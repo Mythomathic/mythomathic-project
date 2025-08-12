@@ -1,0 +1,1 @@
+Explicació (en diferents idiomes)
