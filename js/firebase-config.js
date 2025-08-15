@@ -1,23 +1,3 @@
-/* const firebaseConfig = {
-  apiKey: "AIzaSyDPVUQZXaSAARwROsDgvlohMvB-esYvMrA",
-  authDomain: "mythomathic.firebaseapp.com",
-  projectId: "mythomathic",
-  storageBucket: "mythomathic.firebasestorage.app",
-  messagingSenderId: "396574593247",
-  appId: "1:396574593247:web:5b7f02c53de5613eda996a",
-  measurementId: "G-P649F73C8E"
-};
-
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = firebase.auth(); */
-
-
 <script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
