@@ -76,7 +76,7 @@
         signInWithEmailAndPassword(auth, email, password)
             .then(function(userCredential) {
                 console.log("Sessió iniciada:", userCredential.user);
-                alert("Has iniciat sessió correctament!");
+                alert("Has iniciat sessió correctament!"); window.location.href = "map.html";
             })
             .catch(function(error) {
                 alert("Error: " + error.message);
