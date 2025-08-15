@@ -59,7 +59,8 @@
         createUserWithEmailAndPassword(auth, email, password)
             .then(function(userCredential) {
                 console.log("Usuari creat:", userCredential.user);
-                alert("Compte creat correctament!");
+                alert("Compte creat correctament!"); 
+              window.location.href = "intro.html";
             })
             .catch(function(error) {
                 alert("Error: " + error.message);
