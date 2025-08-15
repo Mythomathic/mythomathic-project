@@ -8,6 +8,11 @@ const firebaseConfig = {
   measurementId: "G-P649F73C8E"
 };
 
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = firebase.auth();
