@@ -1,7 +1,7 @@
 body {
         margin: 0;
         overflow: hidden;
-        background: url("img/backgrounds/map.png") no-repeat center center fixed;
+        background: url("img/backgrounds/map.png");
         background-size: contain;
         font-family: 'Press Start 2P', cursive;
         color: white;
