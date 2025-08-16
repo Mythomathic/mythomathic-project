@@ -1,7 +1,8 @@
 body {
         margin: 0;
         overflow: hidden;
-        background: black;
+        background: url("img/backgrounds/map.png") no-repeat center center fixed;
+        background-size: contain;
         font-family: 'Press Start 2P', cursive;
         color: white;
     }
@@ -68,7 +69,6 @@ body {
         position: relative;
         width: 100vw;
         height: 100vh;
-        background: url('img/backgrounds/map.png') center/cover no-repeat;
     }
 
     /* ===== Portals ===== */
