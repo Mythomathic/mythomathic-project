@@ -17,7 +17,7 @@ body {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 20px;
+        padding: 15px 25px;
         z-index: 1000;
     }
     header img {
@@ -35,7 +35,6 @@ body {
         font-size: 14px;
         cursor: pointer;
         padding: 10px;
-        margin-left: 300px;
         border: 2px solid #00f0ff;
         border-radius: 5px;
         box-shadow: 0 0 10px #00f0ff;
@@ -67,6 +66,8 @@ body {
     /* ===== Fons del mapa ===== */
     .map-container {
         position: relative;
+        width: 100vw;
+        height: 100vh;
         background: url('img/backgrounds/map.png') center/cover no-repeat;
     }
 
