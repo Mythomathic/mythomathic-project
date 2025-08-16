@@ -67,7 +67,7 @@ body {
     /* ===== Fons del mapa ===== */
     .map-container {
         position: relative;
-        background: url('img/backgrounds/Mythomathic.png') center/cover no-repeat;
+        background: url('img/backgrounds/map.png') center/cover no-repeat;
     }
 
     /* ===== Portals ===== */
