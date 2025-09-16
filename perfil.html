@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <title>Perfil - Mythomathic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="perfil.css">
+</head>
+<body>
+  <header>
+  <div class="header-left">
+    <a href="map.html" class="btn-link">⟵ Tornar al mapa</a>
+  </div>
+
+  <h1>El meu perfil</h1>
+
+  <nav class="header-right">
+    <ul class="menu">
+      <li><a href="perfil.html">Perfil</a></li>
+      <li><a href="configuracio.html">Configuració</a></li>
+      <li><a href="sobremi.html">Sobre mi</a></li>
+      <li><a href="contacte.html">Contacte</a></li>
+    </ul>
+  </nav>
+</header>
+
+  <div class="profile-container">
+    <div id="view-mode">
+      <div class="avatar-section">
+        <img id="avatar" src="avatars/avatar1.png" alt="Avatar" class="avatar">
+      </div>
+
+      <div class="user-info">
+        <h2 id="username">Nom d'usuari</h2>
+        <p id="email"></p>
+      </div>
+
+      <div class="progress-section">
+        <p>Nivell: <span id="level">1</span></p>
+        <div class="progress-bar">
+          <div class="progress" id="xp-bar"></div>
+        </div>
+        <p>XP: <span id="xp">0</span> / <span id="xp-max">100</span></p>
+      </div>
+
+      <div class="achievements">
+        <h3>Assoliments</h3>
+        <ul id="achievements-list"></ul>
+      </div>
+
+      <div class="dimension-section">
+        <p id="favorite-dimension-text">Dimensió preferida: Secuentia</p>
+      </div>
+
+      <button id="edit-profile">✎ Editar perfil</button>
+    </div>
+
+    <button id="logout" class="logout-btn">Tancar sessió</button>
+
+    <!-- Vista d'edició -->
+    <div id="edit-mode" style="display:none;">
+      <div class="edit-section">
+        <label for="edit-username">Nom d'usuari:</label>
+        <input type="text" id="edit-username-input">
+      </div>
+
+      <div class="edit-section">
+        <p>Escull avatar:</p>
+        <div id="avatar-options">
+          <img src="avatar1.png" class="avatar-option">
+          <img src="avatar2.png" class="avatar-option">
+          <img src="avatar3.png" class="avatar-option">
+          <img src="avatar4.png" class="avatar-option">
+          <img src="avatar5.png" class="avatar-option">
+          <img src="avatar6.png" class="avatar-option">
+          <img src="avatar7.png" class="avatar-option">
+          <img src="avatar8.png" class="avatar-option">
+          <img src="avatar9.png" class="avatar-option">
+          <img src="avatar10.png" class="avatar-option">
+          <img src="avatar11.png" class="avatar-option">
+          <img src="avatar12.png" class="avatar-option">
+          <img src="avatar13.png" class="avatar-option">
+          <img src="avatar14.png" class="avatar-option">
+          <img src="avatar15.png" class="avatar-option">
+          <img src="avatar16.png" class="avatar-option">
+          <img src="avatar17.png" class="avatar-option">
+          <img src="avatar18.png" class="avatar-option">
+          <img src="avatar19.png" class="avatar-option">
+          <img src="avatar20.png" class="avatar-option">
+          <img src="avatar21.png" class="avatar-option">
+          <img src="avatar22.png" class="avatar-option">
+          <img src="avatar23.png" class="avatar-option">
+          <img src="avatar24.png" class="avatar-option">
+        </div>
+      </div> <br>
+
+      <div class="edit-section">
+        <label for="edit-dimension">Dimensió preferida:</label>
+        <select id="edit-dimension">
+          <option value="Secuentia">Secuentia</option>
+          <option value="Vectonia">Vectonia</option>
+          <option value="Probathénia">Probathénia</option>
+          <option value="Realithia">Realithia</option>
+          <option value="Realithia">Ekuatia</option>
+          <option value="Realithia">Tangentia</option>
+          <option value="Realithia">Complexia</option>
+          <option value="Realithia">Functonia</option>
+          <option value="Realithia">Derivalia</option>
+        </select>
+      </div> <br>
+
+      <button id="confirm-edit">✅ Confirmar</button>
+      <button id="cancel-edit">❌ Cancel·lar</button>
+    </div>
+  </div>
+
+
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDPVUQZXaSAARwROsDgvlohMvB-esYvMrA",
+    authDomain: "mythomathic.firebaseapp.com",
+    projectId: "mythomathic",
+    storageBucket: "mythomathic.firebasestorage.app",
+    messagingSenderId: "396574593247",
+    appId: "1:396574593247:web:5b7f02c53de5613eda996a",
+    measurementId: "G-P649F73C8E"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // 🔹 Elements de la interfície
+  const usernameEl = document.getElementById("username");
+  const emailEl = document.getElementById("email");
+  const xpEl = document.getElementById("xp");
+  const xpMaxEl = document.getElementById("xp-max");
+  const xpBar = document.getElementById("xp-bar");
+  const levelEl = document.getElementById("level");
+  const achievementsList = document.getElementById("achievements-list");
+  const avatarEl = document.getElementById("avatar");
+  const favoriteDimensionText = document.getElementById("favorite-dimension-text");
+
+  const editBtn = document.getElementById("edit-profile");
+  const editMode = document.getElementById("edit-mode");
+  const viewMode = document.getElementById("view-mode");
+  const confirmBtn = document.getElementById("confirm-edit");
+  const cancelBtn = document.getElementById("cancel-edit");
+
+  const editUsernameInput = document.getElementById("edit-username-input");
+  const editDimension = document.getElementById("edit-dimension");
+  const avatarOptions = document.querySelectorAll(".avatar-option");
+
+  let currentUser;
+  let selectedAvatar = "avatars/avatar1.png";
+
+  
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      currentUser = user;
+      emailEl.textContent = user.email;
+
+      const ref = doc(db, "users", user.uid);
+      const snapshot = await getDoc(ref);
+
+      if (snapshot.exists()) {
+        const data = snapshot.data();
+        usernameEl.textContent = data.username || "Usuari sense nom";
+        avatarEl.src = data.avatar || "avatars/avatar1.png";
+        favoriteDimensionText.textContent = "Dimensió preferida: " + (data.favoriteDimension || "Secuentia");
+
+        // XP i nivell
+        const xp = data.xp || 0;
+        const level = data.level || 1;
+        xpEl.textContent = xp;
+        xpMaxEl.textContent = level * 100;
+        levelEl.textContent = level;
+        xpBar.style.width = `${(xp / (level * 100)) * 100}%`;
+
+        // Assoliments
+        achievementsList.innerHTML = "";
+        if (data.achievements) {
+          data.achievements.forEach(a => {
+            const li = document.createElement("li");
+            li.textContent = a;
+            achievementsList.appendChild(li);
+          });
+        }
+      } else {
+        // Si és nou, crea document
+        await setDoc(ref, {
+          username: "Nou jugador",
+          avatar: "avatars/avatar1.png",
+          xp: 0,
+          level: 1,
+          achievements: [],
+          favoriteDimension: "Secuentia"
+        });
+      }
+    } else {
+      window.location.href = "inici.html";
+    }
+  });
+
+  // Mode edició
+  editBtn.addEventListener("click", () => {
+    viewMode.style.display = "none";
+    editMode.style.display = "block";
+
+    // Precarregar valors actuals
+    editUsernameInput.value = usernameEl.textContent;
+    editDimension.value = favoriteDimensionText.textContent.replace("Dimensió preferida: ", "");
+    selectedAvatar = avatarEl.src;
+  });
+
+  // Cancel·lar edició
+  cancelBtn.addEventListener("click", () => {
+    editMode.style.display = "none";
+    viewMode.style.display = "block";
+  });
+
+  // Seleccionar avatar
+  avatarOptions.forEach(img => {
+    img.addEventListener("click", () => {
+      selectedAvatar = img.src;
+      avatarOptions.forEach(i => i.classList.remove("selected"));
+      img.classList.add("selected");
+    });
+  });
+
+  // Confirmar i desar canvis
+  confirmBtn.addEventListener("click", async () => {
+    if (currentUser) {
+      await updateDoc(doc(db, "users", currentUser.uid), {
+        username: editUsernameInput.value,
+        avatar: selectedAvatar,
+        favoriteDimension: editDimension.value
+      });
+
+      // Actualitzar vista
+      usernameEl.textContent = editUsernameInput.value;
+      avatarEl.src = selectedAvatar;
+      favoriteDimensionText.textContent = "Dimensió preferida: " + editDimension.value;
+
+      // Tornar a mode vista
+      editMode.style.display = "none";
+      viewMode.style.display = "block";
+    }
+  });
+
+  // Tancar sessió
+  document.getElementById("logout").addEventListener("click", async () => {
+    await signOut(auth);
+    window.location.href = "inici.html";
+  });
+
+  document.getElementById("back-to-map").addEventListener("click", () => {
+  window.location.href = "map.html";
+});
+
+
+
+  </script>
+</body>
+</html>
