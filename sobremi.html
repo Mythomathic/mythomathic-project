@@ -1,0 +1,90 @@
+<!DOCTYPE html> 
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <title>Sobre mi - Mythomathic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="sobremi.css">
+</head>
+<body>
+  <div class="gradient-background"></div>
+  <header>
+    <div class="header-left">
+      <a href="map.html" class="btn-link">← Tornar al mapa</a>
+    </div>
+    <h1>Sobre mi</h1>
+    <div class="header-right">
+      <nav>
+        <ul class="menu">
+          <li><a href="perfil.html">Perfil</a></li>
+          <li><a href="configuracio.html">Configuració</a></li>
+          <li><a href="sobre-mi.html">Sobre mi</a></li>
+          <li><a href="contacte.html">Contacte</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="about-container">
+    <section class="about-card">
+      <div class="about-content">
+        <div class="about-text">
+          <h2>Sobre mi</h2>
+          <p>
+            Sóc l'Olga, una estudiant de batxillerat que sempre ha sentit una gran curiositat i admiració per les matemàtiques i la programació. 
+            Quan va arribar el moment d’escollir el tema del meu Treball de Recerca, vaig tenir clar que volia unir aquestes dues passions. 
+          </p>
+          <h2>Com va néixer Mythomathic✨</h2>
+          <p>
+            La idea de <span class="highlight-myth">Mythomathic</span> va sorgir d’una pregunta: “I si les matemàtiques fossin un món màgic per explorar?” Així va néixer el concepte: un món enigmàtic i misteriós, dividit en diferents dimensions, cadascuna vinculada a un àmbit matemàtic. 
+            Cada exercici no és només una pregunta, sinó un pas més dins d’una aventura matemàtica plena de reptes i assoliments. Volia que Mythomathic transmetés la sensació d’explorar un univers fantàstic, on aprendre matemàtiques no és una obligació, sinó un viatge. 
+            Un viatge on l’esforç té recompensa, on cada encert suma experiència i on fins i tot els errors formen part de l’aprenentatge.
+          </p>
+          <p>
+            Amb Mythomathic, cada estudiant es converteix en explorador d’un món on les matemàtiques i la màgia es creuen. 
+            <span class="highlight-myth">Mythomathic</span> no és només aprendre matemàtiques: és viure una aventura, resoldre enigmes i descobrir que el saber pot ser tan fascinant com un món de fantasia.
+          </p>
+          <p>
+            <span class="highlight-myth">Mythomathic</span> és molt més que una pàgina d’exercicis: és <span class="highlight-slogan">mates, mites i màgia</span>, un món per explorar, aprendre i gaudir!
+          </p>
+        </div>
+        <div class="about-avatar">
+          <div class="avatar-card" data-tilt data-tilt-scale="1.05" data-tilt-max="20" data-tilt-glare="true" data-tilt-max-glare="0.3">
+            <img src="capy.png" alt="Olybara, Mestra dels Encants Ombrívols (jo, en forma de capybara bruixa amb barret)">
+          </div> <br>
+          <p class="avatar-caption"> <strong>Olybara</strong>, <em>Mestra dels Encants Ombrívols</em> (jo, en forma de capybara bruixa amb barret)</p>
+          <div class="avatar-decoration">
+    <img src="goldentree.png" alt="Arbre màgic decoratiu">
+  </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  
+
+  <!-- Firebase -->
+  <script type="module">
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDPVUQZXaSAARwROsDgvlohMvB-esYvMrA",
+      authDomain: "mythomathic.firebaseapp.com",
+      projectId: "mythomathic",
+      storageBucket: "mythomathic.firebasestorage.app",
+      messagingSenderId: "396574593247",
+      appId: "1:396574593247:web:5b7f02c53de5613eda996a",
+      measurementId: "G-P649F73C8E"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+  </script>
+
+  <!-- VanillaTilt (efecte 3D) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+</body>
+</html>
+

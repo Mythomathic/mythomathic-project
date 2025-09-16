@@ -1,0 +1,234 @@
+body {
+  margin: 0;
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.gradient-background {
+  z-index: -9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle,
+  #e6e6fa 0%,   
+  #8a2be2 20%,  
+  #4169e1 50%, 
+  #191970 76%,  
+  #000000 100%  
+);
+}
+
+header {
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 15px 25px;
+  background: rgba(0,0,0,0.7);
+  border-bottom: 3px solid #0ff;
+  z-index: 1000;
+}
+
+header h1 {
+  text-align: center;
+  font-size: 18px;
+  color: #0ff;
+  margin: 0;
+}
+
+.header-left {
+  justify-self: start;
+}
+
+.header-left .btn-link {
+  text-decoration: none;
+  background: #0ff;
+  color: #000;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #0ff, 0 0 20px #03045e;
+  transition: 0.3s;
+}
+
+.header-left .btn-link:hover {
+  background: #ffcc00;
+  color: #000;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #ffcc00, 0 0 30px #03045e;
+}
+
+.header-right {
+  justify-self: end;
+}
+
+nav ul.menu {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul.menu li a {
+  text-decoration: none;
+  color: white;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+nav ul.menu li a:hover {
+  background: #0ff;
+  color: #000;
+}
+
+.about-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+}
+
+.about-card {
+  background: rgba(0,0,0,0.6);
+  padding: 40px 60px;
+  border-radius: 20px;
+  max-width: 1100px;
+  width: 100%;
+  box-shadow: 0 0 20px #0ff, 0 0 40px #03045e;
+  text-align: justify;
+  line-height: 1.8;
+}
+
+.about-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ffcc00;
+  text-shadow: 0 0 10px #ffcc00;
+}
+
+.logout-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #0ff;
+  border: none;
+  color: #000;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 10px #0ff, 0 0 20px #03045e;
+}
+
+.logout-btn:hover {
+  background: #ffcc00;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #ffcc00, 0 0 30px #03045e;
+}
+
+
+
+
+.about-content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 60px;
+}
+
+.about-text {
+  flex: 3;
+}
+
+.about-avatar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  perspective: 1000px;
+}
+
+.avatar-card {
+  width: 250px;
+  height: 250px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+  will-change: transform;
+  background: rgba(255,255,255,0.05);
+}
+
+.avatar-card img {
+  width: 270px;
+  height: 250px;
+  
+}
+
+.avatar-caption {
+  margin-top: 12px;
+  font-size: 10px;
+  color: #ffcc00;
+  text-align: center;
+  text-shadow: 0 0 6px #000;
+}
+
+
+.avatar-decoration {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.avatar-decoration img {
+  max-height: 700px;
+  width: auto; /* ajusta segons la mida de l’arbre */
+  max-width: 100%;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.6)); /* efecte brillant */
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.avatar-decoration img:hover {
+  transform: scale(1.05) rotate(-2deg);
+  filter: drop-shadow(0 0 25px rgba(255, 204, 0, 0.9));
+}
+
+
+
+.highlight-myth {
+  color: #0ff; /* cian lluminós */
+  font-weight: bold;
+  text-shadow: 0 0 8px #0ff, 0 0 15px #00f, 0 0 25px #0ff;
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.highlight-myth:hover {
+  transform: scale(1.1);
+  text-shadow: 0 0 12px #ffcc00, 0 0 25px #ff0, 0 0 40px #ff6600;
+}
+
+.highlight-slogan {
+  color: #ffcc00; /* daurat màgic */
+  font-style: bold;
+  text-shadow: 0 0 10px #ffcc00, 0 0 25px #ff9900;
+  background: linear-gradient(90deg, #ffcc00, #ff66ff, #0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}

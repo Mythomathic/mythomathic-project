@@ -1,0 +1,189 @@
+body {
+  margin: 0;
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.gradient-background {
+  z-index: -9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle,
+  #e6e6fa 0%,   
+  #8a2be2 20%,  
+  #4169e1 50%, 
+  #191970 76%,  
+  #000000 100%  
+);
+}
+
+header {
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 15px 25px;
+  background: rgba(0,0,0,0.7);
+  border-bottom: 3px solid #0ff;
+  z-index: 1000;
+}
+
+header h1 {
+  text-align: center;
+  font-size: 18px;
+  color: #0ff;
+  margin: 0;
+}
+
+.header-left {
+  justify-self: start;
+}
+
+.header-left .btn-link {
+  text-decoration: none;
+  background: #0ff;
+  color: #000;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #0ff, 0 0 20px #03045e;
+  transition: 0.3s;
+}
+
+.header-left .btn-link:hover {
+  background: #ffcc00;
+  color: #000;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #ffcc00, 0 0 30px #03045e;
+}
+
+.header-right {
+  justify-self: end;
+}
+
+nav ul.menu {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul.menu li a {
+  text-decoration: none;
+  color: white;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+nav ul.menu li a:hover,
+nav ul.menu li a.active {
+  background: #0ff;
+  color: #000;
+}
+
+/* --- Contacte --- */
+.contact-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+}
+
+.contact-card {
+  background: rgba(0,0,0,0.6);
+  padding: 40px 60px;
+  border-radius: 20px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 0 20px #0ff, 0 0 40px #03045e;
+  text-align: left;
+}
+
+.contact-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ffcc00;
+  text-shadow: 0 0 10px #ffcc00;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-form label {
+  font-size: 12px;
+  color: #0ff;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background: rgba(255,255,255,0.1);
+  border: 2px solid #0ff;
+  border-radius: 8px;
+  padding: 10px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  color: white;
+  transition: 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #ffcc00;
+  box-shadow: 0 0 10px #ffcc00, 0 0 20px #0ff;
+}
+
+.magic-btn {
+  background: #0ff;
+  border: none;
+  color: #000;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 10px #0ff, 0 0 20px #03045e;
+}
+
+.magic-btn:hover {
+  background: #ffcc00;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #ffcc00, 0 0 30px #03045e;
+}
+
+/* Botó logout */
+.logout-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #0ff;
+  border: none;
+  color: #000;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 10px #0ff, 0 0 20px #03045e;
+}
+
+.logout-btn:hover {
+  background: #ffcc00;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #ffcc00, 0 0 30px #03045e;
+}
