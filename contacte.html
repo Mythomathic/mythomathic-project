@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <title>Contacte - Mythomathic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="contacte.css">
+</head>
+<body>
+    <div class="gradient-background"></div>
+  <header>
+    <div class="header-left">
+      <a href="map.html" class="btn-link">← Tornar al mapa</a>
+    </div>
+    <h1>Contacte</h1>
+    <div class="header-right">
+      <nav>
+        <ul class="menu">
+          <li><a href="perfil.html">Perfil</a></li>
+          <li><a href="config.html">Configuració</a></li>
+          <li><a href="sobremi.html">Sobre mi</a></li>
+          <li><a href="contacte.html" class="active">Contacte</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="contact-container">
+    <section class="contact-card">
+      <h2>Envia’m un missatge ✨</h2>
+      <form class="contact-form" id="contact-form">
+        <label for="from_name">Nom</label>
+        <input type="text" id="from_name" name="from_name" required>
+
+        <label for="reply_to">Correu electrònic</label>
+        <input type="email" id="reply_to" name="reply_to" required>
+
+        <label for="message">Missatge</label>
+        <textarea id="message" name="message" rows="6" required></textarea>
+
+        <button type="submit" class="magic-btn">📩 Enviar</button>
+      </form>
+      <p id="status-message"></p>
+    </section>
+  </main>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function(){
+    emailjs.init("JJu5UlGiwTDdy6edB"); // La clau pública que et dóna EmailJS
+  })();
+
+  document.getElementById("contact-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    emailjs.sendForm("service_vxd9fhr", "template_01mw3pc", this)
+      .then(() => {
+        alert("✨ El teu missatge s’ha enviat amb èxit!");
+        this.reset();
+      }, (error) => {
+        alert("⚠️ Hi ha hagut un error: " + JSON.stringify(error));
+      });
+  });
+</script>
+
+
+
+  <!-- Firebase -->
+  <script type="module">
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDPVUQZXaSAARwROsDgvlohMvB-esYvMrA",
+      authDomain: "mythomathic.firebaseapp.com",
+      projectId: "mythomathic",
+      storageBucket: "mythomathic.firebasestorage.app",
+      messagingSenderId: "396574593247",
+      appId: "1:396574593247:web:5b7f02c53de5613eda996a",
+      measurementId: "G-P649F73C8E"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+  </script>
+</body>
+</html>

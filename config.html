@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <title>Configuració - Mythomathic</title>
+  <link rel="stylesheet" href="config.css">
+  <script src="config.js" defer></script>
+  <script type="module" src="firebase-config.js" defer></script>
+</head>
+<body>
+  <header>
+    <button class="back-btn" onclick="window.location.href='map.html'">← Torna al mapa</button>
+    <h1 data-translate="config_title">Configuració</h1>
+    <nav>
+      <ul>
+        <li><a href="perfil.html" data-translate="menu_profile">Perfil</a></li>
+        <li><a href="sobre-mi.html" data-translate="menu_about">Sobre mi</a></li>
+        <li><a href="contacte.html" data-translate="menu_contact">Contacte</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <form id="config-form" class="config-card">
+      <!-- Idioma -->
+      <div class="config-option">
+        <label for="language" data-translate="label_language">Idioma</label>
+        <select id="language">
+          <option value="ca">Català</option>
+          <option value="es">Castellano</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+
+      <!-- Separador decimal -->
+      <div class="config-option">
+        <label for="decimal-separator" data-translate="label_decimal">Separador decimal</label>
+        <select id="decimal-separator">
+          <option value="dot">Punt (1,234.56)</option>
+          <option value="comma">Coma (1.234,56)</option>
+        </select>
+      </div>
+
+      <button type="submit" class="save-btn" data-translate="save_btn">💾 Guardar</button>
+    </form>
+  </main>
+
+  <script>
+// Firebase inicialització (ja tens les claus, les pots reaprofitar)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "TU_API_KEY",
+  authDomain: "mythomathic.firebaseapp.com",
+  projectId: "mythomathic",
+  storageBucket: "mythomathic.appspot.com",
+  messagingSenderId: "XXXXXXXX",
+  appId: "XXXXXXXX"
+};
+
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+
+// Carregar preferències a config.html
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    const ref = doc(db, "users", user.uid);
+    const snap = await getDoc(ref);
+
+    if (snap.exists()) {
+      const data = snap.data();
+      document.getElementById("language").value = data.language || "ca";
+      document.getElementById("decimal-separator").value = data.decimalSeparator || "dot";
+    }
+  }
+});
+
+// Guardar preferències
+export async function savePreferences(userId, prefs) {
+  const ref = doc(db, "users", userId);
+  await setDoc(ref, prefs, { merge: true });
+}
+</script>
+
+</body>
+</html>
