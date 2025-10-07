@@ -1,129 +1,495 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="ca"> 
-    <head> 
-        <meta charset="UTF-8"> 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <title>Realithia - Mythomathic</title> 
-        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
-        <link rel="stylesheet" href="realithia.css"> 
-    </head> 
+<head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Realithia - Mythomathic</title> 
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" href="realithia.css"> 
+</head> 
+
 <body> 
-    <header> 
-<button class="back-button" onclick="goTo('map.html')">⬅ Mapa</button> 
-<div class="title-center"> 
-<img src="R_Title.png" alt="Realithia" class="title-img"> 
-</div> 
-<div class="header-buttons"> 
+<header> 
+  <button class="back-button" onclick="goTo('map.html')">⬅ Mapa</button> 
+  <div class="title-center"> 
+    <img src="R_title.png" alt="Realithia" class="title-img"> 
+  </div> 
+  <div class="header-buttons"> 
     <button onclick="openLore()">📜 Lore</button> 
     <button onclick="toggleMenu()">☰ Menú</button> 
-</div> 
-<nav id="menu"> 
-    <ul> <li onclick="goTo('map.html')">Mapa</li> 
-        <li onclick="goTo('perfil.html')">Perfil</li> 
-        <li onclick="goTo('config.html')">Configuració</li> 
-        <li onclick="goTo('sobremi.html')">Sobre mi</li> 
-        <li onclick="goTo('contacte.html')">Contacte</li> 
+  </div> 
+  <nav id="menu"> 
+    <ul> 
+      <li onclick="goTo('map.html')">Mapa</li> 
+      <li onclick="goTo('perfil.html')">Perfil</li> 
+      <li onclick="goTo('config.html')">Configuració</li> 
+      <li onclick="goTo('sobremi.html')">Sobre mi</li> 
+      <li onclick="goTo('contacte.html')">Contacte</li> 
     </ul> 
-</nav> 
+  </nav> 
 </header> 
+
 <main class="dimension-container"> 
-    <aside class="categories"> 
-        <button onclick="showSymbols('reals')">Nombres Reals</button> 
-        <button onclick="showSymbols('potencies')">Potències</button> 
-        <button onclick="showSymbols('logaritmes')">Logaritmes</button> 
-        <button onclick="showSymbols('radicals')">Radicals</button> 
-    </aside> 
-    <div class="symbols">
-  <!-- Nombres reals -->
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 180px; left: 320px;" onclick="openPopup('Intervals i valors absoluts')">
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 430px; left: 980px;" onclick="openPopup('Recta real i conjunts')">
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 600px; left: 200px;" onclick="openPopup('Operacions amb nombres reals')">
+  <aside class="categories"> 
+    <button onclick="showSymbols('reals')">Nombres Reals</button> 
+    <button onclick="showSymbols('potencies')">Potències</button> 
+    <button onclick="showSymbols('logaritmes')">Logaritmes</button> 
+    <button onclick="showSymbols('radicals')">Radicals</button> 
+  </aside> 
 
-  <!-- Potències -->
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 220px; left: 780px;" onclick="openPopup('Propietats de les potències')">
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 420px; left: 560px;" onclick="openPopup('Notació científica')">
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 600px; left: 960px;" onclick="openPopup('Exponents negatius i fraccionaris')">
+  <div class="symbols">
+    <!-- Nombres reals -->
+    <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
+        style="top: 180px; left: 320px;" onclick="openPopup('Intervals i valors absoluts')">
+    <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
+        style="top: 430px; left: 980px;" onclick="openPopup('Recta real i conjunts')">
+    <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
+        style="top: 600px; left: 200px;" onclick="openPopup('Operacions amb nombres reals')">
 
-  <!-- Radicals -->
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 350px; left: 940px;" onclick="openPopup('Simplificació de radicals')">
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 510px; left: 260px;" onclick="openPopup('Operacions amb radicals')">
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 630px; left: 760px;" onclick="openPopup('Racionalització del denominador')">
+    <!-- Potències -->
+    <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
+        style="top: 220px; left: 780px;" onclick="openPopup('Propietats de les potències')">
+    <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
+        style="top: 420px; left: 560px;" onclick="openPopup('Notació científica')">
+    <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
+        style="top: 600px; left: 960px;" onclick="openPopup('Exponents negatius i fraccionaris')">
 
-  <!-- Logaritmes -->
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 300px; left: 620px;" onclick="openPopup('Definició i base dels logaritmes')">
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 540px; left: 520px;" onclick="openPopup('Propietats dels logaritmes')">
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 650px; left: 880px;" onclick="openPopup('Canvis de base i equacions logarítmiques')">
-</div> 
+    <!-- Radicals -->
+    <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
+        style="top: 350px; left: 940px;" onclick="openPopup('Simplificació de radicals')">
+    <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
+        style="top: 510px; left: 260px;" onclick="openPopup('Operacions amb radicals')">
+    <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
+        style="top: 630px; left: 760px;" onclick="openPopup('Racionalització del denominador')">
+
+   <!-- Logaritmes -->
+    <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
+        style="top: 300px; left: 620px;" onclick="openPopup('Definició i base dels logaritmes')">
+    <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
+        style="top: 540px; left: 520px;" onclick="openPopup('Propietats dels logaritmes')">
+    <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
+        style="top: 650px; left: 880px;" onclick="openPopup('Canvis de base i equacions logarítmiques')"> 
+  </div> 
 </main> 
-<!-- POPUP --> 
- <div id="lorePopup" class="popup"> 
-    <div class="popup-content lore-content"> 
-        <span class="close" onclick="closeLore()">&times;</span>
-         <img src="pergami.png" alt="Pergamí" class="scroll-img"> 
-        </div> 
-    </div> 
-    <!-- POPUP EXERCICI -->
+
+<!-- POPUP LORE --> 
+<div id="lorePopup" class="popup"> 
+  <div class="popup-content lore-content"> 
+    <span class="close" onclick="closeLore()">&times;</span>
+    <img src="pergami.png" alt="Pergamí" class="scroll-img"> 
+  </div> 
+</div> 
+
+<!-- POPUP EXERCICI -->
 <div id="exercisePopup" class="popup">
   <div class="popup-content">
     <span class="close" onclick="closePopup()">&times;</span>
     <h2 id="exerciseTitle"></h2>
-    <p>Aquí hi anirà l'enunciat o contingut de l'exercici.</p>
+    <div id="exerciseContent"></div>
   </div>
 </div>
-    <script> 
-    function toggleMenu() { 
-        document.getElementById('menu').classList.toggle('active'); } 
-        
-        function goTo(page) { window.location.href = page; } 
-        function openLore() { document.getElementById("lorePopup").style.display = "flex"; } 
-        function closeLore() { document.getElementById("lorePopup").style.display = "none"; } 
-    
-        function showSymbols(type) {
-  // Amaga tots
-  document.querySelectorAll(".symbol").forEach(el => el.style.display = "none");
 
-  if (type === "reals") {
-    // Mostra tots els símbols de "reals"
-    document.querySelectorAll(".symbol[data-cat='reals']").forEach(el => el.style.display = "block");
-  }
-  if (type === "potencies") {
-    document.querySelectorAll(".symbol[data-cat='potencies']").forEach(el => el.style.display = "block");
-  }
-  if (type === "radicals") {
-    document.querySelectorAll(".symbol[data-cat='radicals']").forEach(el => el.style.display = "block");
-  }
-  if (type === "logaritmes") {
-    document.querySelectorAll(".symbol[data-cat='logaritmes']").forEach(el => el.style.display = "block");
-  }
+<script> 
+function toggleMenu() { 
+  document.getElementById('menu').classList.toggle('active'); 
+} 
+
+function goTo(page) { 
+  window.location.href = page; 
+} 
+
+function openLore() { 
+  document.getElementById("lorePopup").style.display = "flex"; 
+} 
+
+function closeLore() { 
+  document.getElementById("lorePopup").style.display = "none"; 
+} 
+
+function showSymbols(type) {
+  document.querySelectorAll(".symbol").forEach(el => el.style.display = "none");
+  document.querySelectorAll(".symbol[data-cat='"+type+"']").forEach(el => el.style.display = "block");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   showSymbols("reals");
 });
 
-function openPopup(title) {
-  document.getElementById("exerciseTitle").textContent = title;
-  document.getElementById("exercisePopup").style.display = "flex";
-}
-
-// Tancar popup d’exercici
+// ======= POPUP Exercicis =======
 function closePopup() {
   document.getElementById("exercisePopup").style.display = "none";
 }
 
-            </script> 
-            </body> 
-        </html>
+// Diccionari d’exercicis
 
+const exercises = {
+  // --- Nombres Reals ---
+  "Intervals i valors absoluts": () => generateIntervalsExercise(),
+  "Recta real i conjunts": () => generateSetsExercise(),
+  "Operacions amb nombres reals": () => generateClassificationExercise(),
+
+  // --- Potències ---
+  "Propietats de les potències": () => generatePowerPropertiesExercise(),
+  "Notació científica": () => {
+    if (Math.random() < 0.5) {
+      generateScientificNotationExercise();
+    } else {
+      generateScientificConversionExercise();
+    }
+  },
+  "Exponents negatius i fraccionaris": () => generateExponentsExercise(),
+
+  // --- Logaritmes ---
+
+  "Definició i base dels logaritmes": () => generateLogDefinitionExercise(),
+  "Propietats dels logaritmes": () => generateLogPropertiesExercise(),
+  "Canvis de base i equacions logarítmiques": () => generateLogEquationsExercise(),
+
+  // --- Radicals ---
+  "Simplificació de radicals": () => generateRadicalSimplifyExercise(),
+  "Operacions amb radicals": () => generateRadicalOperationsExercise(),
+  "Racionalització del denominador": () => generateRadicalRationalizeExercise()
+};
+
+
+
+function openPopup(title) {
+  document.getElementById("exerciseTitle").textContent = title;
+  document.getElementById("exercisePopup").style.display = "flex";
+  if (exercises[title]) {
+    document.getElementById("exerciseContent").innerHTML = "";
+    exercises[title]();
+  } else {
+    document.getElementById("exerciseContent").innerHTML = "<p>Encara no hi ha exercicis disponibles per aquest apartat.</p>";
+  }
+}
+
+/* ===================== NOMBRES REALS ===================== */
+
+// Exemple intervals
+function generateIntervalsExercise() {
+  const container = document.getElementById("exerciseContent");
+  const examples = [
+    {ineq: "−2 < x ≤ 4", ans: "(-2,4]"},
+    {ineq: "6 < x < 10", ans: "(6,10)"},
+    {ineq: "x ≤ 5", ans: "(-∞,5]"},
+    {ineq: "−3 < x", ans: "(-3,∞)"},
+    {ineq: "−4 ≤ x ≤ 3", ans: "[-4,3]"}
+  ];
+  const ex = examples[Math.floor(Math.random()*examples.length)];
+
+  container.innerHTML = `
+    <p>Escriviu l’interval que correspon a la desigualtat següent:</p>
+    <p><b>${ex.ineq}</b></p>
+    <input type="text" id="answer" placeholder="Ex: (-2,4]">
+    <button onclick="checkAnswer('${ex.ans}')">Comprovar</button>
+    <button onclick="generateIntervalsExercise()">Nova activitat</button>
+    <p id="feedback"></p>
+  `;
+}
+
+// Exemple conjunts i recta real
+function generateSetsExercise() {
+  const container = document.getElementById("exerciseContent");
+  const examples = [
+    {interval: "[1,7]", ans: "1 ≤ x ≤ 7"},
+    {interval: "(-2,3]", ans: "−2 < x ≤ 3"},
+    {interval: "[-2,2)", ans: "−2 ≤ x < 2"},
+    {interval: "(−∞,−7]", ans: "x ≤ −7"}
+  ];
+  const ex = examples[Math.floor(Math.random()*examples.length)];
+
+  container.innerHTML = `
+    <p>Escriu en forma de desigualtat l’interval següent:</p>
+    <p><b>${ex.interval}</b></p>
+    <input type="text" id="answer" placeholder="Ex: 1 ≤ x ≤ 7">
+    <button onclick="checkAnswer('${ex.ans}')">Comprovar</button>
+    <button onclick="generateSetsExercise()">Nova activitat</button>
+    <p id="feedback"></p>
+  `;
+}
+
+// Classificar nombres (racionals / irracionals)
+function generateClassificationExercise() {
+  const container = document.getElementById("exerciseContent");
+  const numbers = [
+    {num: "2.3333...", ans: "Racional"},
+    {num: "√2", ans: "Irracional"},
+    {num: "7/5", ans: "Racional"},
+    {num: "π", ans: "Irracional"},
+    {num: "√9", ans: "Racional"},
+    {num: "1+√3", ans: "Irracional"}
+  ];
+  const subset = numbers.sort(() => 0.5 - Math.random()).slice(0,4);
+
+  container.innerHTML = `<p>Classifica cada nombre com a Racional o Irracional:</p>`;
+
+  subset.forEach((item, i) => {
+    container.innerHTML += `
+      <div>
+        <b>${item.num}</b> → 
+        <select id="sel${i}">
+          <option value="">-- Tria --</option>
+          <option value="Racional">Racional</option>
+          <option value="Irracional">Irracional</option>
+        </select>
+        <span id="fb${i}"></span>
+      </div>
+    `;
+  });
+
+  container.innerHTML += `
+    <button onclick="checkClassification([${subset.map(x=>`'${x.ans}'`).join(",")}])">Comprovar</button>
+    <button onclick="generateClassificationExercise()">Nova activitat</button>
+  `;
+}
+
+function checkClassification(correctAnswers) {
+  correctAnswers.forEach((ans, i) => {
+    const val = document.getElementById("sel"+i).value;
+    const fb = document.getElementById("fb"+i);
+    fb.textContent = val === ans ? "✔️" : "❌";
+    fb.style.color = val === ans ? "lightgreen" : "red";
+  });
+}
+
+/* ===================== POTÈNCIES ===================== */
+
+// Propietats de les potències
+function generatePowerPropertiesExercise() {
+  const container = document.getElementById("exerciseContent");
+  const examples = [
+    {expr: "a³ · a⁵", ans: "a^8"},
+    {expr: "(b⁴)²", ans: "b^8"},
+    {expr: "c⁷ / c³", ans: "c^4"},
+    {expr: "x² · x³ / x", ans: "x^4"}
+  ];
+  const ex = examples[Math.floor(Math.random()*examples.length)];
+
+  container.innerHTML = `
+    <p>Aplicant les propietats de les potències, expressa com una sola potència:</p>
+    <p><b>${ex.expr}</b></p>
+    <input type="text" id="answer" placeholder="Ex: a^8">
+    <button onclick="checkAnswer('${ex.ans}')">Comprovar</button>
+    <button onclick="generatePowerPropertiesExercise()">Nova activitat</button>
+    <p id="feedback"></p>
+  `;
+}
+
+// Notació científica (operacions)
+function generateScientificNotationExercise() {
+  const container = document.getElementById("exerciseContent");
+  const examples = [
+    {expr: "3.5·10^3 + 2.4·10^2", ans: "3.74·10^3"},
+    {expr: "7.3·10^4 · 5.25·10^-3", ans: "3.8325·10^2"},
+    {expr: "8.3·10^6 : 5.37·10^2", ans: "1.545·10^4"}
+  ];
+  const ex = examples[Math.floor(Math.random()*examples.length)];
+
+  container.innerHTML = `
+    <p>Feu l’operació en notació científica:</p>
+    <p><b>${ex.expr}</b></p>
+    <input type="text" id="answer" placeholder="Ex: 3.74·10^3">
+    <button onclick="checkAnswer('${ex.ans}')">Comprovar</button>
+    <button onclick="generateScientificNotationExercise()">Nova activitat</button>
+    <p id="feedback"></p>
+  `;
+}
+
+// Notació científica (transformar nombres)
+function generateScientificConversionExercise() {
+  const container = document.getElementById("exerciseContent");
+  const examples = [
+    {num: "1200000", ans: "1.2·10^6"},
+    {num: "0.000000024", ans: "2.4·10^-8"},
+    {num: "3400540000", ans: "3.40054·10^9"}
+  ];
+  const ex = examples[Math.floor(Math.random()*examples.length)];
+
+  container.innerHTML = `
+    <p>Escriu amb notació científica:</p>
+    <p><b>${ex.num}</b></p>
+    <input type="text" id="answer" placeholder="Ex: 1.2·10^6">
+    <button onclick="checkAnswer('${ex.ans}')">Comprovar</button>
+    <button onclick="generateScientificConversionExercise()">Nova activitat</button>
+    <p id="feedback"></p>
+  `;
+}
+
+// Exponents negatius i fraccionaris
+function generateExponentsExercise() {
+  const container = document.getElementById("exerciseContent");
+  const examples = [
+    {expr: "x^-2", ans: "1/x^2"},
+    {expr: "a^(1/2)", ans: "√a"},
+    {expr: "b^(3/2)", ans: "b√b"},
+    {expr: "1/x^-3", ans: "x^3"}
+  ];
+  const ex = examples[Math.floor(Math.random()*examples.length)];
+
+  container.innerHTML = `
+    <p>Simplifica l’expressió amb exponents negatius o fraccionaris:</p>
+    <p><b>${ex.expr}</b></p>
+    <input type="text" id="answer" placeholder="Ex: 1/x^2">
+    <button onclick="checkAnswer('${ex.ans}')">Comprovar</button>
+    <button onclick="generateExponentsExercise()">Nova activitat</button>
+    <p id="feedback"></p>
+  `;
+}
+
+/* ===================== LOGARITMES ===================== */
+
+// Definició i base
+function generateLogDefinitionExercise() {
+  const container = document.getElementById("exerciseContent");
+  const examples = [
+    {expr: "log2 64", ans: "6"},
+    {expr: "log3 81", ans: "4"},
+    {expr: "log5 1/125", ans: "−3"},
+    {expr: "log8 64", ans: "2"},
+    {expr: "log12 12", ans: "1"},
+    {expr: "log25 1", ans: "0"},
+    {expr: "log2 0.5", ans: "−1"},
+    {expr: "log5 0.2", ans: "−1"},
+    {expr: "log3 1/9", ans: "−2"},
+    {expr: "log6 1/216", ans: "−3"}
+  ];
+  const ex = examples[Math.floor(Math.random()*examples.length)];
+
+  container.innerHTML = `
+    <p>Calcula aquest logaritme a partir de la definició:</p>
+    <p><b>${ex.expr}</b></p>
+    <input type="text" id="answer" placeholder="Ex: 3">
+    <button onclick="checkAnswer('${ex.ans}')">Comprovar</button>
+    <button onclick="generateLogDefinitionExercise()">Nova activitat</button>
+    <p id="feedback"></p>
+  `;
+}
+
+// Propietats dels logaritmes
+function generateLogPropertiesExercise() {
+  const container = document.getElementById("exerciseContent");
+  const examples = [
+    {expr: "log2 32^7", ans: "35"},
+    {expr: "log7 49^77", ans: "154"},
+    {expr: "log(1/2) 8^15", ans: "-45"},
+    {expr: "log(1/3) 27^(1/9)", ans: "-1/3"},
+    {expr: "log2 √2", ans: "1/2"},
+    {expr: "log2 (√8 · 32)", ans: "11/2"},
+    {expr: "log3 (∛9 / √27)", ans: "0"}
+  ];
+  const ex = examples[Math.floor(Math.random()*examples.length)];
+
+  container.innerHTML = `
+    <p>Calcula aplicant les propietats dels logaritmes:</p>
+    <p><b>${ex.expr}</b></p>
+    <input type="text" id="answer" placeholder="Ex: 35">
+    <button onclick="checkAnswer('${ex.ans}')">Comprovar</button>
+    <button onclick="generateLogPropertiesExercise()">Nova activitat</button>
+    <p id="feedback"></p>
+  `;
+}
+
+// Canvi de base i equacions
+function generateLogEquationsExercise() {
+  const container = document.getElementById("exerciseContent");
+  const examples = [
+    {expr: "log5 20 (usa canvi de base amb log10)", ans: "log(20)/log(5)"},
+    {expr: "log2 50 (usa canvi de base amb log10)", ans: "log(50)/log(2)"},
+    {expr: "Resol l’equació: log2 x = 5", ans: "32"},
+    {expr: "Resol l’equació: log3 x = −2", ans: "1/9"},
+    {expr: "Resol l’equació: log10 x = 0", ans: "1"}
+  ];
+  const ex = examples[Math.floor(Math.random()*examples.length)];
+
+  container.innerHTML = `
+    <p><b>${ex.expr}</b></p>
+    <input type="text" id="answer" placeholder="Resposta">
+    <button onclick="checkAnswer('${ex.ans}')">Comprovar</button>
+    <button onclick="generateLogEquationsExercise()">Nova activitat</button>
+    <p id="feedback"></p>
+  `;
+}
+
+/* ===================== RADICALS ===================== */
+
+// Simplificació de radicals
+function generateRadicalSimplifyExercise() {
+  const container = document.getElementById("exerciseContent");
+  const examples = [
+    {expr: "√121", ans: "11"},
+    {expr: "³√27", ans: "3"},
+    {expr: "√(a²+18a+81)", ans: "a+9"},
+    {expr: "10√(11^12)", ans: "11"},
+    {expr: "³√(27z-108)", ans: "3√(z-4)"}
+  ];
+  const ex = examples[Math.floor(Math.random()*examples.length)];
+
+  container.innerHTML = `
+    <p>Simplifica el radical:</p>
+    <p><b>${ex.expr}</b></p>
+    <input type="text" id="answer" placeholder="Ex: 11">
+    <button onclick="checkAnswer('${ex.ans}')">Comprovar</button>
+    <button onclick="generateRadicalSimplifyExercise()">Nova activitat</button>
+    <p id="feedback"></p>
+  `;
+}
+
+// Operacions amb radicals
+function generateRadicalOperationsExercise() {
+  const container = document.getElementById("exerciseContent");
+  const examples = [
+    {expr: "√2 + √2", ans: "2√2"},
+    {expr: "2√3 - √3", ans: "√3"},
+    {expr: "√5 · √5", ans: "5"},
+    {expr: "√18 / √2", ans: "3"}
+  ];
+  const ex = examples[Math.floor(Math.random()*examples.length)];
+
+  container.innerHTML = `
+    <p>Resol l’operació amb radicals:</p>
+    <p><b>${ex.expr}</b></p>
+    <input type="text" id="answer" placeholder="Ex: 2√2">
+    <button onclick="checkAnswer('${ex.ans}')">Comprovar</button>
+    <button onclick="generateRadicalOperationsExercise()">Nova activitat</button>
+    <p id="feedback"></p>
+  `;
+}
+
+// Racionalització del denominador
+function generateRadicalRationalizeExercise() {
+  const container = document.getElementById("exerciseContent");
+  const examples = [
+    {expr: "6/√2", ans: "3√2"},
+    {expr: "√(2/9)", ans: "√2/3"},
+    {expr: "√3/√8", ans: "√6/4"},
+    {expr: "9√6 / 4√3", ans: "(9√2)/4"}
+  ];
+  const ex = examples[Math.floor(Math.random()*examples.length)];
+
+  container.innerHTML = `
+    <p>Racionalitza el denominador i simplifica si escau:</p>
+    <p><b>${ex.expr}</b></p>
+    <input type="text" id="answer" placeholder="Ex: 3√2">
+    <button onclick="checkAnswer('${ex.ans}')">Comprovar</button>
+    <button onclick="generateRadicalRationalizeExercise()">Nova activitat</button>
+    <p id="feedback"></p>
+  `;
+}
+
+
+/* ===================== FEEDBACK GENERAL ===================== */
+function checkAnswer(correct) {
+  const userAns = document.getElementById("answer").value.trim();
+  const fb = document.getElementById("feedback");
+  if (userAns === correct) {
+    fb.textContent = "Correcte! ✔️";
+    fb.style.color = "lightgreen";
+  } else {
+    fb.textContent = "Incorrecte ❌ (resposta esperada: " + correct + ")";
+    fb.style.color = "red";
+  }
+}
+</script>
+</body> 
+</html>
