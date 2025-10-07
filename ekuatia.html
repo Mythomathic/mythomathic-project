@@ -1,128 +1,391 @@
-<!DOCTYPE html> 
-<html lang="ca"> 
-    <head> 
-        <meta charset="UTF-8"> 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <title>Ekuatia - Mythomathic</title> 
-        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
-        <link rel="stylesheet" href="ekuatia.css"> 
-    </head> 
-<body> 
-    <header> 
-<button class="back-button" onclick="goTo('map.html')">⬅ Mapa</button> 
-<div class="title-center"> 
-<img src="E_Title.png" alt="Ekuatia" class="title-img"> 
-</div> 
-<div class="header-buttons"> 
-    <button onclick="openLore()">📜 Lore</button> 
-    <button onclick="toggleMenu()">☰ Menú</button> 
-</div> 
-<nav id="menu"> 
-    <ul> <li onclick="goTo('map.html')">Mapa</li> 
-        <li onclick="goTo('perfil.html')">Perfil</li> 
-        <li onclick="goTo('config.html')">Configuració</li> 
-        <li onclick="goTo('sobremi.html')">Sobre mi</li> 
-        <li onclick="goTo('contacte.html')">Contacte</li> 
-    </ul> 
-</nav> 
-</header> 
-<main class="dimension-container"> 
-    <aside class="categories"> 
-        <button onclick="showSymbols('reals')">Nombres Reals</button> 
-        <button onclick="showSymbols('potencies')">Potències</button> 
-        <button onclick="showSymbols('logaritmes')">Logaritmes</button> 
-        <button onclick="showSymbols('radicals')">Radicals</button> 
-    </aside> 
-    <div class="symbols">
-  <!-- Nombres reals -->
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 180px; left: 320px;" onclick="openPopup('Intervals i valors absoluts')">
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 430px; left: 980px;" onclick="openPopup('Recta real i conjunts')">
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 600px; left: 200px;" onclick="openPopup('Operacions amb nombres reals')">
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ekuatia - Mythomathic</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ekuatia.css">
 
-  <!-- Potències -->
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 220px; left: 780px;" onclick="openPopup('Propietats de les potències')">
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 420px; left: 560px;" onclick="openPopup('Notació científica')">
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 600px; left: 960px;" onclick="openPopup('Exponents negatius i fraccionaris')">
-
-  <!-- Radicals -->
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 350px; left: 940px;" onclick="openPopup('Simplificació de radicals')">
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 510px; left: 260px;" onclick="openPopup('Operacions amb radicals')">
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 630px; left: 760px;" onclick="openPopup('Racionalització del denominador')">
-
-  <!-- Logaritmes -->
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 300px; left: 620px;" onclick="openPopup('Definició i base dels logaritmes')">
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 540px; left: 520px;" onclick="openPopup('Propietats dels logaritmes')">
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 650px; left: 880px;" onclick="openPopup('Canvis de base i equacions logarítmiques')">
-</div> 
-</main> 
-<!-- POPUP --> 
- <div id="lorePopup" class="popup"> 
-    <div class="popup-content lore-content"> 
-        <span class="close" onclick="closeLore()">&times;</span>
-         <img src="pergami.png" alt="Pergamí" class="scroll-img"> 
-        </div> 
-    </div> 
-    <!-- POPUP EXERCICI -->
-<div id="exercisePopup" class="popup">
-  <div class="popup-content">
-    <span class="close" onclick="closePopup()">&times;</span>
-    <h2 id="exerciseTitle"></h2>
-    <p>Aquí hi anirà l'enunciat o contingut de l'exercici.</p>
-  </div>
+</head>
+<body>
+<header>
+<button class="back-button" onclick="goTo('map.html')">⬅ Mapa</button>
+<div class="title-center">
+<img src="E_Title.png" alt="Ekuatia" class="title-img">
 </div>
-    <script> 
-    function toggleMenu() { 
-        document.getElementById('menu').classList.toggle('active'); } 
-        
-        function goTo(page) { window.location.href = page; } 
-        function openLore() { document.getElementById("lorePopup").style.display = "flex"; } 
-        function closeLore() { document.getElementById("lorePopup").style.display = "none"; } 
-    
-        function showSymbols(type) {
-  // Amaga tots
-  document.querySelectorAll(".symbol").forEach(el => el.style.display = "none");
+<div class="header-buttons">
+<button onclick="openLore()">📜 Lore</button>
+<button onclick="toggleMenu()">☰ Menú</button>
+</div>
+<nav id="menu">
+<ul>
+<li onclick="goTo('map.html')">Mapa</li>
+<li onclick="goTo('perfil.html')">Perfil</li>
+<li onclick="goTo('config.html')">Configuració</li>
+<li onclick="goTo('sobremi.html')">Sobre mi</li>
+<li onclick="goTo('contacte.html')">Contacte</li>
+</ul>
+</nav>
+</header>
 
-  if (type === "reals") {
-    // Mostra tots els símbols de "reals"
-    document.querySelectorAll(".symbol[data-cat='reals']").forEach(el => el.style.display = "block");
-  }
-  if (type === "potencies") {
-    document.querySelectorAll(".symbol[data-cat='potencies']").forEach(el => el.style.display = "block");
-  }
-  if (type === "radicals") {
-    document.querySelectorAll(".symbol[data-cat='radicals']").forEach(el => el.style.display = "block");
-  }
-  if (type === "logaritmes") {
-    document.querySelectorAll(".symbol[data-cat='logaritmes']").forEach(el => el.style.display = "block");
-  }
+<main class="dimension-container">
+<aside class="categories">
+<button onclick="showSymbols('equacions')">Equacions</button>
+<button onclick="showSymbols('sistemes')">Sistemes</button>
+<button onclick="showSymbols('inequacions')">Inequacions</button>
+</aside>
+
+<div class="symbols">
+<!-- Equacions -->
+<img src="icon-eq.png" alt="Equacions" class="symbol" data-cat="equacions"
+style="top:180px; left:320px;" onclick="openPopup('Equacions Lineals')">
+<img src="icon-eq.png" alt="Equacions" class="symbol" data-cat="equacions"
+style="top:300px; left:600px;" onclick="openPopup('Equacions Segon Grau')">
+<img src="icon-eq.png" alt="Equacions" class="symbol" data-cat="equacions"
+style="top:420px; left:500px;" onclick="openPopup('Equacions Polinòmiques')">
+<img src="icon-eq.png" alt="Equacions" class="symbol" data-cat="equacions"
+style="top:540px; left:700px;" onclick="openPopup('Equacions Algebraiques')">
+<img src="icon-eq.png" alt="Equacions" class="symbol" data-cat="equacions"
+style="top:650px; left:400px;" onclick="openPopup('Equacions Irracionals')">
+<img src="icon-eq.png" alt="Equacions" class="symbol" data-cat="equacions"
+style="top:600px; left:800px;" onclick="openPopup('Equacions Logaritmiques')">
+<img src="icon-eq.png" alt="Equacions" class="symbol" data-cat="equacions"
+style="top:720px; left:600px;" onclick="openPopup('Equacions Exponencials')">
+
+<!-- Sistemes -->
+<img src="icon-sis.png" alt="Sistemes" class="symbol" data-cat="sistemes"
+style="top:220px; left:780px;" onclick="openPopup('Sistemes Lineals')">
+<img src="icon-sis.png" alt="Sistemes" class="symbol" data-cat="sistemes"
+style="top:420px; left:560px;" onclick="openPopup('Sistemes No Lineals')">
+<img src="icon-sis.png" alt="Sistemes" class="symbol" data-cat="sistemes"
+style="top:600px; left:960px;" onclick="openPopup('Sistemes 3x3')">
+
+<!-- Inequacions -->
+<img src="icon-ineq.png" alt="Inequacions" class="symbol" data-cat="inequacions"
+style="top:350px; left:940px;" onclick="openPopup('Inequacions Simples')">
+<img src="icon-ineq.png" alt="Inequacions" class="symbol" data-cat="inequacions"
+style="top:510px; left:260px;" onclick="openPopup('Inequacions Quadratiques')">
+<img src="icon-ineq.png" alt="Inequacions" class="symbol" data-cat="inequacions"
+style="top:630px; left:760px;" onclick="openPopup('Sistemes d’Inequacions')">
+</div>
+</main>
+
+<div id="lorePopup" class="popup">
+<div class="popup-content lore-content">
+<span class="close" onclick="closeLore()">&times;</span>
+<img src="pergami.png" alt="Pergamí" class="scroll-img">
+</div>
+</div>
+
+<div id="exercisePopup" class="popup">
+<div class="popup-content">
+<span class="close" onclick="closePopup()">&times;</span>
+<h2 id="exerciseTitle"></h2>
+<div id="exerciseContent"></div>
+<p id="feedback"></p>
+</div>
+</div>
+
+<script>
+function toggleMenu(){document.getElementById('menu').classList.toggle('active');}
+function goTo(page){window.location.href=page;}
+function openLore(){document.getElementById("lorePopup").style.display="flex";}
+function closeLore(){document.getElementById("lorePopup").style.display="none";}
+function showSymbols(type){
+document.querySelectorAll(".symbol").forEach(el=>el.style.display="none");
+document.querySelectorAll(".symbol[data-cat='"+type+"']").forEach(el=>el.style.display="block");
+}
+document.addEventListener("DOMContentLoaded",()=>{showSymbols("equacions");});
+function closePopup(){document.getElementById("exercisePopup").style.display="none";}
+
+// ===== Funcions auxiliars =====
+function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  showSymbols("reals");
-});
+// ===== POPUP Exercicis =====
+const exercises = {
 
-function openPopup(title) {
-  document.getElementById("exerciseTitle").textContent = title;
-  document.getElementById("exercisePopup").style.display = "flex";
+"Equacions Lineals": () => {
+    const a = randomInt(1,5);
+    const b = randomInt(-5,5);
+    const c = randomInt(1,10);
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `
+    <p>Resol l'equació: ${a}·x + ${b} = ${c}</p>
+    <input type="text" id="answer">
+    <button onclick="checkLinear(${a},${b},${c})">Comprovar</button>
+    <button onclick="exercises['Equacions Lineals']()">Nova activitat</button>`;
+},
+
+"Equacions Segon Grau": () => {
+    const x1 = randomInt(1,5);
+    const x2 = randomInt(6,10);
+    const a = 1;
+    const b = - (x1 + x2);
+    const c = x1 * x2;
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `
+    <p>Resol l'equació: x² + (${b})·x + (${c}) = 0</p>
+    <input type="text" id="answer" placeholder="Respon amb x1,x2">
+    <button onclick="checkQuadratic(${x1},${x2})">Comprovar</button>
+    <button onclick="exercises['Equacions Segon Grau']()">Nova activitat</button>`;
+},
+
+"Equacions Polinòmiques": () => {
+    const a = randomInt(1,3);
+    const b = randomInt(1,5);
+    const c = randomInt(1,5);
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `
+    <p>Resol l'equació polinòmica: ${a}x³ + ${b}x² - ${c} = 0</p>
+    <input type="text" id="answer">
+    <button onclick="checkPolynomial(${a},${b},${c})">Comprovar</button>
+    <button onclick="exercises['Equacions Polinòmiques']()">Nova activitat</button>`;
+},
+
+"Equacions Algebraiques": () => {
+    const a = randomInt(2,5);
+    const b = randomInt(1,5);
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `
+    <p>Resol l'equació: x² - ${a}/x = ${b}</p>
+    <input type="text" id="answer">
+    <button onclick="checkAlgebraic(${a},${b})">Comprovar</button>
+    <button onclick="exercises['Equacions Algebraiques']()">Nova activitat</button>`;
+},
+
+"Equacions Irracionals": () => {
+    const r = randomInt(3,10);
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `
+    <p>Resol l'equació: √x = ${r}</p>
+    <input type="text" id="answer">
+    <button onclick="checkIrrational(${r})">Comprovar</button>
+    <button onclick="exercises['Equacions Irracionals']()">Nova activitat</button>`;
+},
+
+"Equacions Logaritmiques": () => {
+    const b = 2;
+    const r = randomInt(1,10);
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `
+    <p>Resol l'equació logarítmica: log${b}(x) = ${r}</p>
+    <input type="text" id="answer">
+    <button onclick="checkLogarithm(${b},${r})">Comprovar</button>
+    <button onclick="exercises['Equacions Logaritmiques']()">Nova activitat</button>`;
+},
+
+"Equacions Exponencials": () => {
+    const b = randomInt(2,5);
+    const r = randomInt(2,20);
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `
+    <p>Resol l'equació exponencial: ${b}<sup>x</sup> = ${r}</p>
+    <input type="text" id="answer">
+    <button onclick="checkExponential(${b},${r})">Comprovar</button>
+    <button onclick="exercises['Equacions Exponencials']()">Nova activitat</button>`;
+},
+
+"Sistemes Lineals": () => {
+    const x1 = randomInt(1,5);
+    const y1 = randomInt(1,5);
+    const c1 = x1 + y1;
+    const x2 = randomInt(1,5);
+    const y2 = randomInt(1,5);
+    const c2 = x2 + y2;
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `
+    <p>Resol el sistema:</p>
+    <p>x + y = ${c1}</p>
+    <p>${x2}x + ${y2}y = ${c2}</p>
+    <input type="text" id="answer" placeholder="x,y">
+    <button onclick="checkSystemLinear(${c1},${x2},${y2},${c2})">Comprovar</button>
+    <button onclick="exercises['Sistemes Lineals']()">Nova activitat</button>`;
+},
+
+"Sistemes No Lineals": () => {
+    const x = randomInt(1,5);
+    const y = randomInt(1,5);
+    const sum = x + y;
+    const prod = x * y;
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `
+    <p>Resol el sistema:</p>
+    <p>x + y = ${sum}</p>
+    <p>xy = ${prod}</p>
+    <input type="text" id="answer" placeholder="x,y">
+    <button onclick="checkSystemNonLinear(${x},${y})">Comprovar</button>
+    <button onclick="exercises['Sistemes No Lineals']()">Nova activitat</button>`;
+},
+
+"Sistemes 3x3": () => {
+    const x = randomInt(1,3);
+    const y = randomInt(1,3);
+    const z = randomInt(1,3);
+    const c1 = x + y + z;
+    const c2 = 2*x - y + 3*z;
+    const c3 = x - y + 2*z;
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `
+    <p>Resol el sistema 3x3:</p>
+    <p>x + y + z = ${c1}</p>
+    <p>2x - y + 3z = ${c2}</p>
+    <p>x - y + 2z = ${c3}</p>
+    <input type="text" id="answer" placeholder="x,y,z">
+    <button onclick="checkSystem3x3(${x},${y},${z})">Comprovar</button>
+    <button onclick="exercises['Sistemes 3x3']()">Nova activitat</button>`;
+},
+
+"Inequacions Simples": () => {
+    const a = randomInt(1,5);
+    const b = randomInt(1,5);
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `
+    <p>Resol la inequació: ${a}x - ${b} &ge; 0</p>
+    <input type="text" id="answer">
+    <button onclick="checkInequationSimple(${a},${b})">Comprovar</button>
+    <button onclick="exercises['Inequacions Simples']()">Nova activitat</button>`;
+},
+
+"Inequacions Quadratiques": () => {
+    const x1 = randomInt(1,5);
+    const x2 = randomInt(6,10);
+    const a = 1;
+    const b = - (x1 + x2);
+    const c = x1 * x2;
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `
+    <p>Resol la inequació: x² + (${b})x + (${c}) &le; 0</p>
+    <input type="text" id="answer" placeholder="x ∈ [...]">
+    <button onclick="checkInequationQuadratic(${x1},${x2})">Comprovar</button>
+    <button onclick="exercises['Inequacions Quadratiques']()">Nova activitat</button>`;
+},
+
+"Sistemes d’Inequacions": () => {
+    const a1 = randomInt(1,5);
+    const b1 = randomInt(1,5);
+    const a2 = randomInt(1,5);
+    const b2 = randomInt(1,5);
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `
+    <p>Resol el sistema d'inequacions:</p>
+    <p>${a1}x + ${b1}y &ge; 0</p>
+    <p>${a2}x - ${b2}y &lt; 5</p>
+    <input type="text" id="answer" placeholder="x,y">
+    <button onclick="checkSystemIneq(${a1},${b1},${a2},${b2})">Comprovar</button>
+    <button onclick="exercises['Sistemes d’Inequacions']()">Nova activitat</button>`;
+}
 }
 
-// Tancar popup d’exercici
-function closePopup() {
-  document.getElementById("exercisePopup").style.display = "none";
+function checkLinear(a,b,c){
+    const user = Number(document.getElementById("answer").value.trim());
+    const correct = (c-b)/a;
+    const fb = document.getElementById("feedback");
+    if(user===correct){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    else{fb.textContent=`Incorrecte ❌ (resposta: ${correct})`; fb.style.color="red";}
 }
 
-            </script> 
-            </body> 
-        </html>
+function checkQuadratic(x1,x2){
+    const user = document.getElementById("answer").value.trim().split(",").map(Number).sort((a,b)=>a-b);
+    const correct = [x1,x2].sort((a,b)=>a-b);
+    const fb = document.getElementById("feedback");
+    if(user[0]===correct[0] && user[1]===correct[1]){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    else{fb.textContent=`Incorrecte ❌ (resposta: ${correct.join(",")})`; fb.style.color="red";}
+}
+
+function checkPolynomial(a,b,c){
+    const fb = document.getElementById("feedback");
+    fb.textContent="Revisa el càlcul polinòmic. ❌";
+    fb.style.color="red";
+}
+
+function checkAlgebraic(a,b){
+    const fb = document.getElementById("feedback");
+    fb.textContent="Revisa la resolució algebraica. ❌";
+    fb.style.color="red";
+}
+
+function checkIrrational(r){
+    const user = Number(document.getElementById("answer").value.trim());
+    const correct = r**2;
+    const fb = document.getElementById("feedback");
+    if(user===correct){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    else{fb.textContent=`Incorrecte ❌ (resposta: ${correct})`; fb.style.color="red";}
+}
+
+function checkLogarithm(b,r){
+    const user = Number(document.getElementById("answer").value.trim());
+    const correct = Math.pow(b,r);
+    const fb = document.getElementById("feedback");
+    if(user===correct){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    else{fb.textContent=`Incorrecte ❌ (resposta: ${correct})`; fb.style.color="red";}
+}
+
+function checkExponential(b,r){
+    const user = Number(document.getElementById("answer").value.trim());
+    const correct = Math.log(r)/Math.log(b);
+    const fb = document.getElementById("feedback");
+    if(Math.abs(user-correct)<0.001){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    else{fb.textContent=`Incorrecte ❌ (resposta: ${correct.toFixed(3)})`; fb.style.color="red";}
+}
+
+function checkSystemLinear(c1,x2,y2,c2){
+    const user = document.getElementById("answer").value.trim().split(",").map(Number);
+    const y = (c2 - x2*c1/(1)) / y2; 
+    const x = c1 - y;
+    const fb = document.getElementById("feedback");
+    if(Math.abs(user[0]-x)<0.001 && Math.abs(user[1]-y)<0.001){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    else{fb.textContent=`Incorrecte ❌ (resposta: ${x},${y})`; fb.style.color="red";}
+}
+
+function checkSystemNonLinear(x,y){
+    const user = document.getElementById("answer").value.trim().split(",").map(Number);
+    const fb = document.getElementById("feedback");
+    if(user[0]===x && user[1]===y){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    else{fb.textContent=`Incorrecte ❌ (resposta: ${x},${y})`; fb.style.color="red";}
+}
+
+function checkSystem3x3(x,y,z){
+    const user = document.getElementById("answer").value.trim().split(",").map(Number);
+    const fb = document.getElementById("feedback");
+    if(user[0]===x && user[1]===y && user[2]===z){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    else{fb.textContent=`Incorrecte ❌ (resposta: ${x},${y},${z})`; fb.style.color="red";}
+}
+
+function checkInequationSimple(a,b){
+    const correct = `x >= ${b/a}`;
+    const user = document.getElementById("answer").value.trim();
+    const fb = document.getElementById("feedback");
+    if(user===correct){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    else{fb.textContent=`Incorrecte ❌ (resposta: ${correct})`; fb.style.color="red";}
+}
+
+function checkInequationQuadratic(x1,x2){
+    const correct = `[${x1}, ${x2}]`;
+    const user = document.getElementById("answer").value.trim();
+    const fb = document.getElementById("feedback");
+    if(user===correct){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    else{fb.textContent=`Incorrecte ❌ (resposta: ${correct})`; fb.style.color="red";}
+}
+
+function checkSystemIneq(a1,b1,a2,b2){
+    const fb = document.getElementById("feedback");
+    fb.textContent="Resol el sistema gràficament. ❌";
+    fb.style.color="red";
+}
+
+// ===== Obrir popup =====
+function openPopup(title){
+    document.getElementById("exerciseTitle").textContent=title;
+    document.getElementById("exercisePopup").style.display="flex";
+    document.getElementById("exerciseContent").innerHTML="";
+    document.getElementById("feedback").textContent="";
+    if(exercises[title]) exercises[title]();
+    else document.getElementById("exerciseContent").innerHTML="<p>Encara no hi ha exercicis disponibles.</p>";
+}
+
+</script>
+</body>
+</html>
