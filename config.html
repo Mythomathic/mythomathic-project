@@ -4,27 +4,32 @@
   <meta charset="UTF-8">
   <title>Configuració - Mythomathic</title>
   <link rel="stylesheet" href="config.css">
-  <script src="config.js" defer></script>
-  <script type="module" src="firebase-config.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="gradient-background"></div>
   <header>
-    <button class="back-btn" onclick="window.location.href='map.html'">← Torna al mapa</button>
-    <h1 data-translate="config_title">Configuració</h1>
-    <nav>
-      <ul>
-        <li><a href="perfil.html" data-translate="menu_profile">Perfil</a></li>
-        <li><a href="sobre-mi.html" data-translate="menu_about">Sobre mi</a></li>
-        <li><a href="contacte.html" data-translate="menu_contact">Contacte</a></li>
-      </ul>
-    </nav>
+    <div class="header-left">
+      <a href="map.html" class="btn-link">← Tornar al mapa</a>
+    </div>
+    <h1>Configuració</h1>
+    <div class="header-right">
+      <nav>
+        <ul class="menu">
+          <li><a href="perfil.html">Perfil</a></li>
+          <li><a href="config.html" class="active">Configuració</a></li>
+          <li><a href="sobremi.html">Sobre mi</a></li>
+          <li><a href="contacte.html">Contacte</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <main>
     <form id="config-form" class="config-card">
       <!-- Idioma -->
       <div class="config-option">
-        <label for="language" data-translate="label_language">Idioma</label>
+        <label for="language">Idioma</label>
         <select id="language">
           <option value="ca">Català</option>
           <option value="es">Castellano</option>
@@ -32,58 +37,108 @@
         </select>
       </div>
 
-      <!-- Separador decimal -->
-      <div class="config-option">
-        <label for="decimal-separator" data-translate="label_decimal">Separador decimal</label>
-        <select id="decimal-separator">
-          <option value="dot">Punt (1,234.56)</option>
-          <option value="comma">Coma (1.234,56)</option>
-        </select>
-      </div>
-
-      <button type="submit" class="save-btn" data-translate="save_btn">💾 Guardar</button>
+      <!-- Botons -->
+      <button type="submit" class="save-btn">💾 Guardar</button>
+      <button type="button" id="delete-account" class="delete-btn">🗑️ Eliminar compte</button>
     </form>
   </main>
 
-  <script>
-// Firebase inicialització (ja tens les claus, les pots reaprofitar)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+  import { 
+    getAuth, 
+    onAuthStateChanged, 
+    deleteUser 
+  } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+  import { 
+    getFirestore, 
+    doc, 
+    getDoc, 
+    setDoc, 
+    deleteDoc, 
+    collection, 
+    getDocs 
+  } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "mythomathic.firebaseapp.com",
-  projectId: "mythomathic",
-  storageBucket: "mythomathic.appspot.com",
-  messagingSenderId: "XXXXXXXX",
-  appId: "XXXXXXXX"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyDPVUQZXaSAARwROsDgvlohMvB-esYvMrA",
+    authDomain: "mythomathic.firebaseapp.com",
+    projectId: "mythomathic",
+    storageBucket: "mythomathic.firebasestorage.app",
+    messagingSenderId: "396574593247",
+    appId: "1:396574593247:web:5b7f02c53de5613eda996a",
+    measurementId: "G-P649F73C8E"
+  };
 
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-// Carregar preferències a config.html
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
+  // Carregar preferències
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const ref = doc(db, "users", user.uid);
+      const snap = await getDoc(ref);
+      if (snap.exists()) {
+        const data = snap.data();
+        document.getElementById("language").value = data.language || "ca";
+      }
+    }
+  });
+
+  // Guardar preferències
+  document.getElementById("config-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const prefs = {
+      language: document.getElementById("language").value
+    };
+
     const ref = doc(db, "users", user.uid);
-    const snap = await getDoc(ref);
+    await setDoc(ref, prefs, { merge: true });
 
-    if (snap.exists()) {
-      const data = snap.data();
-      document.getElementById("language").value = data.language || "ca";
-      document.getElementById("decimal-separator").value = data.decimalSeparator || "dot";
+    alert("✅ Configuració guardada!");
+  });
+
+  // Funció per eliminar TOT del Firestore per un usuari
+  async function deleteUserData(uid) {
+    try {
+      await deleteDoc(doc(db, "users", uid));
+      const subcollections = ["exercicis", "preferencies", "altresDades"]; 
+      for (const sub of subcollections) {
+        const colRef = collection(db, "users", uid, sub);
+        const snapshot = await getDocs(colRef);
+        snapshot.forEach(async (docu) => {
+          await deleteDoc(doc(db, "users", uid, sub, docu.id));
+        });
+      }
+    } catch (err) {
+      console.error("❌ Error esborrant dades:", err);
     }
   }
-});
 
-// Guardar preferències
-export async function savePreferences(userId, prefs) {
-  const ref = doc(db, "users", userId);
-  await setDoc(ref, prefs, { merge: true });
-}
+  // Eliminar compte completament
+  document.getElementById("delete-account").addEventListener("click", async () => {
+    if (!confirm("⚠️ Estàs segur que vols eliminar el teu compte i totes les teves dades? Aquesta acció és irreversible!")) return;
+
+    const user = auth.currentUser;
+    if (!user) return;
+
+    try {
+      await deleteUserData(user.uid);
+      await deleteUser(user);
+
+      alert("🗑️ Compte i dades eliminades correctament.");
+      window.location.href = "inici.html";
+    } catch (err) {
+      console.error(err);
+      alert("❌ Error en eliminar el compte. Torna a iniciar sessió i torna-ho a provar.");
+    }
+  });
 </script>
 
 </body>
 </html>
+
