@@ -1,129 +1,372 @@
-<!DOCTYPE html> 
-<html lang="ca"> 
-    <head> 
-        <meta charset="UTF-8"> 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <title>Functonia - Mythomathic</title> 
-        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
-        <link rel="stylesheet" href="functonia.css"> 
-    </head> 
-<body> 
-    <header> 
-<button class="back-button" onclick="goTo('map.html')">⬅ Mapa</button> 
-<div class="title-center"> 
-<img src="F_Title.png" alt="Functonia" class="title-img"> 
-</div> 
-<div class="header-buttons"> 
-    <button onclick="openLore()">📜 Lore</button> 
-    <button onclick="toggleMenu()">☰ Menú</button> 
-</div> 
-<nav id="menu"> 
-    <ul> <li onclick="goTo('map.html')">Mapa</li> 
-        <li onclick="goTo('perfil.html')">Perfil</li> 
-        <li onclick="goTo('config.html')">Configuració</li> 
-        <li onclick="goTo('sobremi.html')">Sobre mi</li> 
-        <li onclick="goTo('contacte.html')">Contacte</li> 
-    </ul> 
-</nav> 
-</header> 
-<main class="dimension-container"> 
-    <aside class="categories"> 
-        <button onclick="showSymbols('reals')">Nombres Reals</button> 
-        <button onclick="showSymbols('potencies')">Potències</button> 
-        <button onclick="showSymbols('logaritmes')">Logaritmes</button> 
-        <button onclick="showSymbols('radicals')">Radicals</button> 
-    </aside> 
-    <div class="symbols">
-  <!-- Nombres reals -->
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 180px; left: 320px;" onclick="openPopup('Intervals i valors absoluts')">
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 430px; left: 980px;" onclick="openPopup('Recta real i conjunts')">
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 600px; left: 200px;" onclick="openPopup('Operacions amb nombres reals')">
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Functonia - Mythomathic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="functonia.css">
+</head>
+<body>
 
-  <!-- Potències -->
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 220px; left: 780px;" onclick="openPopup('Propietats de les potències')">
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 420px; left: 560px;" onclick="openPopup('Notació científica')">
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 600px; left: 960px;" onclick="openPopup('Exponents negatius i fraccionaris')">
+<header>
+  <button class="back-button" onclick="goTo('map.html')">⬅ Mapa</button>
+  <div class="title-center">
+    <img src="F_title.png" alt="Functonia" class="title-img">
+  </div>
+  <div class="header-buttons">
+    <button onclick="toggleMenu()">☰ Menú</button>
+  </div>
+  <nav id="menu">
+    <ul>
+      <li onclick="goTo('map.html')">Mapa</li>
+      <li onclick="goTo('perfil.html')">Perfil</li>
+      <li onclick="goTo('config.html')">Configuració</li>
+      <li onclick="goTo('sobremi.html')">Sobre mi</li>
+      <li onclick="goTo('contacte.html')">Contacte</li>
+    </ul>
+  </nav>
+</header>
 
-  <!-- Radicals -->
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 350px; left: 940px;" onclick="openPopup('Simplificació de radicals')">
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 510px; left: 260px;" onclick="openPopup('Operacions amb radicals')">
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 630px; left: 760px;" onclick="openPopup('Racionalització del denominador')">
+<main class="dimension-container">
+  <aside class="categories">
+    <button onclick="showSymbols('domini')">Domini</button>
+    <button onclick="showSymbols('paraboles')">Paràboles</button>
+    <button onclick="showSymbols('altres')">Altres funcions</button>
+    <button onclick="showSymbols('limits')">Límits & Continuïtat</button>
+  </aside>
 
-  <!-- Logaritmes -->
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 300px; left: 620px;" onclick="openPopup('Definició i base dels logaritmes')">
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 540px; left: 520px;" onclick="openPopup('Propietats dels logaritmes')">
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 650px; left: 880px;" onclick="openPopup('Canvis de base i equacions logarítmiques')">
-</div> 
-</main> 
-<!-- POPUP --> 
- <div id="lorePopup" class="popup"> 
-    <div class="popup-content lore-content"> 
-        <span class="close" onclick="closeLore()">&times;</span>
-         <img src="pergami.png" alt="Pergamí" class="scroll-img"> 
-        </div> 
-    </div> 
-    <!-- POPUP EXERCICI -->
+  <div class="symbols">
+    <!-- Domini -->
+    <img src="icon-func.png" class="symbol" data-cat="domini" style="top:200px; left:400px;" onclick="openPopup('Domini de funcions')">
+
+    <!-- Paràboles -->
+    <img src="icon-func.png" class="symbol" data-cat="paraboles" style="top:300px; left:700px;" onclick="openPopup('Concavitat de paràboles')">
+    <img src="icon-func.png" class="symbol" data-cat="paraboles" style="top:420px; left:500px;" onclick="openPopup('Vèrtex de paràboles')">
+    <img src="icon-func.png" class="symbol" data-cat="paraboles" style="top:520px; left:900px;" onclick="openPopup('Intersecció de funcions')">
+
+    <!-- Límits, continuïtat -->
+    
+    <img src="icon-func.png" class="symbol" data-cat="limits" style="top:250px; left:600px;" onclick="openPopup('Límits infinits')">
+    <img src="icon-func.png" class="symbol" data-cat="limits" style="top:400px; left:850px;" onclick="openPopup('Límits laterals')">
+    <img src="icon-func.png" class="symbol" data-cat="limits" style="top:550px; left:500px;" onclick="openPopup('Continuïtat de funcions')">
+    <img src="icon-func.png" class="symbol" data-cat="limits" style="top:300px; left:750px;" onclick="openPopup('Asímptotes de funcions')">
+
+    <!-- Altres -->
+    <img src="icon-func.png" class="symbol" data-cat="altres" style="top:280px; left:950px;" onclick="openPopup('Problema de la travessa desèrtica')">
+    <img src="icon-func.png" class="symbol" data-cat="altres" style="top:500px; left:300px;" onclick="openPopup('Creixents i decreixents')">
+    <img src="icon-func.png" class="symbol" data-cat="altres" style="top:600px; left:600px;" onclick="openPopup('Funcions a trossos')">
+    <img src="icon-func.png" class="symbol" data-cat="altres" style="top:680px; left:850px;" onclick="openPopup('Operacions entre funcions')">
+    <img src="icon-func.png" class="symbol" data-cat="altres" style="top:750px; left:500px;" onclick="openPopup('Funció inversa')">
+  </div>
+</main>
+
+<!-- Popup -->
 <div id="exercisePopup" class="popup">
   <div class="popup-content">
     <span class="close" onclick="closePopup()">&times;</span>
     <h2 id="exerciseTitle"></h2>
-    <p>Aquí hi anirà l'enunciat o contingut de l'exercici.</p>
+    <div id="exerciseContent"></div>
+    <p id="feedback"></p>
   </div>
 </div>
-    <script> 
-    function toggleMenu() { 
-        document.getElementById('menu').classList.toggle('active'); } 
-        
-        function goTo(page) { window.location.href = page; } 
-        function openLore() { document.getElementById("lorePopup").style.display = "flex"; } 
-        function closeLore() { document.getElementById("lorePopup").style.display = "none"; } 
-    
-        function showSymbols(type) {
-  // Amaga tots
-  document.querySelectorAll(".symbol").forEach(el => el.style.display = "none");
 
-  if (type === "reals") {
-    // Mostra tots els símbols de "reals"
-    document.querySelectorAll(".symbol[data-cat='reals']").forEach(el => el.style.display = "block");
+<script>
+function toggleMenu(){document.getElementById('menu').classList.toggle('active');}
+function goTo(page){window.location.href=page;}
+function showSymbols(type){
+  document.querySelectorAll(".symbol").forEach(el=>el.style.display="none");
+  document.querySelectorAll(".symbol[data-cat='"+type+"']").forEach(el=>el.style.display="block");
+}
+document.addEventListener("DOMContentLoaded",()=>{showSymbols("domini");});
+function closePopup(){document.getElementById("exercisePopup").style.display="none";}
+
+function randomInt(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+function randomChoice(arr){return arr[randomInt(0,arr.length-1)];}
+
+// ====== EXERCICIS ======
+const exercises = {
+
+  // --- DOMINI ---
+  "Domini de funcions":()=>{
+    const exemples=[
+      {text:"f(x)=3x⁴+2x−1", answer:"ℝ"},
+      {text:"f(x)=(3x²+x)/(x+1)", answer:"x ≠ −1"},
+      {text:"f(x)=√(x²−25)", answer:"x ≤ −5 o x ≥ 5"},
+      {text:"f(x)=√(x−1)/(x−5)", answer:"x ≥ 1, x ≠ 5"},
+      {text:"f(x)=ln(x+2)", answer:"x > −2"},
+    ];
+    const ex=randomChoice(exemples);
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Troba el domini de:</p>
+      <p><b>${ex.text}</b></p>
+      <input id="answer1" placeholder="Ex: x ≠ −1 o x ≥ 0">
+      <button onclick="checkTextAnswers(['${ex.answer}'])">Comprovar</button>
+      <button onclick="exercises['Domini de funcions']()">Nova activitat</button>`;
+  },
+
+  // --- PARÀBOLES ---
+  "Concavitat de paràboles":()=>{
+    const casos=[
+      {eq:"y=2x²−2x+1", answer:"convexa"},
+      {eq:"y=−x²+5x−2", answer:"còncava"},
+      {eq:"y=1−x²", answer:"còncava"},
+      {eq:"y=1−3x+2x²", answer:"convexa"}
+    ];
+    const c=randomChoice(casos);
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Indica si la paràbola és còncava o convexa:</p>
+      <b>${c.eq}</b><br><br>
+      <input id="answer1" placeholder="Escriu còncava o convexa">
+      <button onclick="checkTextAnswers(['${c.answer}'])">Comprovar</button>
+      <button onclick="exercises['Concavitat de paràboles']()">Nova activitat</button>`;
+  },
+
+  "Vèrtex de paràboles":()=>{
+    const casos=[
+      {eq:"y=x²+2x−8", h:-1, k:-9},
+      {eq:"y=−x²+7x−10", h:3.5, k:2.25},
+      {eq:"y=3x−2x²", h:0.75, k:1.12}
+    ];
+    const c=randomChoice(casos);
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Troba el vèrtex de:</p><b>${c.eq}</b><br><br>
+      <input id="answer1" placeholder="x del vèrtex">
+      <input id="answer2" placeholder="y del vèrtex">
+      <button onclick="checkDoubleAnswer(${c.h},${c.k})">Comprovar</button>
+      <button onclick="exercises['Vèrtex de paràboles']()">Nova activitat</button>`;
+  },
+
+  // 🔹 INTERSECCIÓ DE FUNCIONS
+  "Intersecció de funcions":()=>{
+    const a=randomInt(1,3);
+    const b=randomInt(-4,4);
+    const c=randomInt(-5,5);
+    const m=randomInt(-3,3);
+    const n=randomInt(-5,5);
+
+    const A=a;
+    const B=b-m;
+    const C=c-n;
+    const disc=B*B-4*A*C;
+
+    let result;
+    if(disc<0){
+      result="No hi ha intersecció real.";
+    } else if(disc===0){
+      const x=(-B/(2*A)).toFixed(2);
+      result=`x=${x}`;
+    } else {
+      const x1=((-B+Math.sqrt(disc))/(2*A)).toFixed(2);
+      const x2=((-B-Math.sqrt(disc))/(2*A)).toFixed(2);
+      result=`x=${x1} i x=${x2}`;
+    }
+
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Troba els punts d’intersecció de:</p>
+      <p><b>y=${a}x²${b>=0?'+':''}${b}x${c>=0?'+':''}${c}</b></p>
+      <p><b>y=${m}x${n>=0?'+':''}${n}</b></p>
+      <input id="answer1" placeholder="Valors de x">
+      <button onclick="checkTextAnswers(['${result}'])">Comprovar</button>
+      <button onclick="exercises['Intersecció de funcions']()">Nova activitat</button>`;
+  },
+
+  // 🔹 PROBLEMA — mateix format que el del Camí de Santiago
+  "Problema de la travessa desèrtica":()=>{
+    const dist=randomInt(650,900);  // km totals
+    const minDays=randomInt(25,40);
+    const kmDia1=randomInt(20,28);
+    const kmDia2=randomInt(29,40);
+    const temps=(dist/kmDia2).toFixed(2);
+
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Per completar els <b>${dist} km</b> de la travessa desèrtica del Sahel, cal recórrer <b>${kmDia1} km</b> diaris durant un mínim de <b>${minDays} dies</b>.</p>
+      <p><b>1)</b> Troba la funció que proporciona el nombre de dies que calen per fer tota la travessa en funció dels quilòmetres que es recorren cada dia.</p>
+      <p><b>2)</b> Determina, a partir de la funció que has trobat, el temps que es trigaria a recórrer el desert a un ritme de <b>${kmDia2} km</b> diaris.</p>
+
+      <input id="answer1" placeholder="Ex: t(v)=700/v">
+      <input id="answer2" placeholder="Ex: 23.3">
+
+      <button onclick="checkTextAnswers(['t(v)=${dist}/v'])">Comprovar funció</button>
+      <button onclick="checkAnswer(${temps})">Comprovar resultat</button>
+      <button onclick="exercises['Problema de la travessa desèrtica']()">Nova activitat</button>`;
+  },
+
+  "Operacions entre funcions":()=>{
+    const a=randomInt(1,5), b=randomInt(1,6), c=randomInt(1,4), d=randomInt(0,5);
+    const f=`f(x)=${a}x+${b}`;
+    const g=`g(x)=${c}x+${d}`;
+    const ops=[
+      {sim:"+", fn:(x)=>`${a+c}x+${b+d}`},
+      {sim:"−", fn:(x)=>`${a-c}x+${b-d}`},
+      {sim:"·", fn:(x)=>`${a*c}x²+${a*d+b*c}x+${b*d}`},
+      {sim:"÷", fn:(x)=>`(${a}x+${b})/(${c}x+${d})`}
+    ];
+    const op=randomChoice(ops);
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Sigui ${f} i ${g}.</p>
+      <p>Calcula <b>f(x) ${op.sim} g(x)</b></p>
+      <input id="answer1" placeholder="Resultat">
+      <button onclick="checkTextAnswers(['${op.fn()}'])">Comprovar</button>
+      <button onclick="exercises['Operacions entre funcions']()">Nova activitat</button>`;
+  },
+
+  "Creixents i decreixents":()=>{
+    const fns=[
+      {eq:"y=8^x", ans:"creixent"},
+      {eq:"y=0.6^x", ans:"decreixent"},
+      {eq:"y=log₀.₂(x)", ans:"decreixent"},
+      {eq:"y=log₅(x)", ans:"creixent"}
+    ];
+    const c=randomChoice(fns);
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Indica si la funció és creixent o decreixent:</p>
+      <b>${c.eq}</b><br><br>
+      <input id="answer1" placeholder="creixent o decreixent">
+      <button onclick="checkTextAnswers(['${c.ans}'])">Comprovar</button>
+      <button onclick="exercises['Creixents i decreixents']()">Nova activitat</button>`;
+  },
+
+  "Funcions a trossos":()=>{
+    const fns=[
+      {eq:"f(x)=5−|x|", ans:"x≥0:5−x; x<0:5+x"},
+      {eq:"f(x)=x·|x|", ans:"x≥0:x²; x<0:−x²"},
+      {eq:"f(x)=|x+2|−x", ans:"x≥−2:2; x<−2:−2−2x"}
+    ];
+    const c=randomChoice(fns);
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Escriu com a funció definida a trossos:</p>
+      <b>${c.eq}</b><br><br>
+      <input id="answer1" placeholder="Defineix els trams">
+      <button onclick="checkTextAnswers(['${c.ans}'])">Comprovar</button>
+      <button onclick="exercises['Funcions a trossos']()">Nova activitat</button>`;
+  },
+
+  "Funció inversa":()=>{
+    const fns=[
+      {eq:"f(x)=3x+4", inv:"(x−4)/3"},
+      {eq:"f(x)=(x−1)/2", inv:"2x+1"},
+      {eq:"f(x)=(5x−2)/x", inv:"2/(5−x)"},
+      {eq:"f(x)=(3x−2)/(2x+7)", inv:"(7x+2)/(3−2x)"}
+    ];
+    const c=randomChoice(fns);
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Calcula la funció inversa de:</p>
+      <b>${c.eq}</b><br><br>
+      <input id="answer1" placeholder="f⁻¹(x)">
+      <button onclick="checkTextAnswers(['${c.inv}'])">Comprovar</button>
+      <button onclick="exercises['Funció inversa']()">Nova activitat</button>`;
+  },
+
+  // 🔹 LÍMITS I CONTINUÏTAT 🔹
+  "Límits infinits":()=>{
+    const sentit = Math.random() < 0.5 ? "+∞" : "−∞"; // alterna el sentit
+    const exemples = [
+      {expr:"x² - 2x² + 3", ans:(sentit==="+∞"?"−∞":"−∞")},
+      {expr:"(12/x) - 1", ans:(sentit==="+∞"?"−1":"−1")},
+      {expr:"(12x−5)/(3x+5)", ans:(sentit==="+∞"?"4":"4")},
+      {expr:"(x²+x+1)/(10x)", ans:(sentit==="+∞"?"∞":"−∞")},
+      {expr:"√(4x²−1)/(2x)", ans:(sentit==="+∞"?"1":"−1")}
+    ];
+    const ex = randomChoice(exemples);
+
+    document.getElementById("exerciseContent").innerHTML = `
+      <p>Calcula el límit quan <b>x → ${sentit}</b> de la funció següent:</p>
+      <p><b>lim x→${sentit} (${ex.expr})</b></p>
+      <input id="answer1" placeholder="Ex: 4, ∞, −∞, 1...">
+      <button onclick="checkTextAnswers(['${ex.ans}'])">Comprovar</button>
+      <button onclick="exercises['Límits infinits']()">Nova activitat</button>
+    `;
+  },
+
+  "Límits laterals":()=>{
+    const exemples=[
+      {text:"lim x→0⁻ (1/x)", ans:"−∞"},
+      {text:"lim x→0⁺ (1/x)", ans:"+∞"},
+      {text:"lim x→1⁻ (1/x²)", ans:"1"},
+      {text:"lim x→1⁺ (1/x²)", ans:"1"},
+      {text:"lim x→2⁻ ((x²−4)/(3x−6))", ans:"4/3"},
+      {text:"lim x→2⁺ ((x²−4)/(3x−6))", ans:"4/3"},
+      {text:"lim x→4⁻ (x/(√x−2))", ans:"+∞"},
+      {text:"lim x→4⁺ (x/(√x−2))", ans:"−∞"}
+    ];
+    const ex=randomChoice(exemples);
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Calcula el límit lateral següent:</p>
+      <b>${ex.text}</b><br><br>
+      <input id="answer1" placeholder="Ex: +∞ o −∞">
+      <button onclick="checkTextAnswers(['${ex.ans}'])">Comprovar</button>
+      <button onclick="exercises['Límits laterals']()">Nova activitat</button>`;
+  },
+
+  "Continuïtat de funcions":()=>{
+    const exemples=[
+      {text:"f(x) = (x−4)/(x+2)", ans:"x = −2"},
+      {text:"f(x) = (x+1)/(x²−x−6)", ans:"x = 3, x = −2"},
+      {text:"f(x) = (x²+2)/(x³+3x²−4x)", ans:"x = 0, x = 1, x = −4"},
+      {text:"f(x) = (x²−1)/(x²−3x+2x)", ans:"x = 0, x = 1"}
+    ];
+    const ex=randomChoice(exemples);
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Indica en quins punts la funció no és contínua:</p>
+      <b>${ex.text}</b><br><br>
+      <input id="answer1" placeholder="Ex: x = 1, x = −2">
+      <button onclick="checkTextAnswers(['${ex.ans}'])">Comprovar</button>
+      <button onclick="exercises['Continuïtat de funcions']()">Nova activitat</button>`;
+  },
+
+  "Asímptotes de funcions":()=>{
+    const exemples=[
+      {text:"f(x) = x / (x²−5x+4)", ans:"x=1, x=4 (verticals); y=0 (horitzontal)"},
+      {text:"f(x) = x² / (x²−4)", ans:"x=2, x=−2 (verticals); y=1 (horitzontal)"},
+      {text:"f(x) = (4x²−2)/x", ans:"x=0 (vertical); y=∞ (obliqua)"},
+      {text:"f(x) = (5x²−5)/(2x²+x−1)", ans:"x=0.5, x=−1 (verticals); y=5/2 (horitzontal)"}
+    ];
+    const ex=randomChoice(exemples);
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Troba les asímptotes de la funció i indica si són horitzontals, verticals o obliqües:</p>
+      <b>${ex.text}</b><br><br>
+      <input id="answer1" placeholder="Ex: x=1, y=0">
+      <button onclick="checkTextAnswers(['${ex.ans}'])">Comprovar</button>
+      <button onclick="exercises['Asímptotes de funcions']()">Nova activitat</button>`;
   }
-  if (type === "potencies") {
-    document.querySelectorAll(".symbol[data-cat='potencies']").forEach(el => el.style.display = "block");
-  }
-  if (type === "radicals") {
-    document.querySelectorAll(".symbol[data-cat='radicals']").forEach(el => el.style.display = "block");
-  }
-  if (type === "logaritmes") {
-    document.querySelectorAll(".symbol[data-cat='logaritmes']").forEach(el => el.style.display = "block");
-  }
+};
+
+
+// ====== FUNCIONS DE COMPROVACIÓ ======
+function openPopup(title){
+  document.getElementById("exerciseTitle").textContent=title;
+  document.getElementById("exercisePopup").style.display="flex";
+  if(exercises[title]) exercises[title]();
+  else document.getElementById("exerciseContent").innerHTML="<p>No disponible.</p>";
+  document.getElementById("feedback").textContent="";
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  showSymbols("reals");
-});
-
-function openPopup(title) {
-  document.getElementById("exerciseTitle").textContent = title;
-  document.getElementById("exercisePopup").style.display = "flex";
+function checkAnswer(correct){
+  const user=parseFloat(document.getElementById("answer2")?.value || document.getElementById("answer1")?.value);
+  const fb=document.getElementById("feedback");
+  if(Math.abs(user-correct)<0.1){fb.innerHTML="✅ Correcte!";}
+  else fb.innerHTML=`❌ Incorrecte (esperat ${correct})`;
 }
 
-// Tancar popup d’exercici
-function closePopup() {
-  document.getElementById("exercisePopup").style.display = "none";
+function checkDoubleAnswer(correct1,correct2){
+  const u1=parseFloat(document.getElementById("answer1").value);
+  const u2=parseFloat(document.getElementById("answer2").value);
+  const fb=document.getElementById("feedback");
+  if(Math.abs(u1-correct1)<0.2 && Math.abs(u2-correct2)<0.2){
+    fb.innerHTML="✅ Correcte!";
+  } else fb.innerHTML=`❌ Incorrecte (esperat V(${correct1},${correct2}))`;
 }
 
-            </script> 
-            </body> 
+function checkTextAnswers(expected){
+  const fb=document.getElementById("feedback");
+  const ans=document.getElementById("answer1").value.trim().replace(/\s+/g,'').toLowerCase();
+  const correct=expected[0].replace(/\s+/g,'').toLowerCase();
+  if(ans===correct){
+    fb.innerHTML="✅ Correcte!";
+  } else fb.innerHTML=`❌ Incorrecte (esperat ${expected[0]})`;
+}
+</script>
 
-        </html>
+</body>
+</html>
