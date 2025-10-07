@@ -1,128 +1,248 @@
-<!DOCTYPE html> 
-<html lang="ca"> 
-    <head> 
-        <meta charset="UTF-8"> 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <title>Complexia - Mythomathic</title> 
-        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
-        <link rel="stylesheet" href="complexia.css"> 
-    </head> 
-<body> 
-    <header> 
-<button class="back-button" onclick="goTo('map.html')">⬅ Mapa</button> 
-<div class="title-center"> 
-<img src="C_Title.png" alt="Complexia" class="title-img"> 
-</div> 
-<div class="header-buttons"> 
-    <button onclick="openLore()">📜 Lore</button> 
-    <button onclick="toggleMenu()">☰ Menú</button> 
-</div> 
-<nav id="menu"> 
-    <ul> <li onclick="goTo('map.html')">Mapa</li> 
-        <li onclick="goTo('perfil.html')">Perfil</li> 
-        <li onclick="goTo('config.html')">Configuració</li> 
-        <li onclick="goTo('sobremi.html')">Sobre mi</li> 
-        <li onclick="goTo('contacte.html')">Contacte</li> 
-    </ul> 
-</nav> 
-</header> 
-<main class="dimension-container"> 
-    <aside class="categories"> 
-        <button onclick="showSymbols('reals')">Nombres Reals</button> 
-        <button onclick="showSymbols('potencies')">Potències</button> 
-        <button onclick="showSymbols('logaritmes')">Logaritmes</button> 
-        <button onclick="showSymbols('radicals')">Radicals</button> 
-    </aside> 
-    <div class="symbols">
-  <!-- Nombres reals -->
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 180px; left: 320px;" onclick="openPopup('Intervals i valors absoluts')">
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 430px; left: 980px;" onclick="openPopup('Recta real i conjunts')">
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 600px; left: 200px;" onclick="openPopup('Operacions amb nombres reals')">
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complexia - Mythomathic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="complexia.css"> 
+</head>
+<body>
+<header>
+  <button class="back-button" onclick="goTo('map.html')">⬅ Mapa</button>
+  <div class="title-center">
+    <img src="C_Title.png" alt="Complexia" class="title-img">
+  </div>
+  <div class="header-buttons">
+    <button onclick="toggleMenu()">☰ Menú</button>
+  </div>
+  <nav id="menu">
+    <ul>
+      <li onclick="goTo('map.html')">Mapa</li>
+      <li onclick="goTo('perfil.html')">Perfil</li>
+      <li onclick="goTo('config.html')">Configuració</li>
+      <li onclick="goTo('sobremi.html')">Sobre mi</li>
+      <li onclick="goTo('contacte.html')">Contacte</li>
+    </ul>
+  </nav>
+</header>
 
-  <!-- Potències -->
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 220px; left: 780px;" onclick="openPopup('Propietats de les potències')">
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 420px; left: 560px;" onclick="openPopup('Notació científica')">
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 600px; left: 960px;" onclick="openPopup('Exponents negatius i fraccionaris')">
+<main class="dimension-container">
+  <aside class="categories">
+    <button onclick="showSymbols('forma')">Forma binòmica</button>
+    <button onclick="showSymbols('equacions')">Equacions i identitats</button>
+  </aside>
 
-  <!-- Radicals -->
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 350px; left: 940px;" onclick="openPopup('Simplificació de radicals')">
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 510px; left: 260px;" onclick="openPopup('Operacions amb radicals')">
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 630px; left: 760px;" onclick="openPopup('Racionalització del denominador')">
+  <div class="symbols">
+    <!-- Forma binòmica -->
+    <img src="icon-complex.png" alt="Complex" class="symbol" data-cat="forma" style="top:240px; left:400px;" onclick="openPopup('Forma polar')">
+    <img src="icon-complex.png" alt="Complex" class="symbol" data-cat="forma" style="top:260px; left:800px;" onclick="openPopup('Mòdul i argument')">
+    <img src="icon-complex.png" alt="Complex" class="symbol" data-cat="forma" style="top:560px; left:300px;" onclick="openPopup('Operacions amb z')">
+    <img src="icon-complex.png" alt="Complex" class="symbol" data-cat="forma" style="top:460px; left:460px;" onclick="openPopup('Multiplicacions')">
+    <img src="icon-complex.png" alt="Complex" class="symbol" data-cat="forma" style="top:580px; left:580px;" onclick="openPopup('Divisions')">
+    <img src="icon-complex.png" alt="Complex" class="symbol" data-cat="forma" style="top:550px; left:700px;" onclick="openPopup('Potències de i')">
 
-  <!-- Logaritmes -->
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 300px; left: 620px;" onclick="openPopup('Definició i base dels logaritmes')">
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 540px; left: 520px;" onclick="openPopup('Propietats dels logaritmes')">
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 650px; left: 880px;" onclick="openPopup('Canvis de base i equacions logarítmiques')">
-</div> 
-</main> 
-<!-- POPUP --> 
- <div id="lorePopup" class="popup"> 
-    <div class="popup-content lore-content"> 
-        <span class="close" onclick="closeLore()">&times;</span>
-         <img src="pergami.png" alt="Pergamí" class="scroll-img"> 
-        </div> 
-    </div> 
-    <!-- POPUP EXERCICI -->
+    <!-- Equacions i identitats -->
+    <img src="icon-complex.png" alt="Complex" class="symbol" data-cat="equacions" style="top:360px; left:980px;" onclick="openPopup('Potències i radicals especials')">
+    <img src="icon-complex.png" alt="Complex" class="symbol" data-cat="equacions" style="top:520px; left:900px;" onclick="openPopup('Equacions en C')">
+  </div>
+</main>
+
+<!-- Popup d'exercicis -->
 <div id="exercisePopup" class="popup">
   <div class="popup-content">
     <span class="close" onclick="closePopup()">&times;</span>
     <h2 id="exerciseTitle"></h2>
-    <p>Aquí hi anirà l'enunciat o contingut de l'exercici.</p>
+    <div id="exerciseContent"></div>
+    <p id="feedback"></p>
   </div>
 </div>
-    <script> 
-    function toggleMenu() { 
-        document.getElementById('menu').classList.toggle('active'); } 
-        
-        function goTo(page) { window.location.href = page; } 
-        function openLore() { document.getElementById("lorePopup").style.display = "flex"; } 
-        function closeLore() { document.getElementById("lorePopup").style.display = "none"; } 
-    
-        function showSymbols(type) {
-  // Amaga tots
-  document.querySelectorAll(".symbol").forEach(el => el.style.display = "none");
 
-  if (type === "reals") {
-    // Mostra tots els símbols de "reals"
-    document.querySelectorAll(".symbol[data-cat='reals']").forEach(el => el.style.display = "block");
+<script>
+function toggleMenu(){document.getElementById('menu').classList.toggle('active');}
+function goTo(page){window.location.href=page;}
+function showSymbols(type){
+  document.querySelectorAll(".symbol").forEach(el=>el.style.display="none");
+  document.querySelectorAll(".symbol[data-cat='"+type+"']").forEach(el=>el.style.display="block");
+}
+document.addEventListener("DOMContentLoaded",()=>{showSymbols("forma");});
+function closePopup(){document.getElementById("exercisePopup").style.display="none";}
+
+function randomInt(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+function randomChoice(arr){return arr[randomInt(0,arr.length-1)];}
+
+const exercises={
+  // === FORMA BINÒMICA ===
+ 
+  "Forma polar":()=>{
+    const a=randomInt(-6,6), b=randomInt(1,6);
+    const mod=Math.sqrt(a*a+b*b).toFixed(2);
+    const arg=(Math.atan2(b,a)*180/Math.PI).toFixed(2);
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`
+      <p>Expressa en forma polar el nombre <b>z=${a}+${b}i</b>.</p>
+      <p>Introdueix mòdul i argument (graus):</p>
+      <input id="answer1" placeholder="Mòdul">
+      <input id="answer2" placeholder="Argument">
+      <button onclick="checkDoubleAnswer(${mod},${arg})">Comprovar</button>
+      <button onclick="exercises['Forma polar']()">Nova activitat</button>`;
+  },
+
+  "Mòdul i argument":()=>{
+    const a=randomInt(1,6), b=randomInt(1,6);
+    const mod=Math.sqrt(a*a+b*b).toFixed(2);
+    const arg=(Math.atan2(b,a)*180/Math.PI).toFixed(2);
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`
+      <p>Donat <b>z=${a}+${b}i</b>, calcula |z| i Arg(z).</p>
+      <input id="answer1" placeholder="Mòdul">
+      <input id="answer2" placeholder="Argument">
+      <button onclick="checkDoubleAnswer(${mod},${arg})">Comprovar</button>
+      <button onclick="exercises['Mòdul i argument']()">Nova activitat</button>`;
+  },
+
+  "Operacions amb z":()=>{
+    const a=randomInt(-4,4), b=randomInt(-4,4), c=randomInt(-4,4), d=randomInt(-4,4);
+    const sum=[a+c,b+d], diff=[a-c,b-d];
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`
+      <p>Donats <b>z1=${a}${b>=0?'+':''}${b}i</b> i <b>z2=${c}${d>=0?'+':''}${d}i</b>, calcula:</p>
+      <p>1) z1+z2</p>
+      <p>2) z1−z2</p>
+      <input id="answer1" placeholder="Suma">
+      <input id="answer2" placeholder="Resta">
+      <button onclick="checkTextAnswers(['${sum[0]}${sum[1]>=0?'+':''}${sum[1]}i','${diff[0]}${diff[1]>=0?'+':''}${diff[1]}i'])">Comprovar</button>
+      <button onclick="exercises['Operacions amb z']()">Nova activitat</button>`;
+  },
+
+  "Multiplicacions":()=>{
+    const a=randomInt(-3,3), b=randomInt(-3,3), c=randomInt(-3,3), d=randomInt(-3,3);
+    const real=a*c-b*d, imag=a*d+b*c;
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`
+      <p>Calcula <b>(${a}${b>=0?'+':''}${b}i)·(${c}${d>=0?'+':''}${d}i)</b>.</p>
+      <input id="answer1" placeholder="Resultat (forma a+bi)">
+      <button onclick="checkTextAnswers(['${real}${imag>=0?'+':''}${imag}i'])">Comprovar</button>
+      <button onclick="exercises['Multiplicacions']()">Nova activitat</button>`;
+  },
+
+  "Divisions":()=>{
+    const a=randomInt(-3,3), b=randomInt(1,4), c=randomInt(-3,3), d=randomInt(1,4);
+    const denom=c*c+d*d;
+    const real=((a*c+b*d)/denom).toFixed(2), imag=((b*c-a*d)/denom).toFixed(2);
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`
+      <p>Calcula <b>(${a}${b>=0?'+':''}${b}i)/(${c}${d>=0?'+':''}${d}i)</b>.</p>
+      <input id="answer1" placeholder="Resultat (a+bi)">
+      <button onclick="checkTextAnswers(['${real}${imag>=0?'+':''}${imag}i'])">Comprovar</button>
+      <button onclick="exercises['Divisions']()">Nova activitat</button>`;
+  },
+
+  "Potències de i":()=>{
+    const n=randomInt(1,12);
+    const val=["1","i","-1","-i"][n%4];
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`
+      <p>Calcula <b>i^${n}</b>.</p>
+      <input id="answer1" placeholder="Resultat">
+      <button onclick="checkTextAnswers(['${val}'])">Comprovar</button>
+      <button onclick="exercises['Potències de i']()">Nova activitat</button>`;
+  },
+
+  // === EQUACIONS I IDENTITATS ===
+  "Igualtats amb a i b":()=>{
+    const a=randomInt(1,5), b=randomInt(1,5);
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`
+      <p>Sigui <b>z=${a}+${b}i</b>. Verifica la identitat: |z|² = a²+b²</p>
+      <input id="answer1" placeholder="|z|²">
+      <button onclick="checkAnswer(${a*a+b*b})">Comprovar</button>
+      <button onclick="exercises['Igualtats amb a i b']()">Nova activitat</button>`;
+  },
+
+  "Potències i radicals especials":()=>{
+    const n=randomChoice([2,3,4]);
+    const theta=randomInt(0,360);
+    const mod=1;
+    const rootTheta=(theta/n).toFixed(2);
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`
+      <p>Calcula una de les <b>${n}-enes arrels</b> de <b>z=cos(${theta}°)+i·sin(${theta}°)</b>.</p>
+      <p>Introdueix l’argument d’una arrel en graus:</p>
+      <input id="answer1" placeholder="Argument">
+      <button onclick="checkAnswer(${rootTheta})">Comprovar</button>
+      <button onclick="exercises['Potències i radicals especials']()">Nova activitat</button>`;
+  },
+
+  "Equacions en C":()=>{
+    const a=randomInt(1,5), b=randomInt(1,5);
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`
+      <p>Resol l’equació <b>z²+${a}z+${b}=0</b> en ℂ.</p>
+      <p>Introdueix les dues solucions separades per comes:</p>
+      <input id="answer1" placeholder="Ex: -2, -3">
+      <button onclick="checkQuadratic(${a},${b})">Comprovar</button>
+      <button onclick="exercises['Equacions en C']()">Nova activitat</button>`;
   }
-  if (type === "potencies") {
-    document.querySelectorAll(".symbol[data-cat='potencies']").forEach(el => el.style.display = "block");
-  }
-  if (type === "radicals") {
-    document.querySelectorAll(".symbol[data-cat='radicals']").forEach(el => el.style.display = "block");
-  }
-  if (type === "logaritmes") {
-    document.querySelectorAll(".symbol[data-cat='logaritmes']").forEach(el => el.style.display = "block");
-  }
+};
+
+function openPopup(title){
+  document.getElementById("exerciseTitle").textContent=title;
+  document.getElementById("exercisePopup").style.display="flex";
+  if(exercises[title]) exercises[title]();
+  else document.getElementById("exerciseContent").innerHTML="<p>No disponible.</p>";
+  document.getElementById("feedback").textContent="";
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  showSymbols("reals");
-});
-
-function openPopup(title) {
-  document.getElementById("exerciseTitle").textContent = title;
-  document.getElementById("exercisePopup").style.display = "flex";
+function checkAnswer(correct){
+  const user=parseFloat(document.getElementById("answer1").value);
+  const fb=document.getElementById("feedback");
+  if(Math.abs(user-correct)<0.1){
+    fb.innerHTML="✅ Correcte!";
+  } else fb.innerHTML=`❌ Incorrecte (esperat ${correct})`;
 }
 
-// Tancar popup d’exercici
-function closePopup() {
-  document.getElementById("exercisePopup").style.display = "none";
+function checkDoubleAnswer(correct1,correct2){
+  const u1=parseFloat(document.getElementById("answer1").value);
+  const u2=parseFloat(document.getElementById("answer2").value);
+  const fb=document.getElementById("feedback");
+  if(Math.abs(u1-correct1)<0.1 && Math.abs(u2-correct2)<0.1){
+    fb.innerHTML="✅ Correcte!";
+  } else fb.innerHTML=`❌ Incorrecte (esperat ${correct1}, ${correct2})`;
 }
 
-            </script> 
-            </body> 
-        </html>
+function checkTextAnswers(expected){
+  const fb=document.getElementById("feedback");
+  const ans=[];
+  document.querySelectorAll("#exerciseContent input").forEach(el=>ans.push(el.value.replace(/\s+/g,'')));
+  let ok=true;
+  for(let i=0;i<expected.length;i++){
+    if(ans[i]!==expected[i]) ok=false;
+  }
+  fb.innerHTML=ok?"✅ Correcte!":`❌ Incorrecte (esperat ${expected.join(', ')})`;
+}
+
+function checkQuadratic(a,b){
+  const disc = a*a-4*b;
+  const fb = document.getElementById("feedback");
+  const user=document.getElementById("answer1").value.split(",");
+  if(disc >= 0){
+    const r1 = (-a + Math.sqrt(disc))/2;
+    const r2 = (-a - Math.sqrt(disc))/2;
+    const u1 = parseFloat(user[0]), u2 = parseFloat(user[1]);
+    if((Math.abs(u1-r1)<0.1 && Math.abs(u2-r2)<0.1)||(Math.abs(u1-r2)<0.1 && Math.abs(u2-r1)<0.1)){
+      fb.innerHTML="✅ Correcte!";
+    } else fb.innerHTML=`❌ Incorrecte (esperat ${r1}, ${r2})`;
+  } else {
+    const real = (-a/2).toFixed(2);
+    const imag = (Math.sqrt(-disc)/2).toFixed(2);
+    const r1 = `${real}+${imag}i`;
+    const r2 = `${real}-${imag}i`;
+    if(user[0].replace(/\s+/g,'')===r1 && user[1].replace(/\s+/g,'')===r2 || user[0].replace(/\s+/g,'')===r2 && user[1].replace(/\s+/g,'')===r1){
+      fb.innerHTML="✅ Correcte!";
+    } else fb.innerHTML=`❌ Incorrecte (esperat ${r1}, ${r2})`;
+  }
+}
+</script>
+</body>
+</html>
