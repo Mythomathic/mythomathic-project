@@ -1,128 +1,433 @@
-<!DOCTYPE html> 
-<html lang="ca"> 
-    <head> 
-        <meta charset="UTF-8"> 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <title>Tangentia - Mythomathic</title> 
-        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
-        <link rel="stylesheet" href="tangentia.css"> 
-    </head> 
-<body> 
-    <header> 
-<button class="back-button" onclick="goTo('map.html')">⬅ Mapa</button> 
-<div class="title-center"> 
-<img src="T_Title.png" alt="Tangentia" class="title-img"> 
-</div> 
-<div class="header-buttons"> 
-    <button onclick="openLore()">📜 Lore</button> 
-    <button onclick="toggleMenu()">☰ Menú</button> 
-</div> 
-<nav id="menu"> 
-    <ul> <li onclick="goTo('map.html')">Mapa</li> 
-        <li onclick="goTo('perfil.html')">Perfil</li> 
-        <li onclick="goTo('config.html')">Configuració</li> 
-        <li onclick="goTo('sobremi.html')">Sobre mi</li> 
-        <li onclick="goTo('contacte.html')">Contacte</li> 
-    </ul> 
-</nav> 
-</header> 
-<main class="dimension-container"> 
-    <aside class="categories"> 
-        <button onclick="showSymbols('reals')">Nombres Reals</button> 
-        <button onclick="showSymbols('potencies')">Potències</button> 
-        <button onclick="showSymbols('logaritmes')">Logaritmes</button> 
-        <button onclick="showSymbols('radicals')">Radicals</button> 
-    </aside> 
-    <div class="symbols">
-  <!-- Nombres reals -->
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 180px; left: 320px;" onclick="openPopup('Intervals i valors absoluts')">
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 430px; left: 980px;" onclick="openPopup('Recta real i conjunts')">
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 600px; left: 200px;" onclick="openPopup('Operacions amb nombres reals')">
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tangentia - Mythomathic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tangentia.css">
+</head>
+<body>
+<header>
+  <button class="back-button" onclick="goTo('map.html')">⬅ Mapa</button>
+  <div class="title-center">
+    <img src="T_Title.png" alt="Tangentia" class="title-img">
+  </div>
+  <div class="header-buttons">
+    <button onclick="openLore()">📜 Lore</button>
+    <button onclick="toggleMenu()">☰ Menú</button>
+  </div>
+  <nav id="menu">
+    <ul>
+      <li onclick="goTo('map.html')">Mapa</li>
+      <li onclick="goTo('perfil.html')">Perfil</li>
+      <li onclick="goTo('config.html')">Configuració</li>
+      <li onclick="goTo('sobremi.html')">Sobre mi</li>
+      <li onclick="goTo('contacte.html')">Contacte</li>
+    </ul>
+  </nav>
+</header>
 
-  <!-- Potències -->
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 220px; left: 780px;" onclick="openPopup('Propietats de les potències')">
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 420px; left: 560px;" onclick="openPopup('Notació científica')">
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 600px; left: 960px;" onclick="openPopup('Exponents negatius i fraccionaris')">
+<main class="dimension-container">
+  <aside class="categories">
+    <button onclick="showSymbols('angles')">Angles i Raons</button>
+    <button onclick="showSymbols('triangles')">Triangles</button>
+    <button onclick="showSymbols('problemes')">Problemes</button>
+  </aside>
 
-  <!-- Radicals -->
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 350px; left: 940px;" onclick="openPopup('Simplificació de radicals')">
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 510px; left: 260px;" onclick="openPopup('Operacions amb radicals')">
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 630px; left: 760px;" onclick="openPopup('Racionalització del denominador')">
+  <div class="symbols">
+    <!-- Angles i Raons -->
+    <img src="icon-trig.png" alt="Angles" class="symbol" data-cat="angles"
+         style="top:180px; left:320px;" onclick="openPopup('Expressió en radians')">
+    <img src="icon-trig.png" alt="Angles" class="symbol" data-cat="angles"
+         style="top:300px; left:600px;" onclick="openPopup('Expressió en graus')">
+    <img src="icon-trig.png" alt="Angles" class="symbol" data-cat="angles"
+         style="top:420px; left:500px;" onclick="openPopup('Raons trigonomètriques inverses')">
+    <img src="icon-trig.png" alt="Angles" class="symbol" data-cat="angles"
+         style="top:540px; left:700px;" onclick="openPopup('Identitats de suma i diferència')">
+    <img src="icon-trig.png" alt="Angles" class="symbol" data-cat="angles"
+         style="top:650px; left:400px;" onclick="openPopup('Dobles')">
+    <img src="icon-trig.png" alt="Angles" class="symbol" data-cat="angles"
+         style="top:600px; left:800px;" onclick="openPopup('Cos d\'angle amb condicions')">
+    <img src="icon-trig.png" alt="Angles" class="symbol" data-cat="angles"
+         style="top:600px; left:600px;" onclick="openPopup('Exercici combinat')">
 
-  <!-- Logaritmes -->
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 300px; left: 620px;" onclick="openPopup('Definició i base dels logaritmes')">
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 540px; left: 520px;" onclick="openPopup('Propietats dels logaritmes')">
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 650px; left: 880px;" onclick="openPopup('Canvis de base i equacions logarítmiques')">
-</div> 
-</main> 
-<!-- POPUP --> 
- <div id="lorePopup" class="popup"> 
-    <div class="popup-content lore-content"> 
-        <span class="close" onclick="closeLore()">&times;</span>
-         <img src="pergami.png" alt="Pergamí" class="scroll-img"> 
-        </div> 
-    </div> 
-    <!-- POPUP EXERCICI -->
+    <!-- Triangles -->
+    <img src="icon-trig.png" alt="Triangles" class="symbol" data-cat="triangles"
+         style="top:220px; left:780px;" onclick="openPopup('Resolució de triangles')">
+    <img src="icon-trig.png" alt="Triangles" class="symbol" data-cat="triangles"
+         style="top:420px; left:560px;" onclick="openPopup('Rombe i trapezi')">
+
+    <!-- Problemes aplicats -->
+    <img src="icon-trig.png" alt="Problemes" class="symbol" data-cat="problemes"
+         style="top:350px; left:940px;" onclick="openPopup('Capsa màgica')">
+    <img src="icon-trig.png" alt="Problemes" class="symbol" data-cat="problemes"
+         style="top:510px; left:260px;" onclick="openPopup('Columna de pedra')">
+    <img src="icon-trig.png" alt="Problemes" class="symbol" data-cat="problemes"
+         style="top:630px; left:760px;" onclick="openPopup('Doble observació I')">
+    <img src="icon-trig.png" alt="Problemes" class="symbol" data-cat="problemes"
+         style="top:600px; left:600px;" onclick="openPopup('Doble observació II')">
+    <img src="icon-trig.png" alt="Problemes" class="symbol" data-cat="problemes"
+         style="top:750px; left:880px;" onclick="openPopup('Distància entre fanals')">
+  </div>
+</main>
+
+<!-- Lore Popup -->
+<div id="lorePopup" class="popup">
+  <div class="popup-content lore-content">
+    <span class="close" onclick="closeLore()">&times;</span>
+    <img src="pergami.png" alt="Pergamí" class="scroll-img">
+  </div>
+</div>
+
+<!-- Exercise Popup -->
 <div id="exercisePopup" class="popup">
   <div class="popup-content">
     <span class="close" onclick="closePopup()">&times;</span>
     <h2 id="exerciseTitle"></h2>
-    <p>Aquí hi anirà l'enunciat o contingut de l'exercici.</p>
+    <div id="exerciseContent"></div>
+    <p id="feedback"></p>
   </div>
 </div>
-    <script> 
-    function toggleMenu() { 
-        document.getElementById('menu').classList.toggle('active'); } 
-        
-        function goTo(page) { window.location.href = page; } 
-        function openLore() { document.getElementById("lorePopup").style.display = "flex"; } 
-        function closeLore() { document.getElementById("lorePopup").style.display = "none"; } 
-    
-        function showSymbols(type) {
-  // Amaga tots
-  document.querySelectorAll(".symbol").forEach(el => el.style.display = "none");
 
-  if (type === "reals") {
-    // Mostra tots els símbols de "reals"
-    document.querySelectorAll(".symbol[data-cat='reals']").forEach(el => el.style.display = "block");
-  }
-  if (type === "potencies") {
-    document.querySelectorAll(".symbol[data-cat='potencies']").forEach(el => el.style.display = "block");
-  }
-  if (type === "radicals") {
-    document.querySelectorAll(".symbol[data-cat='radicals']").forEach(el => el.style.display = "block");
-  }
-  if (type === "logaritmes") {
-    document.querySelectorAll(".symbol[data-cat='logaritmes']").forEach(el => el.style.display = "block");
+<script>
+function toggleMenu(){document.getElementById('menu').classList.toggle('active');}
+function goTo(page){window.location.href=page;}
+function openLore(){document.getElementById("lorePopup").style.display="flex";}
+function closeLore(){document.getElementById("lorePopup").style.display="none";}
+
+function showSymbols(type){
+  document.querySelectorAll(".symbol").forEach(el=>el.style.display="none");
+  document.querySelectorAll(".symbol[data-cat='"+type+"']").forEach(el=>el.style.display="block");
+}
+document.addEventListener("DOMContentLoaded",()=>{showSymbols("angles");});
+
+function closePopup(){document.getElementById("exercisePopup").style.display="none";}
+
+// Random util
+function randomInt(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+
+// Exercicis
+const exercises = {
+  // === ANGLES I RAONS ===
+  "Expressió en radians":()=>{
+    const graus = randomInt(30,330);
+    const correct = (graus*Math.PI/180).toFixed(2);
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`<p>Converteix ${graus}° a radians (2 decimals):</p>
+      <input type="text" id="answer" placeholder="Ex: 1.57">
+      <button onclick="checkAnswer(${correct})">Comprovar</button>
+      <button onclick="exercises['Expressió en radians']()">Nova activitat</button>`;
+  },
+  "Expressió en graus":()=>{
+    const rad = (randomInt(1,10)*Math.PI/6).toFixed(2);
+    const graus = (rad*180/Math.PI).toFixed(2);
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`<p>Converteix ${rad} rad a graus (2 decimals):</p>
+      <input type="text" id="answer" placeholder="Ex: 30">
+      <button onclick="checkAnswer(${graus})">Comprovar</button>
+      <button onclick="exercises['Expressió en graus']()">Nova activitat</button>`;
+  },
+
+"Raons trigonomètriques inverses":()=>{
+  const options=[
+    {f:"arcsin",val:(Math.random()*0.9+0.1).toFixed(2)},
+    {f:"arccos",val:(Math.random()*0.9).toFixed(2)},
+    {f:"arctan",val:(Math.random()*3+0.5).toFixed(2)}
+  ];
+  const choice=options[randomInt(0,options.length-1)];
+  let angle;
+  if(choice.f==="arcsin") angle=(Math.asin(choice.val)*180/Math.PI).toFixed(2);
+  if(choice.f==="arccos") angle=(Math.acos(choice.val)*180/Math.PI).toFixed(2);
+  if(choice.f==="arctan") angle=(Math.atan(choice.val)*180/Math.PI).toFixed(2);
+  const container=document.getElementById("exerciseContent");
+  container.innerHTML=`
+    <p>Calcula l’angle (en graus) que compleix <b>${choice.f}(${choice.val})</b>.</p>
+    <input type="text" id="answer" placeholder="Ex: 32.11">
+    <button onclick="checkAnswer(${angle})">Comprovar</button>
+    <button onclick="exercises['Raons trigonomètriques inverses']()">Nova activitat</button>`;
+},
+
+"Identitats de suma i diferència":()=>{
+  const a=[15,30,45,60,75,105][randomInt(0,5)];
+  const b=[15,30,45,60,75,105][randomInt(0,5)];
+  const forms=[
+    {txt:`sin(${a}+${b})`, val:Math.sin((a+b)*Math.PI/180).toFixed(2)},
+    {txt:`sin(${a}-${b})`, val:Math.sin((a-b)*Math.PI/180).toFixed(2)},
+    {txt:`cos(${a}+${b})`, val:Math.cos((a+b)*Math.PI/180).toFixed(2)},
+    {txt:`cos(${a}-${b})`, val:Math.cos((a-b)*Math.PI/180).toFixed(2)}
+  ];
+  const chosen=forms[randomInt(0,forms.length-1)];
+  const container=document.getElementById("exerciseContent");
+  container.innerHTML=`
+    <p>Aplica les identitats trigonomètriques per calcular:  
+    <b>${chosen.txt}</b> (arrodoneix a 2 decimals).</p>
+    <input type="text" id="answer" placeholder="Ex: 0.71">
+    <button onclick="checkAnswer(${chosen.val})">Comprovar</button>
+    <button onclick="exercises['Identitats de suma i diferència']()">Nova activitat</button>`;
+},
+
+"Dobles":()=>{
+  const a=[15,30,45,60,75,90][randomInt(0,5)];
+  const forms=[
+    {txt:`sin(2·${a}°)`, val:Math.sin(2*a*Math.PI/180).toFixed(2)},
+    {txt:`cos(2·${a}°)`, val:Math.cos(2*a*Math.PI/180).toFixed(2)},
+    {txt:`tan(2·${a}°)`, val:Math.tan(2*a*Math.PI/180).toFixed(2)}
+  ];
+  const chosen=forms[randomInt(0,forms.length-1)];
+  const container=document.getElementById("exerciseContent");
+  container.innerHTML=`
+    <p>Aplica les fórmules de doble angle per calcular:  
+    <b>${chosen.txt}</b> (arrodoneix a 2 decimals).</p>
+    <input type="text" id="answer" placeholder="Ex: 0.87">
+    <button onclick="checkAnswer(${chosen.val})">Comprovar</button>
+    <button onclick="exercises['Dobles']()">Nova activitat</button>`;
+},
+
+"Cos d'angle amb condicions":()=>{
+    const candidates=[
+      ["-√3", Math.tan(120*Math.PI/180)],
+      ["-√5", -Math.sqrt(5)],
+      ["1", 1],
+      ["-1", -1],
+      ["√3", Math.sqrt(3)]
+    ];
+    const chosen=candidates[randomInt(0,candidates.length-1)];
+    const intervals=[
+      {txt:"π/2 ≤ 2α ≤ π", quad:"I"},
+      {txt:"π ≤ 2α ≤ 3π/2", quad:"II"},
+      {txt:"0 ≤ 2α ≤ π/2", quad:"I"},
+      {txt:"3π/2 ≤ 2α ≤ 2π", quad:"IV"}
+    ];
+    const chosenInt=intervals[randomInt(0,intervals.length-1)];
+
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`
+      <p>Sapiguem que <b>tan(2α) = ${chosen[0]}</b> i <b>${chosenInt.txt}</b>.<br>
+      Calcula <b>cosα</b>. En quin quadrant es troba α?</p>
+      <input type="text" id="answer" placeholder="Escriu cosα (aprox)">
+      <select id="quadrant">
+        <option value="">-- Tria quadrant --</option>
+        <option value="I">Quadrant I</option>
+        <option value="II">Quadrant II</option>
+        <option value="III">Quadrant III</option>
+        <option value="IV">Quadrant IV</option>
+      </select>
+      <button onclick="checkCosAlpha(${chosen[1]}, '${chosenInt.quad}')">Comprovar</button>
+      <button onclick="exercises['Cos d\\'angle amb condicions']()">Nova activitat</button>
+    `;
+  },
+
+  "Exercici combinat":()=>{
+    const n=[3,4,5,6,7,8][randomInt(0,5)];
+    const k=randomInt(1,n-1);
+    const sinA=k/n;
+    const cosA=-Math.sqrt(1-sinA**2);
+
+    const q=[3,4,5,6,7,8,9,10][randomInt(0,7)];
+    const p=randomInt(1,q-1);
+    const cosB=p/q;
+    const sinB=Math.sqrt(1-cosB**2);
+
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`
+      <p>Si <b>sinα = ${k}/${n}</b> amb <b>π/2 ≤ α ≤ π</b><br>
+      i <b>cosβ = ${p}/${q}</b> amb <b>β ≤ 90°</b>, calcula:</p>
+      <ol>
+        <li>a) sin(2α)</li>
+        <li>b) cos(2α)</li>
+        <li>c) sin(2β)</li>
+        <li>d) cos(2β)</li>
+        <li>e) sin(α/2)</li>
+        <li>f) cos(β/2)</li>
+        <li>g) sin(α+2β)</li>
+        <li>h) cos(2α-β)</li>
+        <li>i) cos(α+2β)</li>
+        <li>j) sin(2α-β)</li>
+      </ol>
+      <textarea id="answer" placeholder="Escriu respostes separades per comes"></textarea>
+      <button onclick="checkExerciciCombinat(${sinA},${cosA},${sinB},${cosB})">Comprovar</button>
+      <button onclick="exercises['Exercici combinat']()">Nova activitat</button>
+    `;
+  },
+
+
+// === TRIANGLES ===
+"Resolució de triangles":()=>{
+  const a=randomInt(20,80), b=randomInt(20,80);
+  const angC=randomInt(30,100); // Llei dels cosinus
+  const c=Math.sqrt(a*a+b*b-2*a*b*Math.cos(angC*Math.PI/180)).toFixed(2);
+  const container=document.getElementById("exerciseContent");
+  container.innerHTML=`
+    <p>Es considera un triangle amb costats <b>a=${a} cm</b> i <b>b=${b} cm</b>, 
+    i angle comprès entre ells de <b>${angC}°</b>.  
+    Calcula la longitud del tercer costat <b>c</b> (arrodoneix a 2 decimals).</p>
+    <input type="text" id="answer" placeholder="Ex: 23.45">
+    <button onclick="checkAnswer(${c})">Comprovar</button>
+    <button onclick="exercises['Resolució de triangles']()">Nova activitat</button>`;
+},
+
+"Rombe i trapezi":()=>{
+  const diag1=randomInt(10,40), diag2=randomInt(10,40);
+  const rombeCostat=(Math.sqrt((diag1/2)**2+(diag2/2)**2)).toFixed(2);
+  const base1=randomInt(10,30), base2=randomInt(5,25), altura=randomInt(8,20);
+  const trapeziArea=(((base1+base2)/2)*altura).toFixed(2);
+
+  const container=document.getElementById("exerciseContent");
+  container.innerHTML=`
+    <p><b>Part 1 (Rombe):</b> Un rombe té diagonals de <b>${diag1} cm</b> i <b>${diag2} cm</b>.  
+    Calcula la longitud del seu costat (arrodonit a 2 decimals).</p>
+    <input type="text" id="answerRombe" placeholder="Ex: 12.34"><br><br>
+
+    <p><b>Part 2 (Trapezi):</b> Un trapezi té bases de <b>${base1} cm</b> i <b>${base2} cm</b>, i altura <b>${altura} cm</b>.  
+    Calcula la seva àrea (arrodonida a 2 decimals).</p>
+    <input type="text" id="answerTrap" placeholder="Ex: 245.00"><br>
+
+    <button onclick="checkRombeTrapezi(${rombeCostat},${trapeziArea})">Comprovar</button>
+    <button onclick="exercises['Rombe i trapezi']()">Nova activitat</button>`;
+},
+
+
+  // === PROBLEMES ===
+"Capsa màgica":()=>{
+  const a=randomInt(2,10), b=randomInt(3,12), c=randomInt(5,20);
+  const d=Math.sqrt(a*a+b*b+c*c).toFixed(2);
+  const container=document.getElementById("exerciseContent");
+  container.innerHTML=`
+    <p>Una capsa té unes dimensions de <b>${a} m</b> d’amplada, 
+    <b>${b} m</b> de profunditat i <b>${c} m</b> d’alçada.  
+    Calcula la longitud de la diagonal de l’espai interior de la capsa (arrodoneix a 2 decimals).</p>
+    <input type="text" id="answer" placeholder="Ex: 14.32">
+    <button onclick="checkAnswer(${d})">Comprovar</button>
+    <button onclick="exercises['Capsa màgica']()">Nova activitat</button>`;
+},
+
+"Columna de pedra":()=>{
+  const h=randomInt(5,30), ombra=randomInt(3,25);
+  const ang=(Math.atan(h/ombra)*180/Math.PI).toFixed(2);
+  const container=document.getElementById("exerciseContent");
+  container.innerHTML=`
+    <p>Una columna de pedra de <b>${h} m</b> d’alçada projecta una ombra de <b>${ombra} m</b>.  
+    Calcula l’angle d’elevació del Sol respecte al terra (en graus, amb 2 decimals).</p>
+    <input type="text" id="answer" placeholder="Ex: 63.43">
+    <button onclick="checkAnswer(${ang})">Comprovar</button>
+    <button onclick="exercises['Columna de pedra']()">Nova activitat</button>`;
+},
+
+"Doble observació I":()=>{
+  const d=randomInt(50,200), h=randomInt(20,100);
+  const ang=(Math.atan(h/d)*180/Math.PI).toFixed(2);
+  const container=document.getElementById("exerciseContent");
+  container.innerHTML=`
+    <p>Un observador es troba a <b>${d} m</b> de la base d’un edifici que té una alçada de <b>${h} m</b>.  
+    Calcula l’angle d’elevació des del punt de l’observador fins a la part superior de l’edifici.</p>
+    <input type="text" id="answer" placeholder="Ex: 26.57">
+    <button onclick="checkAnswer(${ang})">Comprovar</button>
+    <button onclick="exercises['Doble observació I']()">Nova activitat</button>`;
+},
+
+"Doble observació II":()=>{
+  const d1=randomInt(30,80), d2=d1+randomInt(20,60), h=randomInt(15,50);
+  const ang1=(Math.atan(h/d1)*180/Math.PI).toFixed(2);
+  const ang2=(Math.atan(h/d2)*180/Math.PI).toFixed(2);
+  const container=document.getElementById("exerciseContent");
+  container.innerHTML=`
+    <p>Des d’un primer punt situat a <b>${d1} m</b> de la base d’una torre d’alçada <b>${h} m</b> 
+    es mesura un angle d’elevació.  
+    Desplaçant-se fins a un altre punt a <b>${d2} m</b> de la torre es mesura un altre angle.  
+    Calcula aquests dos angles d’elevació (arrodonits a 2 decimals).</p>
+    <p><i>Pots introduir les dues respostes separades per comes, ex: 58.23, 45.11</i></p>
+    <input type="text" id="answer" placeholder="Ex: 58.23, 45.11">
+    <button onclick="checkDoubleAnswer(${ang1},${ang2})">Comprovar</button>
+    <button onclick="exercises['Doble observació II']()">Nova activitat</button>`;
+},
+
+"Distància entre fanals":()=>{
+  const h=randomInt(5,15), ang=randomInt(15,60);
+  const dist=(h/Math.tan(ang*Math.PI/180)).toFixed(2);
+  const container=document.getElementById("exerciseContent");
+  container.innerHTML=`
+    <p>Un fanal té una alçada de <b>${h} m</b>.  
+    Des d’un punt d’observació, l’angle d’elevació fins a la part superior del fanal és de <b>${ang}°</b>.  
+    Calcula la distància horitzontal entre l’observador i el peu del fanal.</p>
+    <input type="text" id="answer" placeholder="Ex: 13.86">
+    <button onclick="checkAnswer(${dist})">Comprovar</button>
+    <button onclick="exercises['Distància entre fanals']()">Nova activitat</button>`;
+}};
+
+
+function openPopup(title){
+  document.getElementById("exerciseTitle").textContent=title;
+  document.getElementById("exercisePopup").style.display="flex";
+  if(exercises[title]){exercises[title]();}
+  else{document.getElementById("exerciseContent").innerHTML="<p>Encara no hi ha exercicis disponibles.</p>";}
+  document.getElementById("feedback").textContent="";
+}
+
+function checkDoubleAnswer(correct1, correct2){
+  const user=document.getElementById("answer").value.trim().split(",");
+  const fb=document.getElementById("feedback");
+  if(user.length!==2){fb.innerHTML="❌ Introdueix dues respostes separades per coma."; return;}
+  const u1=parseFloat(user[0]), u2=parseFloat(user[1]);
+  if(Math.abs(u1-correct1)<0.1 && Math.abs(u2-correct2)<0.1){
+    fb.innerHTML="✅ <span style='color:lightgreen'>Correcte!</span>";
+  } else {
+    fb.innerHTML=`❌ Incorrecte (esperat: ${correct1}, ${correct2})`;
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  showSymbols("reals");
-});
-
-function openPopup(title) {
-  document.getElementById("exerciseTitle").textContent = title;
-  document.getElementById("exercisePopup").style.display = "flex";
+function checkCosAlpha(val, quadCorrect){
+  const fb=document.getElementById("feedback");
+  const quad=document.getElementById("quadrant").value;
+  const userAns=parseFloat(document.getElementById("answer").value.trim());
+  if(quad===quadCorrect && !isNaN(userAns)){
+    fb.textContent="✅ Correcte! (cosα i quadrant correctes)";
+    fb.style.color="green";
+  } else {
+    fb.textContent="❌ Incorrecte. Revisa el signe del cos i el quadrant.";
+    fb.style.color="red";
+  }
 }
 
-// Tancar popup d’exercici
-function closePopup() {
-  document.getElementById("exercisePopup").style.display = "none";
+function checkExerciciCombinat(sinA,cosA,sinB,cosB){
+  const fb=document.getElementById("feedback");
+  const results=[
+    (2*sinA*cosA).toFixed(3),
+    (cosA**2-sinA**2).toFixed(3),
+    (2*sinB*cosB).toFixed(3),
+    (cosB**2-sinB**2).toFixed(3),
+    Math.sqrt((1-cosA)/2).toFixed(3),
+    Math.sqrt((1+cosB)/2).toFixed(3),
+    (sinA*Math.cos(2*Math.acos(cosB))+cosA*Math.sin(2*Math.acos(cosB))).toFixed(3),
+    Math.cos(2*Math.asin(sinA)-Math.acos(cosB)).toFixed(3),
+    Math.cos(Math.asin(sinA)+2*Math.acos(cosB)).toFixed(3),
+    Math.sin(2*Math.asin(sinA)-Math.acos(cosB)).toFixed(3)
+  ];
+  fb.textContent="Respostes esperades (aprox): "+results.join(", ");
+  fb.style.color="blue";
 }
 
-            </script> 
-            </body> 
-        </html>
+function checkRombeTrapezi(correctRombe, correctTrap){
+  const fb=document.getElementById("feedback");
+  const userRombe=parseFloat(document.getElementById("answerRombe").value.trim());
+  const userTrap=parseFloat(document.getElementById("answerTrap").value.trim());
+
+  if(Math.abs(userRombe-correctRombe)<0.1 && Math.abs(userTrap-correctTrap)<0.1){
+    fb.innerHTML="✅ <span style='color:lightgreen'>Correcte! Tant el rombe com el trapezi són correctes.</span>";
+  } else {
+    fb.innerHTML=`❌ <span style='color:red'>Incorrecte. Les respostes correctes eren costat del rombe = ${correctRombe}, àrea del trapezi = ${correctTrap}</span>`;
+  }
+}
+
+function checkAnswer(correct){
+  const user=document.getElementById("answer").value.trim();
+  const fb=document.getElementById("feedback");
+  if(parseFloat(user).toFixed(2)==parseFloat(correct).toFixed(2)){
+    fb.innerHTML="✅ <span style='color:lightgreen'>Correcte!</span>";
+  } else {
+    fb.innerHTML=`❌ <span style='color:red'>Incorrecte (esperat: ${correct})</span>`;
+  }
+}
+</script>
+</body>
+</html>
