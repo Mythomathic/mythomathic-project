@@ -1,128 +1,261 @@
-<!DOCTYPE html> 
-<html lang="ca"> 
-    <head> 
-        <meta charset="UTF-8"> 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <title>Secuentia - Mythomathic</title> 
-        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
-        <link rel="stylesheet" href="secuentia.css"> 
-    </head> 
-<body> 
-    <header> 
-<button class="back-button" onclick="goTo('map.html')">⬅ Mapa</button> 
-<div class="title-center"> 
-<img src="S_Title.png" alt="Secuentia" class="title-img"> 
-</div> 
-<div class="header-buttons"> 
-    <button onclick="openLore()">📜 Lore</button> 
-    <button onclick="toggleMenu()">☰ Menú</button> 
-</div> 
-<nav id="menu"> 
-    <ul> <li onclick="goTo('map.html')">Mapa</li> 
-        <li onclick="goTo('perfil.html')">Perfil</li> 
-        <li onclick="goTo('config.html')">Configuració</li> 
-        <li onclick="goTo('sobremi.html')">Sobre mi</li> 
-        <li onclick="goTo('contacte.html')">Contacte</li> 
-    </ul> 
-</nav> 
-</header> 
-<main class="dimension-container"> 
-    <aside class="categories"> 
-        <button onclick="showSymbols('reals')">Nombres Reals</button> 
-        <button onclick="showSymbols('potencies')">Potències</button> 
-        <button onclick="showSymbols('logaritmes')">Logaritmes</button> 
-        <button onclick="showSymbols('radicals')">Radicals</button> 
-    </aside> 
-    <div class="symbols">
-  <!-- Nombres reals -->
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 180px; left: 320px;" onclick="openPopup('Intervals i valors absoluts')">
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 430px; left: 980px;" onclick="openPopup('Recta real i conjunts')">
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 600px; left: 200px;" onclick="openPopup('Operacions amb nombres reals')">
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secuentia - Mythomathic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="secuentia.css">
+</head>
 
-  <!-- Potències -->
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 220px; left: 780px;" onclick="openPopup('Propietats de les potències')">
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 420px; left: 560px;" onclick="openPopup('Notació científica')">
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 600px; left: 960px;" onclick="openPopup('Exponents negatius i fraccionaris')">
+<body>
+<header>
+  <button class="back-button" onclick="goTo('map.html')">⬅ Mapa</button>
+  <div class="title-center">
+    <img src="S_Title.png" alt="Secuentia" class="title-img">
+  </div>
+  <div class="header-buttons">
+    <button onclick="openLore()">📜 Lore</button>
+    <button onclick="toggleMenu()">☰ Menú</button>
+  </div>
+  <nav id="menu">
+    <ul>
+      <li onclick="goTo('map.html')">Mapa</li>
+      <li onclick="goTo('perfil.html')">Perfil</li>
+      <li onclick="goTo('config.html')">Configuració</li>
+      <li onclick="goTo('sobremi.html')">Sobre mi</li>
+      <li onclick="goTo('contacte.html')">Contacte</li>
+    </ul>
+  </nav>
+</header>
 
-  <!-- Radicals -->
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 350px; left: 940px;" onclick="openPopup('Simplificació de radicals')">
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 510px; left: 260px;" onclick="openPopup('Operacions amb radicals')">
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 630px; left: 760px;" onclick="openPopup('Racionalització del denominador')">
+<main class="dimension-container">
+  <aside class="categories">
+    <button onclick="showSymbols('aritmetiques')">P. Aritmètiques</button>
+    <button onclick="showSymbols('geometriques')">P. Geomètriques</button>
+    <button onclick="showSymbols('generals')">Termes Generals</button>
+  </aside>
 
-  <!-- Logaritmes -->
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 300px; left: 620px;" onclick="openPopup('Definició i base dels logaritmes')">
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 540px; left: 520px;" onclick="openPopup('Propietats dels logaritmes')">
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 650px; left: 880px;" onclick="openPopup('Canvis de base i equacions logarítmiques')">
-</div> 
-</main> 
-<!-- POPUP --> 
- <div id="lorePopup" class="popup"> 
-    <div class="popup-content lore-content"> 
-        <span class="close" onclick="closeLore()">&times;</span>
-         <img src="pergami.png" alt="Pergamí" class="scroll-img"> 
-        </div> 
-    </div> 
-    <!-- POPUP EXERCICI -->
+  <div class="symbols">
+    <!-- Progressions Aritmètiques -->
+    <img src="icon-aritmetica.png" alt="Aritmètiques" class="symbol" data-cat="aritmetiques"
+         style="top: 180px; left: 320px;" onclick="openPopup('Suma i termes de PA')">
+    <img src="icon-aritmetica.png" alt="Aritmètiques" class="symbol" data-cat="aritmetiques"
+         style="top: 430px; left: 980px;" onclick="openPopup('Troba el terme general PA')">
+
+    <!-- Progressions Geomètriques -->
+    <img src="icon-geo.png" alt="Geomètriques" class="symbol" data-cat="geometriques"
+         style="top: 220px; left: 780px;" onclick="openPopup('Suma i termes de PG')">
+    <img src="icon-geo.png" alt="Geomètriques" class="symbol" data-cat="geometriques"
+         style="top: 420px; left: 560px;" onclick="openPopup('Troba el terme general PG')">
+
+    <!-- Termes Generals -->
+    <img src="icon-general.png" alt="Generals" class="symbol" data-cat="generals"
+         style="top: 350px; left: 940px;" onclick="openPopup('Calcula termes de la successió')">
+    <img src="icon-general.png" alt="Generals" class="symbol" data-cat="generals"
+         style="top: 510px; left: 260px;" onclick="openPopup('Troba el terme indicat')">
+  </div>
+</main>
+
+<!-- POPUP LORE -->
+<div id="lorePopup" class="popup">
+  <div class="popup-content lore-content">
+    <span class="close" onclick="closeLore()">&times;</span>
+    <img src="pergami.png" alt="Pergamí" class="scroll-img">
+  </div>
+</div>
+
+<!-- POPUP EXERCICI -->
 <div id="exercisePopup" class="popup">
   <div class="popup-content">
     <span class="close" onclick="closePopup()">&times;</span>
     <h2 id="exerciseTitle"></h2>
-    <p>Aquí hi anirà l'enunciat o contingut de l'exercici.</p>
+    <div id="exerciseContent"></div>
   </div>
 </div>
-    <script> 
-    function toggleMenu() { 
-        document.getElementById('menu').classList.toggle('active'); } 
-        
-        function goTo(page) { window.location.href = page; } 
-        function openLore() { document.getElementById("lorePopup").style.display = "flex"; } 
-        function closeLore() { document.getElementById("lorePopup").style.display = "none"; } 
-    
-        function showSymbols(type) {
-  // Amaga tots
-  document.querySelectorAll(".symbol").forEach(el => el.style.display = "none");
 
-  if (type === "reals") {
-    // Mostra tots els símbols de "reals"
-    document.querySelectorAll(".symbol[data-cat='reals']").forEach(el => el.style.display = "block");
-  }
-  if (type === "potencies") {
-    document.querySelectorAll(".symbol[data-cat='potencies']").forEach(el => el.style.display = "block");
-  }
-  if (type === "radicals") {
-    document.querySelectorAll(".symbol[data-cat='radicals']").forEach(el => el.style.display = "block");
-  }
-  if (type === "logaritmes") {
-    document.querySelectorAll(".symbol[data-cat='logaritmes']").forEach(el => el.style.display = "block");
-  }
+<script>
+function toggleMenu() {
+  document.getElementById('menu').classList.toggle('active');
+}
+
+function goTo(page) {
+  window.location.href = page;
+}
+
+function openLore() {
+  document.getElementById("lorePopup").style.display = "flex";
+}
+
+function closeLore() {
+  document.getElementById("lorePopup").style.display = "none";
+}
+
+function showSymbols(type) {
+  document.querySelectorAll(".symbol").forEach(el => el.style.display = "none");
+  document.querySelectorAll(".symbol[data-cat='"+type+"']").forEach(el => el.style.display = "block");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  showSymbols("reals");
+  showSymbols("aritmetiques");
 });
 
-function openPopup(title) {
-  document.getElementById("exerciseTitle").textContent = title;
-  document.getElementById("exercisePopup").style.display = "flex";
-}
-
-// Tancar popup d’exercici
+// ===== POPUP Exercicis =====
 function closePopup() {
   document.getElementById("exercisePopup").style.display = "none";
 }
 
-            </script> 
-            </body> 
-        </html>
+// Generació aleatòria d’exercicis
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Diccionari d’exercicis
+const exercises = {
+  "Calcula termes de la successió": () => {
+    const n = randomInt(3,7);
+    const a = randomInt(1,5);
+    const b = randomInt(1,5);
+    const expr = `a_n = ${a}·n^2 + ${b}·n`;
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `<p>Troba els ${n} primers termes de la successió:</p>
+      <p><b>${expr}</b></p>
+      <input type="text" id="answer" placeholder="Ex: 12, 24, 48...">
+      <button onclick="generateTermsExercise(${a},${b},${n})">Comprovar</button>
+      <button onclick="exercises['Calcula termes de la successió']()">Nova activitat</button>
+      <p id="feedback"></p>`;
+  },
+
+  "Troba el terme indicat": () => {
+    const n = randomInt(5,15);
+    const a = randomInt(1,5);
+    const b = randomInt(-5,5);
+    const expr = `a_n = ${a}·n + ${b}`;
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `<p>Troba el terme a<sub>${n}</sub> de la successió:</p>
+      <p><b>${expr}</b></p>
+      <input type="text" id="answer" placeholder="Ex: 12">
+      <button onclick="checkTerm(${a},${b},${n})">Comprovar</button>
+      <button onclick="exercises['Troba el terme indicat']()">Nova activitat</button>
+      <p id="feedback"></p>`;
+  },
+
+  "Suma i termes de PA": () => {
+    const a2 = randomInt(1,10);
+    const a7 = randomInt(20,50);
+    const d = (a7 - a2)/5;
+    const a1 = a2 - d;
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `<p>En una progressió aritmètica, a2 = ${a2} i a7 = ${a7}. Escriu el terme general i els 5 primers termes.</p>
+      <input type="text" id="answer" placeholder="Ex: a_n = ...">
+      <button onclick="checkPA(${a1},${d})">Comprovar</button>
+      <button onclick="exercises['Suma i termes de PA']()">Nova activitat</button>
+      <p id="feedback"></p>`;
+  },
+
+  "Troba el terme general PA": () => {
+    const s3 = randomInt(20,60);
+    const s6 = randomInt(80,150);
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `<p>La suma dels tres primers termes d'una PA és ${s3} i la suma dels tres següents és ${s6}. Troba el terme general.</p>
+      <input type="text" id="answer" placeholder="Ex: a_n = ...">
+      <button onclick="checkPA2(${s3},${s6})">Comprovar</button>
+      <button onclick="exercises['Troba el terme general PA']()">Nova activitat</button>
+      <p id="feedback"></p>`;
+  },
+
+  "Suma i termes de PG": () => {
+    const c4 = randomInt(10,50);
+    const c5 = randomInt(20,60);
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `<p>En una progressió geomètrica, c4 = ${c4} i c5 = ${c5}. Escriu el terme general.</p>
+      <input type="text" id="answer" placeholder="Ex: c_n = ...">
+      <button onclick="checkPG(${c4},${c5})">Comprovar</button>
+      <button onclick="exercises['Suma i termes de PG']()">Nova activitat</button>
+      <p id="feedback"></p>`;
+  },
+
+  "Troba el terme general PG": () => {
+    const sInf = randomInt(10,50);
+    const a2 = randomInt(1,10);
+    const container = document.getElementById("exerciseContent");
+    container.innerHTML = `<p>La suma infinita d'una PG és ${sInf} i a2 = ${a2}. Calcula a1 i la raó.</p>
+      <input type="text" id="answer" placeholder="Ex: a1 = ..., r = ...">
+      <button onclick="checkPG2(${sInf},${a2})">Comprovar</button>
+      <button onclick="exercises['Troba el terme general PG']()">Nova activitat</button>
+      <p id="feedback"></p>`;
+  }
+};
+
+function openPopup(title) {
+  document.getElementById("exerciseTitle").textContent = title;
+  document.getElementById("exercisePopup").style.display = "flex";
+  document.getElementById("exerciseContent").innerHTML = "";
+  if (exercises[title]) {
+    exercises[title]();
+  } else {
+    document.getElementById("exerciseContent").innerHTML = "<p>Encara no hi ha exercicis disponibles per aquest apartat.</p>";
+  }
+}
+
+// ===== Funcions de comprovació =====
+function generateTermsExercise(a,b,n) {
+  const correct = Array.from({length:n}, (_,i) => a*(i+1)**2 + b*(i+1)).join(", ");
+  const userAns = document.getElementById("answer").value.trim();
+  const fb = document.getElementById("feedback");
+  if(userAns === correct){
+    fb.textContent = "Correcte! ✔️";
+    fb.style.color = "green";
+  } else {
+    fb.textContent = `Incorrecte ❌ (resposta esperada: ${correct})`;
+    fb.style.color = "red";
+  }
+}
+
+function checkTerm(a,b,n) {
+  const correct = a*n + b;
+  const userAns = Number(document.getElementById("answer").value.trim());
+  const fb = document.getElementById("feedback");
+  if(userAns === correct){
+    fb.textContent = "Correcte! ✔️";
+    fb.style.color = "green";
+  } else {
+    fb.textContent = `Incorrecte ❌ (resposta esperada: ${correct})`;
+    fb.style.color = "red";
+  }
+}
+
+function checkPA(a1,d) {
+  const correct = `a_n = ${a1} + ${d}·(n-1)`;
+  const fb = document.getElementById("feedback");
+  const userAns = document.getElementById("answer").value.trim();
+  if(userAns === correct){
+    fb.textContent = "Correcte! ✔️";
+    fb.style.color = "green";
+  } else {
+    fb.textContent = `Incorrecte ❌ (resposta esperada: ${correct})`;
+    fb.style.color = "red";
+  }
+}
+
+function checkPA2(s3,s6) {
+  const fb = document.getElementById("feedback");
+  fb.textContent = "Revisa el càlcul segons la suma dels termes. ❌";
+  fb.style.color = "red";
+}
+
+function checkPG(c4,c5) {
+  const fb = document.getElementById("feedback");
+  fb.textContent = "Calcula a partir de la raó c5/c4 i troba c1. ❌";
+  fb.style.color = "red";
+}
+
+function checkPG2(sInf,a2) {
+  const fb = document.getElementById("feedback");
+  fb.textContent = "Calcula a1 = ?, raó = ?. ❌";
+  fb.style.color = "red";
+}
+
+</script>
+</body>
+</html>
