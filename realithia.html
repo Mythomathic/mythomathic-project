@@ -102,9 +102,28 @@ function openLore() {
   document.getElementById("lorePopup").style.display = "flex"; 
 } 
 
-function closeLore() { 
-  document.getElementById("lorePopup").style.display = "none"; 
-} 
+
+
+// funció existent: tanca el popup lore
+  function closeLore(){
+    const lp = document.getElementById("lorePopup");
+    if(lp) lp.style.display = "none";
+  }
+
+  // fallback: assegurem l'event si l'atribut onclick no s'executa per algun motiu
+  document.addEventListener("DOMContentLoaded", () => {
+    const closeBtn = document.querySelector(".lore-content .close");
+    if(closeBtn){
+      closeBtn.addEventListener("click", closeLore);
+    }
+    // També fem que fer click a la capa fosca tanqui el popup (opcional)
+    const lorePopup = document.getElementById("lorePopup");
+    if(lorePopup){
+      lorePopup.addEventListener("click", (e) => {
+        if(e.target === lorePopup) closeLore(); // només si cliques fora del contingut
+      });
+    }
+  });
 
 function showSymbols(type) {
   document.querySelectorAll(".symbol").forEach(el => el.style.display = "none");
@@ -493,6 +512,8 @@ function checkAnswer(correct) {
 </script>
 </body> 
 </html>
+
+
 
 
 
