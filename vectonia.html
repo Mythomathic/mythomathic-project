@@ -11,7 +11,7 @@
     <header> 
 <button class="back-button" onclick="goTo('map.html')">⬅ Mapa</button> 
 <div class="title-center"> 
-<img src="V_Title.png" alt="Vectonia" class="title-img"> 
+<img src="V_title.png" alt="Vectonia" class="title-img"> 
 </div> 
 <div class="header-buttons"> 
     <button onclick="openLore()">📜 Lore</button> 
@@ -26,104 +26,421 @@
     </ul> 
 </nav> 
 </header> 
-<main class="dimension-container"> 
-    <aside class="categories"> 
-        <button onclick="showSymbols('reals')">Nombres Reals</button> 
-        <button onclick="showSymbols('potencies')">Potències</button> 
-        <button onclick="showSymbols('logaritmes')">Logaritmes</button> 
-        <button onclick="showSymbols('radicals')">Radicals</button> 
-    </aside> 
-    <div class="symbols">
-  <!-- Nombres reals -->
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 180px; left: 320px;" onclick="openPopup('Intervals i valors absoluts')">
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 430px; left: 980px;" onclick="openPopup('Recta real i conjunts')">
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 600px; left: 200px;" onclick="openPopup('Operacions amb nombres reals')">
 
-  <!-- Potències -->
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 220px; left: 780px;" onclick="openPopup('Propietats de les potències')">
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 420px; left: 560px;" onclick="openPopup('Notació científica')">
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 600px; left: 960px;" onclick="openPopup('Exponents negatius i fraccionaris')">
+<main class="dimension-container">
+  <aside class="categories">
+    <button onclick="showSymbols('vectors')">Operacions amb vectors</button>
+    <button onclick="showSymbols('punts')">Punts i rectes</button>
+    <button onclick="showSymbols('angles')">Angles i posició</button>
+    <button onclick="showSymbols('figures')">Figures i distàncies</button>
+  </aside>
 
-  <!-- Radicals -->
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 350px; left: 940px;" onclick="openPopup('Simplificació de radicals')">
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 510px; left: 260px;" onclick="openPopup('Operacions amb radicals')">
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 630px; left: 760px;" onclick="openPopup('Racionalització del denominador')">
+  <div class="symbols">
+    <!-- VECTORS -->
+    <img src="icon-vec.png" class="symbol" data-cat="vectors" style="top:200px; left:400px;" onclick="openPopup('Operacions vectorials')">
+    <img src="icon-vec.png" class="symbol" data-cat="vectors" style="top:400px; left:800px;" onclick="openPopup('Producte escalar i mòdul')">
+    <img src="icon-vec.png" class="symbol" data-cat="vectors" style="top:600px; left:300px;" onclick="openPopup('Vector unitari i perpendicular')">
 
-  <!-- Logaritmes -->
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 300px; left: 620px;" onclick="openPopup('Definició i base dels logaritmes')">
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 540px; left: 520px;" onclick="openPopup('Propietats dels logaritmes')">
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 650px; left: 880px;" onclick="openPopup('Canvis de base i equacions logarítmiques')">
-</div> 
-</main> 
-<!-- POPUP --> 
- <div id="lorePopup" class="popup"> 
-    <div class="popup-content lore-content"> 
-        <span class="close" onclick="closeLore()">&times;</span>
-         <img src="pergami.png" alt="Pergamí" class="scroll-img"> 
-        </div> 
-    </div> 
-    <!-- POPUP EXERCICI -->
+    <!-- PUNTS I RECTES -->
+    <img src="icon-vec.png" class="symbol" data-cat="punts" style="top:200px; left:700px;" onclick="openPopup('Coordenades de punts')">
+    <img src="icon-vec.png" class="symbol" data-cat="punts" style="top:400px; left:500px;" onclick="openPopup('Equacions de rectes')">
+
+    <!-- ANGLES I POSICIÓ -->
+    <img src="icon-vec.png" class="symbol" data-cat="angles" style="top:250px; left:900px;" onclick="openPopup('Paral·lelisme i perpendicularitat')">
+    <img src="icon-vec.png" class="symbol" data-cat="angles" style="top:450px; left:350px;" onclick="openPopup('Interseccions i punts de tall')">
+    <img src="icon-vec.png" class="symbol" data-cat="angles" style="top:350px; left:700px;" onclick="openPopup('Angles entre rectes')">
+    <img src="icon-vec.png" class="symbol" data-cat="angles" style="top:250px; left:400px;" onclick="openPopup('Rectes secants')">
+
+    <!-- FIGURES -->
+    <img src="icon-vec.png" class="symbol" data-cat="figures" style="top:200px; left:300px;" onclick="openPopup('Triangles')">
+    <img src="icon-vec.png" class="symbol" data-cat="figures" style="top:500px; left:900px;" onclick="openPopup('Distàncies i punts a rectes')">
+    <img src="icon-vec.png" class="symbol" data-cat="figures" style="top:500px; left:900px;" onclick="openPopup('Paral·lelogram')">
+  </div>
+</main>
+
+<!-- POPUP -->
 <div id="exercisePopup" class="popup">
   <div class="popup-content">
     <span class="close" onclick="closePopup()">&times;</span>
     <h2 id="exerciseTitle"></h2>
-    <p>Aquí hi anirà l'enunciat o contingut de l'exercici.</p>
+    <div id="exerciseContent"></div>
+    <p id="feedback"></p>
   </div>
 </div>
-    <script> 
-    function toggleMenu() { 
-        document.getElementById('menu').classList.toggle('active'); } 
-        
-        function goTo(page) { window.location.href = page; } 
-        function openLore() { document.getElementById("lorePopup").style.display = "flex"; } 
-        function closeLore() { document.getElementById("lorePopup").style.display = "none"; } 
-    
-        function showSymbols(type) {
-  // Amaga tots
-  document.querySelectorAll(".symbol").forEach(el => el.style.display = "none");
 
-  if (type === "reals") {
-    // Mostra tots els símbols de "reals"
-    document.querySelectorAll(".symbol[data-cat='reals']").forEach(el => el.style.display = "block");
+<script>
+function toggleMenu(){}
+function goTo(p){window.location.href=p;}
+function showSymbols(cat){
+  document.querySelectorAll('.symbol').forEach(s=>s.style.display='none');
+  document.querySelectorAll(`.symbol[data-cat="${cat}"]`).forEach(s=>s.style.display='block');
+}
+document.addEventListener('DOMContentLoaded',()=>showSymbols('vectors'));
+function closePopup(){document.getElementById('exercisePopup').style.display='none';}
+function randomInt(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+function randomChoice(a){return a[Math.floor(Math.random()*a.length)];}
+function checkTextAnswers(expected){
+  const user=document.getElementById("answer1").value.trim().toLowerCase().replace(/\s+/g,'');
+  const valid=expected.map(e=>e.toLowerCase().replace(/\s+/g,''));
+  const fb=document.getElementById("feedback");
+  fb.innerHTML= valid.includes(user) ? "✅ Correcte!" : `❌ Incorrecte (resposta esperada: ${expected[0]})`;
+}
+
+// ====== EXERCICIS ======
+const exercises={
+
+  // 1️⃣ OPERACIONS VECTORIALS
+  "Operacions vectorials":()=>{
+    const u1=randomInt(-5,5), u2=randomInt(-5,5);
+    const v1=randomInt(-5,5), v2=randomInt(-5,5);
+    const w1=randomInt(-5,5), w2=randomInt(-5,5);
+    const ans=`u+v-w=(${u1+v1-w1},${u2+v2-w2})`;
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Donats els vectors →u=(${u1},${u2}), →v=(${v1},${v2}) i →w=(${w1},${w2}), calcula:</p>
+      <p><b>→u+→v−→w</b></p>
+      <input id="answer1" placeholder="Ex: (x,y)">
+      <button onclick="checkTextAnswers(['${ans}'])">Comprovar</button>
+      <button onclick="exercises['Operacions vectorials']()">Nova activitat</button>`;
+    document.getElementById("feedback").innerHTML="";
+  },
+
+  // 2️⃣ PRODUCTE ESCALAR I MÒDUL
+  "Producte escalar i mòdul":()=>{
+    const u1=randomInt(-5,5), u2=randomInt(-5,5);
+    const v1=randomInt(-5,5), v2=randomInt(-5,5);
+    const prod=u1*v1+u2*v2;
+    const modU=Math.sqrt(u1*u1+u2*u2).toFixed(2);
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Calcula el producte escalar i el mòdul de →u=(${u1},${u2}) i →v=(${v1},${v2}).</p>
+      <input id="answer1" placeholder="Ex: producte=..., mòdul=...">
+      <button onclick="checkTextAnswers(['producte=${prod},mòdul=${modU}'])">Comprovar</button>
+      <button onclick="exercises['Producte escalar i mòdul']()">Nova activitat</button>`;
+    document.getElementById("feedback").innerHTML="";
+  },
+
+  // 3️⃣ VECTOR UNITARI I PERPENDICULAR
+  "Vector unitari i perpendicular":()=>{
+    const u1=randomInt(-7,7), u2=randomInt(-7,7);
+    const mod=Math.sqrt(u1*u1+u2*u2);
+    const unitX=(u1/mod).toFixed(2), unitY=(u2/mod).toFixed(2);
+    const perpX=-u2, perpY=u1;
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Troba un vector unitari i un perpendicular a →u=(${u1},${u2}).</p>
+      <input id="answer1" placeholder="Ex: unitari=(x,y), perpendicular=(x,y)">
+      <button onclick="checkTextAnswers(['unitari=(${unitX},${unitY}),perpendicular=(${perpX},${perpY})'])">Comprovar</button>
+      <button onclick="exercises['Vector unitari i perpendicular']()">Nova activitat</button>`;
+    document.getElementById("feedback").innerHTML="";
+  },
+
+  // 4️⃣ COORDENADES DE PUNTS
+  "Coordenades de punts":()=>{
+    const ax=randomInt(-5,5), ay=randomInt(-5,5);
+    const abx=randomInt(-5,5), aby=randomInt(-5,5);
+    const bx=ax+abx, by=ay+aby;
+    const ans=`B(${bx},${by})`;
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Si →AB=(${abx},${aby}) i A(${ax},${ay}), calcula les coordenades de B.</p>
+      <input id="answer1" placeholder="Ex: B(x,y)">
+      <button onclick="checkTextAnswers(['${ans}'])">Comprovar</button>
+      <button onclick="exercises['Coordenades de punts']()">Nova activitat</button>`;
+    document.getElementById("feedback").innerHTML="";
+  },
+
+  // 5️⃣ EQUACIONS DE RECTES
+  "Equacions de rectes":()=>{
+    const a1=randomInt(-3,3), a2=randomInt(-3,3);
+    const b1=randomInt(-3,3), b2=randomInt(-3,3);
+    const m=((b2-a2)/(b1-a1)).toFixed(2);
+    const n=(a2 - m*a1).toFixed(2);
+    const ans=`y=${m}x+${n}`;
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Calcula l'equació de la recta que passa per A(${a1},${a2}) i B(${b1},${b2}).</p>
+      <input id="answer1" placeholder="Ex: y=mx+n">
+      <button onclick="checkTextAnswers(['${ans}'])">Comprovar</button>
+      <button onclick="exercises['Equacions de rectes']()">Nova activitat</button>`;
+    document.getElementById("feedback").innerHTML="";
+  },
+
+  // 6️⃣ PARAL·LELISME I PERPENDICULARITAT
+  "Paral·lelisme i perpendicularitat":()=>{
+    const k=randomInt(-4,4);
+    const ansPar=(2*k===-4)?'Paral·lels':'No';
+    const ansPerp=(2*k+0===0)?'Perpendiculars':'No';
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Troba el valor de k perquè els vectors →u=(${k},-1) i →v=(-2,4) siguin paral·lels o perpendiculars.</p>
+      <input id="answer1" placeholder="Ex: Paral·lels:k=..., Perpendiculars:k=...">
+      <button onclick="checkTextAnswers(['Paral·lels:k=-2,Perpendiculars:k=0.5'])">Comprovar</button>
+      <button onclick="exercises['Paral·lelisme i perpendicularitat']()">Nova activitat</button>`;
+    document.getElementById("feedback").innerHTML="";
+  },
+
+  // 7️⃣ INTERSECCIONS I PUNTS DE TALL
+  "Interseccions i punts de tall":()=>{
+    const m1=randomInt(1,5), n1=randomInt(-5,5);
+    const m2=randomInt(1,5), n2=randomInt(-5,5);
+    const x=(n2-n1)/(m1-m2);
+    const y=m1*x+n1;
+    const ans=`(${x.toFixed(2)},${y.toFixed(2)})`;
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Troba el punt de tall entre r: y=${m1}x+${n1} i s: y=${m2}x+${n2}</p>
+      <input id="answer1" placeholder="Ex: (x,y)">
+      <button onclick="checkTextAnswers(['${ans}'])">Comprovar</button>
+      <button onclick="exercises['Interseccions i punts de tall']()">Nova activitat</button>`;
+    document.getElementById("feedback").innerHTML="";
+  },
+
+  // 🔹 ANGLES ENTRE RECTES
+"Angles entre rectes":()=>{
+  const tipus=randomInt(1,3); // Tria quin tipus d’equació es genera
+  let textR, textS, m1, m2;
+
+  if(tipus===1){
+    // Tipus ax+by+c=0
+    const a1=randomInt(1,6), b1=randomInt(-6,-1), c1=randomInt(-5,5);
+    const a2=randomInt(1,6), b2=randomInt(1,6), c2=randomInt(-5,5);
+    m1=-(a1/b1);
+    m2=-(a2/b2);
+    textR=`${a1}x${b1<0?'+':''}${b1}y${c1>=0?'+':''}${c1}=0`;
+    textS=`${a2}x${b2<0?'+':''}${b2}y${c2>=0?'+':''}${c2}=0`;
+  } 
+  else if(tipus===2){
+    // Tipus y = mx + n
+    m1=randomInt(-5,5); const n1=randomInt(-5,5);
+    m2=randomInt(-5,5); const n2=randomInt(-5,5);
+    textR=`y=${m1}x${n1>=0?'+':''}${n1}`;
+    textS=`y=${m2}x${n2>=0?'+':''}${n2}`;
+  } 
+  else {
+    // Tipus fraccions paramètriques
+    const n1=randomInt(1,6), d1=randomInt(1,6);
+    const n2=randomInt(1,6), d2=randomInt(1,6);
+    m1=n1/d1;
+    m2=n2/d2;
+    textR=`x/${d1}=y/${n1}`;
+    textS=`x/${d2}=y/${n2}`;
   }
-  if (type === "potencies") {
-    document.querySelectorAll(".symbol[data-cat='potencies']").forEach(el => el.style.display = "block");
+
+  // càlcul angle
+  const angle=(Math.atan(Math.abs((m1-m2)/(1+m1*m2)))*180/Math.PI).toFixed(2);
+  const ans=`${angle}°`;
+
+  document.getElementById("exerciseContent").innerHTML=`
+    <p>Calcula l'angle que formen aquestes dues rectes:</p>
+    <p><b>r:</b> ${textR}</p>
+    <p><b>s:</b> ${textS}</p>
+    <input id="answer1" placeholder="Ex: α=...°">
+    <button onclick="checkTextAnswers(['α=${ans}','${ans}','angle=${ans}'])">Comprovar</button>
+    <button onclick="exercises['Angles entre rectes']()">Nova activitat</button>
+  `;
+  document.getElementById("feedback").innerHTML="";
+},
+
+// 🔹 RECTES SECANTS
+"Rectes secants":()=>{
+  const tipus=randomInt(1,3);
+  let textR, textS, m1, n1, m2, n2, x, y, secants;
+
+  if(tipus===1){
+    // y = mx + n
+    m1=randomInt(-4,4)||1; n1=randomInt(-5,5);
+    m2=randomInt(-4,4)||2; n2=randomInt(-5,5);
+    textR=`y=${m1}x${n1>=0?'+':''}${n1}`;
+    textS=`y=${m2}x${n2>=0?'+':''}${n2}`;
+    secants = (m1!==m2);
+    if(secants){
+      x=(n2-n1)/(m1-m2);
+      y=m1*x+n1;
+    }
+  } 
+  else if(tipus===2){
+    // Forma general ax+by+c=0
+    const a1=randomInt(1,5), b1=randomInt(1,5), c1=randomInt(-5,5);
+    const a2=randomInt(1,5), b2=randomInt(1,5), c2=randomInt(-5,5);
+    textR=`${a1}x${b1<0?'+':''}${b1}y${c1>=0?'+':''}${c1}=0`;
+    textS=`${a2}x${b2<0?'+':''}${b2}y${c2>=0?'+':''}${c2}=0`;
+    const det=a1*b2-a2*b1;
+    secants=(det!==0);
+    if(secants){
+      x=(b1*c2-b2*c1)/det;
+      y=(c1*a2-c2*a1)/det;
+    }
+  } 
+  else {
+    // Una forma fraccionària simple
+    const a=randomInt(1,4), b=randomInt(1,4);
+    textR=`x/${a}=y/${b}`;
+    m1=b/a; n1=0;
+    const c=randomInt(1,4), d=randomInt(1,4);
+    textS=`x/${c}=y/${d}`;
+    m2=d/c; n2=0;
+    secants=(m1!==m2);
+    if(secants){
+      x=0; y=0; // passen per origen, secants a O
+    }
   }
-  if (type === "radicals") {
-    document.querySelectorAll(".symbol[data-cat='radicals']").forEach(el => el.style.display = "block");
+
+  const respostaSec=secants ? "Sí" : "No";
+  const respostaPunt = secants ? `(${x.toFixed(2)},${y.toFixed(2)})` : "No existeix";
+
+  document.getElementById("exerciseContent").innerHTML=`
+    <p>Estudia si les rectes següents són secants. Si ho són, troba'n el punt de tall:</p>
+    <p><b>r:</b> ${textR}</p>
+    <p><b>s:</b> ${textS}</p>
+    <label>Secants?</label>
+    <select id="secantsSel">
+      <option value="">--Selecciona--</option>
+      <option value="Sí">Sí</option>
+      <option value="No">No</option>
+    </select><br><br>
+    <label>Punt de tall:</label>
+    <input id="answer1" placeholder="Ex: (x,y)"><br><br>
+    <button onclick="checkSecants('${respostaSec}','${respostaPunt}')">Comprovar</button>
+    <button onclick="exercises['Rectes secants']()">Nova activitat</button>
+  `;
+  document.getElementById("feedback").innerHTML="";
+},
+
+  // 9️⃣ TRIANGLES
+
+  "Triangles":()=>{
+    const ax=randomInt(-3,2), ay=randomInt(0,2);
+    const bx=ax+randomInt(3,6), by=ay;
+    const cx=ax+randomInt(2,4), cy=ay+randomInt(3,6);
+
+    const ab=Math.sqrt((bx-ax)**2+(by-ay)**2);
+    const bc=Math.sqrt((cx-bx)**2+(cy-by)**2);
+    const ca=Math.sqrt((ax-cx)**2+(ay-cy)**2);
+
+    // angles amb la llei dels cosinus
+    const A=(Math.acos((ab**2+ca**2-bc**2)/(2*ab*ca))*180/Math.PI).toFixed(1);
+    const B=(Math.acos((ab**2+bc**2-ca**2)/(2*ab*bc))*180/Math.PI).toFixed(1);
+    const C=(180 - A - B).toFixed(1);
+
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Donat el triangle A(${ax},${ay}), B(${bx},${by}), C(${cx},${cy}):</p>
+      <p><b>a)</b> Calcula la longitud dels seus costats.</p>
+      <input id="answer1" placeholder="Ex: AB=..., BC=..., CA=..."><br><br>
+      <p><b>b)</b> Calcula els seus angles (en graus).</p>
+      <input id="answer2" placeholder="Ex: A=..., B=..., C=..."><br><br>
+      <button onclick="checkTriangleAnswers(${ab.toFixed(2)},${bc.toFixed(2)},${ca.toFixed(2)},${A},${B},${C})">Comprovar</button>
+      <button onclick="exercises['Triangles']()">Nova activitat</button>
+    `;
+    document.getElementById("feedback").innerHTML="";
+  },
+
+    // 🔹 PARAL·LELOGRAM
+  "Paral·lelogram":()=>{
+  const ax=randomInt(-4,4), ay=randomInt(-4,4);
+  const bx=ax+randomInt(2,5), by=ay;
+  const cx=bx+randomInt(-1,2), cy=by+randomInt(2,5);
+  const dx=ax+(cx-bx), dy=ay+(cy-by);
+
+  const ab=Math.sqrt((bx-ax)**2+(by-ay)**2).toFixed(2);
+  const bc=Math.sqrt((cx-bx)**2+(cy-by)**2).toFixed(2);
+  const area=(ab*bc).toFixed(2);
+
+  document.getElementById("exerciseContent").innerHTML=`
+    <p>Les coordenades dels vèrtexs d’un paral·lelogram són:</p>
+    <p>A(${ax},${ay}), B(${bx},${by}), C(${cx},${cy}) i D(${dx},${dy})</p>
+
+    <p><b>a)</b> Calcula la longitud dels costats AB i BC.</p>
+    <input id="answer1" placeholder="Ex: AB=..., BC=..."><br><br>
+
+    <p><b>b)</b> Calcula l’àrea del paral·lelogram.</p>
+    <input id="answer2" placeholder="Ex: Àrea=..."><br><br>
+
+    <button id="checkBtn">Comprovar</button>
+    <button id="newBtn">Nova activitat</button>
+  `;
+  document.getElementById("feedback").innerHTML="";
+
+  // Funcions de botons
+  document.getElementById("checkBtn").onclick = function(){
+    checkParallelogramAnswers(ab, bc, area);
+  };
+  document.getElementById("newBtn").onclick = function(){
+    exercises["Paral·lelogram"]();
+  };
+},
+
+
+  // 🔟 DISTÀNCIES I PUNTS A RECTES
+  "Distàncies i punts a rectes":()=>{
+    const a=randomInt(1,5), b=randomInt(1,5), c=randomInt(-10,10);
+    const px=randomInt(-5,5), py=randomInt(-5,5);
+    const d=(Math.abs(a*px+b*py+c)/Math.sqrt(a*a+b*b)).toFixed(2);
+    const ans=`d=${d}`;
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Calcula la distància del punt P(${px},${py}) a la recta ${a}x+${b}y+${c}=0</p>
+      <input id="answer1" placeholder="Ex: d=...">
+      <button onclick="checkTextAnswers(['${ans}'])">Comprovar</button>
+      <button onclick="exercises['Distàncies i punts a rectes']()">Nova activitat</button>`;
+    document.getElementById("feedback").innerHTML="";
   }
-  if (type === "logaritmes") {
-    document.querySelectorAll(".symbol[data-cat='logaritmes']").forEach(el => el.style.display = "block");
+
+};
+
+// FUNCIONS GENERALS
+function openPopup(title){
+  document.getElementById("exerciseTitle").textContent=title;
+  document.getElementById("exercisePopup").style.display="flex";
+  exercises[title]();
+}
+
+function checkTriangleAnswers(ab, bc, ca, A, B, C){
+  const user1=document.getElementById("answer1").value.trim().toLowerCase().replace(/\s+/g,'');
+  const user2=document.getElementById("answer2").value.trim().toLowerCase().replace(/\s+/g,'');
+  const expected1=`ab=${ab.toFixed(2)},bc=${bc.toFixed(2)},ca=${ca.toFixed(2)}`.toLowerCase().replace(/\s+/g,'');
+  const expected2=`a=${A},b=${B},c=${C}`.toLowerCase().replace(/\s+/g,'');
+
+  const fb=document.getElementById("feedback");
+  if(user1===expected1 && user2===expected2){
+    fb.innerHTML="✅ Correcte!";
+  } else {
+    fb.innerHTML=`❌ Incorrecte.<br>Respostes esperades:<br>Costats: ${expected1}<br>Angles: ${expected2}`;
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  showSymbols("reals");
-});
+function checkParallelogramAnswers(ab, bc, area){
+  const user1=document.getElementById("answer1").value.trim().toLowerCase().replace(/\s+/g,'');
+  const user2=document.getElementById("answer2").value.trim().toLowerCase().replace(/\s+/g,'');
+  
+  const exp1=`ab=${ab},bc=${bc}`.toLowerCase().replace(/\s+/g,'');
+  const exp2=`àrea=${area}`.toLowerCase().replace(/\s+/g,'');
 
-function openPopup(title) {
-  document.getElementById("exerciseTitle").textContent = title;
-  document.getElementById("exercisePopup").style.display = "flex";
+  const fb=document.getElementById("feedback");
+
+  if(user1===exp1 && user2===exp2){
+    fb.innerHTML="✅ Correcte! Els costats i l’àrea són correctes.";
+  } else if(user1===exp1){
+    fb.innerHTML="✅ Costats correctes, però ❌ àrea incorrecta.";
+  } else if(user2===exp2){
+    fb.innerHTML="✅ Àrea correcta, però ❌ costats incorrectes.";
+  } else {
+    fb.innerHTML=`❌ Incorrecte.<br>Respostes esperades:<br>AB=${ab}, BC=${bc}<br>Àrea=${area}`;
+  }
 }
 
-// Tancar popup d’exercici
-function closePopup() {
-  document.getElementById("exercisePopup").style.display = "none";
+function checkSecants(correctSec, correctPoint){
+  const userSel=document.getElementById("secantsSel").value;
+  const userPoint=document.getElementById("answer1").value.trim().toLowerCase().replace(/\s+/g,'');
+  const fb=document.getElementById("feedback");
+
+  const expPoint=correctPoint.toLowerCase().replace(/\s+/g,'');
+  const isPointCorrect = userPoint===expPoint;
+
+  if(userSel===correctSec && isPointCorrect){
+    fb.innerHTML="✅ Correcte! Les dues respostes són encertades.";
+  } else if(userSel===correctSec){
+    fb.innerHTML=`✅ Correcte que són "${correctSec}", però ❌ punt de tall incorrecte (esperat: ${correctPoint}).`;
+  } else {
+    fb.innerHTML=`❌ Incorrecte.<br>Respostes esperades: Secants? ${correctSec} | Punt: ${correctPoint}`;
+  }
 }
 
-            </script> 
-            </body> 
 
-        </html>
+</script>
+
+</body>
+</html>
+
