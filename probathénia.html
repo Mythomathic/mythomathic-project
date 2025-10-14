@@ -11,7 +11,7 @@
     <header> 
 <button class="back-button" onclick="goTo('map.html')">⬅ Mapa</button> 
 <div class="title-center"> 
-<img src="P_Title.png" alt="Probathénia" class="title-img"> 
+<img src="P_title.png" alt="Probathénia" class="title-img"> 
 </div> 
 <div class="header-buttons"> 
     <button onclick="openLore()">📜 Lore</button> 
@@ -26,104 +26,267 @@
     </ul> 
 </nav> 
 </header> 
-<main class="dimension-container"> 
-    <aside class="categories"> 
-        <button onclick="showSymbols('reals')">Nombres Reals</button> 
-        <button onclick="showSymbols('potencies')">Potències</button> 
-        <button onclick="showSymbols('logaritmes')">Logaritmes</button> 
-        <button onclick="showSymbols('radicals')">Radicals</button> 
-    </aside> 
-    <div class="symbols">
-  <!-- Nombres reals -->
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 180px; left: 320px;" onclick="openPopup('Intervals i valors absoluts')">
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 430px; left: 980px;" onclick="openPopup('Recta real i conjunts')">
-  <img src="icon-real.png" alt="Reals" class="symbol" data-cat="reals"
-       style="top: 600px; left: 200px;" onclick="openPopup('Operacions amb nombres reals')">
 
-  <!-- Potències -->
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 220px; left: 780px;" onclick="openPopup('Propietats de les potències')">
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 420px; left: 560px;" onclick="openPopup('Notació científica')">
-  <img src="icon-potencia.png" alt="Potències" class="symbol" data-cat="potencies"
-       style="top: 600px; left: 960px;" onclick="openPopup('Exponents negatius i fraccionaris')">
+<main class="dimension-container">
+  <aside class="categories">
+    <button onclick="showSymbols('espai')">Espai mostral</button>
+    <button onclick="showSymbols('combinatoria')">Combinatòria & factorials</button>
+    <button onclick="showSymbols('esdeveniments')">Esdeveniments & probabilitats</button>
+    <button onclick="showSymbols('composta')">Probabilitat composta / Bayes</button>
+  </aside>
 
-  <!-- Radicals -->
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 350px; left: 940px;" onclick="openPopup('Simplificació de radicals')">
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 510px; left: 260px;" onclick="openPopup('Operacions amb radicals')">
-  <img src="icon-radical.png" alt="Radicals" class="symbol" data-cat="radicals"
-       style="top: 630px; left: 760px;" onclick="openPopup('Racionalització del denominador')">
+  <div class="symbols">
+    <!-- Espai mostral -->
+    <img src="icon-pro.png" class="symbol" data-cat="espai" style="top:200px; left:700px;" onclick="openPopup('Espai mostral')">
+    <img src="icon-pro.png" class="symbol" data-cat="espai" style="top:350px; left:600px;" onclick="openPopup('Espai mostral 2 monedes')">
 
-  <!-- Logaritmes -->
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 300px; left: 620px;" onclick="openPopup('Definició i base dels logaritmes')">
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 540px; left: 520px;" onclick="openPopup('Propietats dels logaritmes')">
-  <img src="icon-log.png" alt="Logaritmes" class="symbol" data-cat="logaritmes"
-       style="top: 650px; left: 880px;" onclick="openPopup('Canvis de base i equacions logarítmiques')">
-</div> 
-</main> 
-<!-- POPUP --> 
- <div id="lorePopup" class="popup"> 
-    <div class="popup-content lore-content"> 
-        <span class="close" onclick="closeLore()">&times;</span>
-         <img src="pergami.png" alt="Pergamí" class="scroll-img"> 
-        </div> 
-    </div> 
-    <!-- POPUP EXERCICI -->
+    <!-- Combinatòria -->
+    <img src="icon-pro.png" class="symbol" data-cat="combinatoria" style="top:200px; left:600px;" onclick="openPopup('Combinatòria i combinacions')">
+    <img src="icon-pro.png" class="symbol" data-cat="combinatoria" style="top:400px; left:700px;" onclick="openPopup('Simplificació factorials')">
+
+    <!-- Esdeveniments -->
+    <img src="icon-pro.png" class="symbol" data-cat="esdeveniments" style="top:200px; left:860px;" onclick="openPopup('Verdader o fals')">
+    <img src="icon-pro.png" class="symbol" data-cat="esdeveniments" style="top:350px; left:650px;" onclick="openPopup('Urna màgica')">
+    <img src="icon-pro.png" class="symbol" data-cat="esdeveniments" style="top:500px; left:750px;" onclick="openPopup('Peixos màgics')">
+    <img src="icon-pro.png" class="symbol" data-cat="esdeveniments" style="top:550px; left:500px;" onclick="openPopup('Esdeveniments A B')">
+
+    <!-- Composta / Bayes -->
+    <img src="icon-pro.png" class="symbol" data-cat="composta" style="top:400px; left:800px;" onclick="openPopup('Teorema de Bayes')">
+    <img src="icon-pro.png" class="symbol" data-cat="composta" style="top:550px; left:600px;" onclick="openPopup('Probabilitat Laplace & distribució')">
+  </div>
+</main>
+
 <div id="exercisePopup" class="popup">
   <div class="popup-content">
     <span class="close" onclick="closePopup()">&times;</span>
     <h2 id="exerciseTitle"></h2>
-    <p>Aquí hi anirà l'enunciat o contingut de l'exercici.</p>
+    <div id="exerciseContent"></div>
+    <p id="feedback"></p>
   </div>
 </div>
-    <script> 
-    function toggleMenu() { 
-        document.getElementById('menu').classList.toggle('active'); } 
-        
-        function goTo(page) { window.location.href = page; } 
-        function openLore() { document.getElementById("lorePopup").style.display = "flex"; } 
-        function closeLore() { document.getElementById("lorePopup").style.display = "none"; } 
-    
-        function showSymbols(type) {
-  // Amaga tots
-  document.querySelectorAll(".symbol").forEach(el => el.style.display = "none");
 
-  if (type === "reals") {
-    // Mostra tots els símbols de "reals"
-    document.querySelectorAll(".symbol[data-cat='reals']").forEach(el => el.style.display = "block");
-  }
-  if (type === "potencies") {
-    document.querySelectorAll(".symbol[data-cat='potencies']").forEach(el => el.style.display = "block");
-  }
-  if (type === "radicals") {
-    document.querySelectorAll(".symbol[data-cat='radicals']").forEach(el => el.style.display = "block");
-  }
-  if (type === "logaritmes") {
-    document.querySelectorAll(".symbol[data-cat='logaritmes']").forEach(el => el.style.display = "block");
-  }
+<script>
+function goTo(p){window.location.href=p;}
+function showSymbols(cat){
+  document.querySelectorAll('.symbol').forEach(s=>s.style.display='none');
+  document.querySelectorAll(`.symbol[data-cat="${cat}"]`).forEach(s=>s.style.display='block');
+}
+document.addEventListener('DOMContentLoaded',()=>showSymbols('espai'));
+function closePopup(){document.getElementById('exercisePopup').style.display='none';}
+function randomInt(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+function randomChoice(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function factorial(n){return n<=1?1:n*factorial(n-1);}
+function checkTextAnswers(expected){
+  const user=document.getElementById("answer1")?.value.trim().toLowerCase().replace(/\s+/g,'');
+  const valid=expected.map(e=>e.toLowerCase().replace(/\s+/g,''));
+  const fb=document.getElementById("feedback");
+  fb.innerHTML=valid.includes(user)?"✅ Correcte!":`❌ Incorrecte (esperat: ${expected[0]})`;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  showSymbols("reals");
-});
+// ===== Exercicis =====
+const exercises={
 
-function openPopup(title) {
-  document.getElementById("exerciseTitle").textContent = title;
-  document.getElementById("exercisePopup").style.display = "flex";
+  // ESPAI MOSTRAL
+  "Espai mostral":()=>{
+    const exemples=[
+      {text:"Llençar un dau de 6 cares",ans:"{1,2,3,4,5,6}"},
+      {text:"Llençar un dau de 8 cares",ans:"{1,2,3,4,5,6,7,8}"},
+      {text:"Treure una carta d'una baralla espanyola (sense oros)",ans:"{copas,bastos,espases}"},
+      {text:"Treure una bola d’una urna amb 3 boles numerades del 1 al 3",ans:"{1,2,3}"},
+      {text:"Llançar dues monedes",ans:"{CC,CX,XC,XX}"}
+    ];
+    const ex=randomChoice(exemples);
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Escriu l’espai mostral de l’experiment:</p>
+      <b>${ex.text}</b><br><br>
+      <input id="answer1" placeholder="Ex: {…}">
+      <button onclick="checkTextAnswers(['${ex.ans}'])">Comprovar</button>
+      <button onclick="exercises['Espai mostral']()">Nova activitat</button>`;
+    document.getElementById("feedback").innerHTML="";
+  },
+
+  "Espai mostral 2 monedes":()=>{
+    const ans="{CC,CX,XC,XX}";
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Llança dues monedes. Quin és l'espai mostral?</p>
+      <input id="answer1" placeholder="Ex: {…}">
+      <button onclick="checkTextAnswers(['${ans}'])">Comprovar</button>
+      <button onclick="exercises['Espai mostral 2 monedes']()">Nova activitat</button>`;
+    document.getElementById("feedback").innerHTML="";
+  },
+
+  // PEIXOS MÀGICS (ara a esdeveniments)
+  "Peixos màgics":()=>{
+    const blau=randomInt(2,6), daurats=randomInt(1,5), escarlates=randomInt(1,4);
+    const total=blau+daurats+escarlates;
+    const ans=`blau=${(blau/total).toFixed(2)},daurat=${(daurats/total).toFixed(2)},escarlata=${(escarlates/total).toFixed(2)}`;
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Passejant per Probathénia trobes el riu Aqualis, on viuen ${blau} peixos blaus, ${daurats} daurats i ${escarlates} escarlates.</p>
+      <p>Si n'agafes un a l’atzar, escriu la probabilitat de cada espècie.</p>
+      <input id="answer1" placeholder="Ex: blau=...,daurat=...,escarlata=...">
+      <button onclick="checkTextAnswers(['${ans}'])">Comprovar</button>
+      <button onclick="exercises['Peixos màgics']()">Nova activitat</button>`;
+    document.getElementById("feedback").innerHTML="";
+  },
+
+  // COMBINATÒRIA
+  "Combinatòria i combinacions":()=>{
+    const tipus=randomChoice(["V","VR","P","C","F"]);
+    let pregunta="",res="";
+    if(tipus==="V"){const n=randomInt(6,10),r=randomInt(2,n-1);pregunta=`Calcula V${n},${r}`;res=(factorial(n)/factorial(n-r)).toFixed(0);}
+    if(tipus==="VR"){const n=randomInt(6,10),r=randomInt(2,n-1);pregunta=`Calcula VR${n},${r}`;res=Math.pow(n,r);}
+    if(tipus==="P"){const n=randomInt(4,8);pregunta=`Calcula P${n}`;res=factorial(n);}
+    if(tipus==="C"){const n=randomInt(6,10),r=randomInt(2,n-1);pregunta=`Calcula C${n},${r}`;res=(factorial(n)/(factorial(r)*factorial(n-r))).toFixed(0);}
+    if(tipus==="F"){const n=randomChoice([5,10]);pregunta=`Calcula ${n}!`;res=factorial(n);}
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>${pregunta}</p>
+      <input id="answer1" placeholder="Resultat">
+      <button onclick="checkTextAnswers(['${res}'])">Comprovar</button>
+      <button onclick="exercises['Combinatòria i combinacions']()">Nova activitat</button>`;
+    document.getElementById("feedback").innerHTML="";
+  },
+
+  "Simplificació factorials":()=>{
+    const exemples=[
+      {t:"11! / 7!",r:factorial(11)/factorial(7)},
+      {t:"18! / 15!",r:factorial(18)/factorial(15)},
+      {t:"6!7! / 3!4!",r:(factorial(6)*factorial(7))/(factorial(3)*factorial(4))},
+      {t:"(n+2)! / (n-2)!",r:"n(n−1)(n+1)(n+2)"},
+      {t:"P5P7 / 8!",r:(factorial(5)*factorial(7))/factorial(8)}
+    ];
+    const ex=randomChoice(exemples);
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Simplifica:</p><b>${ex.t}</b><br>
+      <input id="answer1" placeholder="Resultat">
+      <button onclick="checkTextAnswers(['${ex.r}'])">Comprovar</button>
+      <button onclick="exercises['Simplificació factorials']()">Nova activitat</button>`;
+    document.getElementById("feedback").innerHTML="";
+  },
+
+  // ESDEVENIMENTS
+  "Verdader o fals":()=>{
+    const tipusDau=randomChoice([4,6,8,10]);
+    const ens=[
+      {text:`Tens un dau de ${tipusDau} cares. És impossible que surti un ${tipusDau+1}.`,ans:"Vertader"},
+      {text:`Tens un dau de ${tipusDau} cares. És segur que sortirà un nombre més petit que ${tipusDau+1}.`,ans:"Vertader"},
+      {text:`Tens un dau de ${tipusDau} cares. És possible treure un 0.`,ans:"Fals"},
+      {text:`Tens un dau de ${tipusDau} cares. El contrari a sortir parell és sortir imparell.`,ans:"Vertader"},
+      {text:`Tens un dau de ${tipusDau} cares. És possible que surtin 1 i ${tipusDau} alhora.`,ans:"Fals"}
+    ];
+    const ex=randomChoice(ens);
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>${ex.text}</p>
+      <select id="answer1">
+        <option value="">--Selecciona--</option>
+        <option value="Vertader">Vertader</option>
+        <option value="Fals">Fals</option>
+      </select>
+      <button onclick="checkTextAnswers(['${ex.ans}'])">Comprovar</button>
+      <button onclick="exercises['Verdader o fals']()">Nova activitat</button>`;
+    document.getElementById("feedback").innerHTML="";
+  },
+
+  "Urna màgica":()=>{
+    const colors=["llum","ombra","aigua","foc"];
+    const nums=colors.map(()=>randomInt(2,8));
+    const total=nums.reduce((a,b)=>a+b,0);
+    const probs=colors.map((c,i)=>`${c}=${(nums[i]/total).toFixed(2)}`).join(',');
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>En una urna màgica hi ha cristalls: ${colors.map((c,i)=>`${nums[i]} de ${c}`).join(', ')}.</p>
+      <p>Calcula la probabilitat de treure cada tipus.</p>
+      <input id="answer1" placeholder="llum=...,ombra=...,aigua=...,foc=...">
+      <button onclick="checkTextAnswers(['${probs}'])">Comprovar</button>
+      <button onclick="exercises['Urna màgica']()">Nova activitat</button>`;
+    document.getElementById("feedback").innerHTML="";
+  },
+
+  "Esdeveniments A B":()=>{
+    const univers=[1,2,3,4,5,6,7,8,9];
+    const A=new Set(randomChoice([[1,3,5],[2,4,6],[1,2,3,7]]));
+    const B=new Set(randomChoice([[2,3,4,5],[5,6,7],[1,4,6,8]]));
+    const unionAB=[...new Set([...A,...B])].sort().join(',');
+    const interAB=[...A].filter(x=>B.has(x)).sort().join(',');
+    const diff=[...A].filter(x=>!B.has(x)).sort().join(',');
+    const ans=`A⋃B={${unionAB}}|A⋂B={${interAB}}|A−B={${diff}}`;
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>A=${JSON.stringify([...A])}, B=${JSON.stringify([...B])}</p>
+      <p>Troba A⋃B, A⋂B i A−B.</p>
+      <input id="answer1" placeholder="A⋃B={…}|A⋂B={…}|A−B={…}">
+      <button onclick="checkTextAnswers(['${ans}'])">Comprovar</button>
+      <button onclick="exercises['Esdeveniments A B']()">Nova activitat</button>`;
+    document.getElementById("feedback").innerHTML="";
+  },
+
+  // COMPOSTA / BAYES
+  "Teorema de Bayes":()=>{
+    const pA=randomInt(1,9)/10;
+    const pB_A=randomInt(3,9)/10;
+    const pB_noA=randomInt(1,5)/10;
+    const ans=((pB_A*pA)/(pB_A*pA+pB_noA*(1-pA))).toFixed(2);
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>P(A)=${pA}, P(B|A)=${pB_A}, P(B|¬A)=${pB_noA}</p>
+      <p>Calcula P(A|B)</p>
+      <input id="answer1" placeholder="Ex: 0.42">
+      <button onclick="checkTextAnswers(['${ans}'])">Comprovar</button>
+      <button onclick="exercises['Teorema de Bayes']()">Nova activitat</button>`;
+    document.getElementById("feedback").innerHTML="";
+  },
+
+  "Probabilitat Laplace & distribució":()=>{
+  const tipus=randomChoice(["dau","urna","monedes"]);
+
+  if(tipus==="dau"){
+    const cares=randomInt(4,12);
+    const numero=randomInt(1,cares);
+    const p=1/cares;
+    const ans=p.toFixed(2);
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Dau de ${cares} cares. Probabilitat de treure un ${numero}?</p>
+      <input id="answer1" placeholder="Ex: 0.17">
+      <button onclick="checkTextAnswers(['${ans}'])">Comprovar</button>
+      <button onclick="exercises['Probabilitat Laplace & distribució']()">Nova activitat</button>`;
+  }
+
+  else if(tipus==="urna"){
+    const b=randomInt(3,8), n=randomInt(2,6), v=randomInt(1,4);
+    const total=b+n+v;
+    const ans=`b=${(b/total).toFixed(2)},n=${(n/total).toFixed(2)},v=${(v/total).toFixed(2)}`;
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Urna amb ${b} cristalls blaus, ${n} negres i ${v} verds. Calcula la probabilitat de treure cadascun.</p>
+      <input id="answer1" placeholder="b=...,n=...,v=...">
+      <button onclick="checkTextAnswers(['${ans}'])">Comprovar</button>
+      <button onclick="exercises['Probabilitat Laplace & distribució']()">Nova activitat</button>`;
+  }
+
+  else { // monedes
+    const monedes=randomInt(2,4);
+    const total=Math.pow(2,monedes);
+    const ans=(1/total).toFixed(2);
+    document.getElementById("exerciseContent").innerHTML=`
+      <p>Llances ${monedes} monedes. Probabilitat que surtin totes cares?</p>
+      <input id="answer1" placeholder="Ex: 0.25">
+      <button onclick="checkTextAnswers(['${ans}'])">Comprovar</button>
+      <button onclick="exercises['Probabilitat Laplace & distribució']()">Nova activitat</button>`;
+  }
+
+  document.getElementById("feedback").innerHTML="";
+}
+};
+
+
+// === Popup handler ===
+function openPopup(title){
+  const popup = document.getElementById("exercisePopup");
+  popup.classList.add("active");
+  document.getElementById("exerciseTitle").innerText = title;
+  if (exercises[title]) exercises[title]();
 }
 
-// Tancar popup d’exercici
-function closePopup() {
-  document.getElementById("exercisePopup").style.display = "none";
+function closePopup(){
+  document.getElementById("exercisePopup").classList.remove("active");
 }
 
-            </script> 
+</script>
             </body> 
-
         </html>
+
