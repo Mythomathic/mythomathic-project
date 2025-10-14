@@ -140,7 +140,7 @@ body {
                     box-shadow: none; } 
                     
                 .scroll-img { 
-                    width: 500px; 
+                    width: 400px; 
                     display: block; 
                     margin: 0 auto; } 
                     
@@ -173,3 +173,7 @@ body {
                     
                 .categories button:hover { 
                     transform: scale(1.1); }
+
+                    .lore-content .scroll-img {
+                    margin-top: 80px;
+                        }
