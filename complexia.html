@@ -14,6 +14,7 @@
     <img src="C_Title.png" alt="Complexia" class="title-img">
   </div>
   <div class="header-buttons">
+    <button onclick="openLore()">📜 Lore</button>
     <button onclick="toggleMenu()">☰ Menú</button>
   </div>
   <nav id="menu">
@@ -48,6 +49,14 @@
   </div>
 </main>
 
+<!-- POPUP LORE --> 
+<div id="lorePopup" class="popup"> 
+  <div class="popup-content lore-content"> 
+    <span class="close" onclick="closeLore()">&times;</span>
+    <img src="lore_R.png" alt="Pergamí" class="scroll-img"> 
+  </div> 
+</div> 
+
 <!-- Popup d'exercicis -->
 <div id="exercisePopup" class="popup">
   <div class="popup-content">
@@ -61,6 +70,33 @@
 <script>
 function toggleMenu(){document.getElementById('menu').classList.toggle('active');}
 function goTo(page){window.location.href=page;}
+
+function openLore() { 
+  document.getElementById("lorePopup").style.display = "flex"; 
+} 
+
+
+// funció existent: tanca el popup lore
+  function closeLore(){
+    const lp = document.getElementById("lorePopup");
+    if(lp) lp.style.display = "none";
+  }
+
+  // fallback: assegurem l'event si l'atribut onclick no s'executa per algun motiu
+  document.addEventListener("DOMContentLoaded", () => {
+    const closeBtn = document.querySelector(".lore-content .close");
+    if(closeBtn){
+      closeBtn.addEventListener("click", closeLore);
+    }
+    // També fem que fer click a la capa fosca tanqui el popup (opcional)
+    const lorePopup = document.getElementById("lorePopup");
+    if(lorePopup){
+      lorePopup.addEventListener("click", (e) => {
+        if(e.target === lorePopup) closeLore(); // només si cliques fora del contingut
+      });
+    }
+  });
+
 function showSymbols(type){
   document.querySelectorAll(".symbol").forEach(el=>el.style.display="none");
   document.querySelectorAll(".symbol[data-cat='"+type+"']").forEach(el=>el.style.display="block");
