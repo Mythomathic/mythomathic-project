@@ -104,7 +104,9 @@ body {
                 position: absolute; 
                 width: 60px; 
                 cursor: pointer; 
-                transition: transform 0.2s; } 
+                transition: transform 0.2s; 
+                filter: drop-shadow(0 0 6px white) drop-shadow(0 0 10px rgba(255,255,255,0.7));
+            } 
                 
             .symbol:hover { 
                 transform: scale(1.2); } 
@@ -140,7 +142,7 @@ body {
                     box-shadow: none; } 
                     
                 .scroll-img { 
-                    width: 400px; 
+                    width: 450px; 
                     display: block; 
                     margin: 0 auto; } 
                     
@@ -175,5 +177,5 @@ body {
                     transform: scale(1.1); }
 
                     .lore-content .scroll-img {
-                    margin-top: 80px;
-                        }
+    margin-top: 80px;
+}
