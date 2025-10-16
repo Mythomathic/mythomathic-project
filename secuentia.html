@@ -61,7 +61,7 @@
 <div id="lorePopup" class="popup">
   <div class="popup-content lore-content">
     <span class="close" onclick="closeLore()">&times;</span>
-    <img src="pergami.png" alt="Pergamí" class="scroll-img">
+    <img src="lore_S.png" alt="Pergamí" class="scroll-img">
   </div>
 </div>
 
@@ -83,13 +83,32 @@ function goTo(page) {
   window.location.href = page;
 }
 
-function openLore() {
-  document.getElementById("lorePopup").style.display = "flex";
-}
+function openLore() { 
+  document.getElementById("lorePopup").style.display = "flex"; 
+} 
 
-function closeLore() {
-  document.getElementById("lorePopup").style.display = "none";
-}
+
+
+// funció existent: tanca el popup lore
+  function closeLore(){
+    const lp = document.getElementById("lorePopup");
+    if(lp) lp.style.display = "none";
+  }
+
+  // fallback: assegurem l'event si l'atribut onclick no s'executa per algun motiu
+  document.addEventListener("DOMContentLoaded", () => {
+    const closeBtn = document.querySelector(".lore-content .close");
+    if(closeBtn){
+      closeBtn.addEventListener("click", closeLore);
+    }
+    // També fem que fer click a la capa fosca tanqui el popup (opcional)
+    const lorePopup = document.getElementById("lorePopup");
+    if(lorePopup){
+      lorePopup.addEventListener("click", (e) => {
+        if(e.target === lorePopup) closeLore(); // només si cliques fora del contingut
+      });
+    }
+  });
 
 function showSymbols(type) {
   document.querySelectorAll(".symbol").forEach(el => el.style.display = "none");
@@ -205,10 +224,9 @@ function generateTermsExercise(a,b,n) {
   const fb = document.getElementById("feedback");
   if(userAns === correct){
     fb.textContent = "Correcte! ✔️";
-    fb.style.color = "green";
+    onExerciseCorrect();
   } else {
     fb.textContent = `Incorrecte ❌ (resposta esperada: ${correct})`;
-    fb.style.color = "red";
   }
 }
 
@@ -218,10 +236,9 @@ function checkTerm(a,b,n) {
   const fb = document.getElementById("feedback");
   if(userAns === correct){
     fb.textContent = "Correcte! ✔️";
-    fb.style.color = "green";
+    onExerciseCorrect();
   } else {
     fb.textContent = `Incorrecte ❌ (resposta esperada: ${correct})`;
-    fb.style.color = "red";
   }
 }
 
@@ -231,32 +248,80 @@ function checkPA(a1,d) {
   const userAns = document.getElementById("answer").value.trim();
   if(userAns === correct){
     fb.textContent = "Correcte! ✔️";
-    fb.style.color = "green";
+    onExerciseCorrect();
   } else {
     fb.textContent = `Incorrecte ❌ (resposta esperada: ${correct})`;
-    fb.style.color = "red";
   }
 }
 
 function checkPA2(s3,s6) {
   const fb = document.getElementById("feedback");
   fb.textContent = "Revisa el càlcul segons la suma dels termes. ❌";
-  fb.style.color = "red";
 }
 
 function checkPG(c4,c5) {
   const fb = document.getElementById("feedback");
   fb.textContent = "Calcula a partir de la raó c5/c4 i troba c1. ❌";
-  fb.style.color = "red";
 }
 
 function checkPG2(sInf,a2) {
   const fb = document.getElementById("feedback");
   fb.textContent = "Calcula a1 = ?, raó = ?. ❌";
-  fb.style.color = "red";
 }
+
+
+// ===== Sistema d'Experiència i Nivells =====
+let correctExercises = 0;
+let xp = parseInt(localStorage.getItem("xp")) || 0;
+let level = parseInt(localStorage.getItem("level")) || 1;
+let xpGainBase = 50; // XP inicial per cada 5 exercicis
+
+function addXP(amount) {
+  xp += amount;
+  const xpMax = level * 100;
+  if (xp >= xpMax) {
+    xp -= xpMax;
+    level++;
+    gainTitle(level);
+  }
+
+  localStorage.setItem("xp", xp);
+  localStorage.setItem("level", level);
+
+  // Missatge de guany
+  alert(`🏅 Has guanyat ${amount} XP! (Nivell actual: ${level})`);
+}
+
+function gainTitle(level) {
+  const titles = {
+    1: "Custodi del Flux",
+    2: "Guardià del Patró",
+    3: "Savi d’Ekuatia",
+    4: "Somniador de Tangentia",
+    5: "Vigilant de Complexia",
+    6: "Cercador de Functonia",
+    7: "Mestre de Derivalia"
+  };
+
+  const newTitle = titles[level] || `Aventurer Nivell ${level}`;
+  alert(`✨ Has pujat de nivell! Nou títol: ${newTitle}`);
+  localStorage.setItem("title", newTitle);
+}
+
+// Cada cop que un exercici és correcte:
+function onExerciseCorrect() {
+  correctExercises++;
+  if (correctExercises % 5 === 0) {
+    // cada 5 correctes → guany XP
+    const earnedXP = Math.max(10, xpGainBase - (level - 1) * 5);
+    addXP(earnedXP);
+  }
+}
+
+
 
 </script>
 </body>
 </html>
+
 
