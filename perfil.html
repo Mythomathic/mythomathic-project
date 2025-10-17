@@ -8,21 +8,21 @@
 </head>
 <body>
   <header>
-  <div class="header-left">
-    <a href="map.html" class="btn-link">⟵ Tornar al mapa</a>
-  </div>
+    <div class="header-left">
+      <a href="map.html" class="btn-link">⟵ Tornar al mapa</a>
+    </div>
 
-  <h1>El meu perfil</h1>
+    <h1>El meu perfil</h1>
 
-  <nav class="header-right">
-    <ul class="menu">
-      <li><a href="perfil.html">Perfil</a></li>
-      <li><a href="config.html">Configuració</a></li>
-      <li><a href="sobremi.html">Sobre mi</a></li>
-      <li><a href="contacte.html">Contacte</a></li>
-    </ul>
-  </nav>
-</header>
+    <nav class="header-right">
+      <ul class="menu">
+        <li><a href="perfil.html">Perfil</a></li>
+        <li><a href="config.html">Configuració</a></li>
+        <li><a href="sobremi.html">Sobre mi</a></li>
+        <li><a href="contacte.html">Contacte</a></li>
+      </ul>
+    </nav>
+  </header>
 
   <div class="profile-container">
     <div id="view-mode">
@@ -41,6 +41,7 @@
           <div class="progress" id="xp-bar"></div>
         </div>
         <p>XP: <span id="xp">0</span> / <span id="xp-max">100</span></p>
+        <p>Títol: <span id="title">Novell de Mythomathic</span></p>
       </div>
 
       <div class="achievements">
@@ -101,11 +102,11 @@
           <option value="Vectonia">Vectonia</option>
           <option value="Probathénia">Probathénia</option>
           <option value="Realithia">Realithia</option>
-          <option value="Realithia">Ekuatia</option>
-          <option value="Realithia">Tangentia</option>
-          <option value="Realithia">Complexia</option>
-          <option value="Realithia">Functonia</option>
-          <option value="Realithia">Derivalia</option>
+          <option value="Ekuatia">Ekuatia</option>
+          <option value="Tangentia">Tangentia</option>
+          <option value="Complexia">Complexia</option>
+          <option value="Functonia">Functonia</option>
+          <option value="Derivalia">Derivalia</option>
         </select>
       </div> <br>
 
@@ -114,157 +115,152 @@
     </div>
   </div>
 
-
   <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-  import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
+    const firebaseConfig = {
+      apiKey: "AIzaSyDPVUQZXaSAARwROsDgvlohMvB-esYvMrA",
+      authDomain: "mythomathic.firebaseapp.com",
+      projectId: "mythomathic",
+      storageBucket: "mythomathic.firebasestorage.app",
+      messagingSenderId: "396574593247",
+      appId: "1:396574593247:web:5b7f02c53de5613eda996a",
+      measurementId: "G-P649F73C8E"
+    };
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDPVUQZXaSAARwROsDgvlohMvB-esYvMrA",
-    authDomain: "mythomathic.firebaseapp.com",
-    projectId: "mythomathic",
-    storageBucket: "mythomathic.firebasestorage.app",
-    messagingSenderId: "396574593247",
-    appId: "1:396574593247:web:5b7f02c53de5613eda996a",
-    measurementId: "G-P649F73C8E"
-  };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+    // Elements
+    const usernameEl = document.getElementById("username");
+    const emailEl = document.getElementById("email");
+    const xpEl = document.getElementById("xp");
+    const xpMaxEl = document.getElementById("xp-max");
+    const xpBar = document.getElementById("xp-bar");
+    const levelEl = document.getElementById("level");
+    const titleEl = document.getElementById("title");
+    const achievementsList = document.getElementById("achievements-list");
+    const avatarEl = document.getElementById("avatar");
+    const favoriteDimensionText = document.getElementById("favorite-dimension-text");
 
-  // 🔹 Elements de la interfície
-  const usernameEl = document.getElementById("username");
-  const emailEl = document.getElementById("email");
-  const xpEl = document.getElementById("xp");
-  const xpMaxEl = document.getElementById("xp-max");
-  const xpBar = document.getElementById("xp-bar");
-  const levelEl = document.getElementById("level");
-  const achievementsList = document.getElementById("achievements-list");
-  const avatarEl = document.getElementById("avatar");
-  const favoriteDimensionText = document.getElementById("favorite-dimension-text");
+    const editBtn = document.getElementById("edit-profile");
+    const editMode = document.getElementById("edit-mode");
+    const viewMode = document.getElementById("view-mode");
+    const confirmBtn = document.getElementById("confirm-edit");
+    const cancelBtn = document.getElementById("cancel-edit");
 
-  const editBtn = document.getElementById("edit-profile");
-  const editMode = document.getElementById("edit-mode");
-  const viewMode = document.getElementById("view-mode");
-  const confirmBtn = document.getElementById("confirm-edit");
-  const cancelBtn = document.getElementById("cancel-edit");
+    const editUsernameInput = document.getElementById("edit-username-input");
+    const editDimension = document.getElementById("edit-dimension");
+    const avatarOptions = document.querySelectorAll(".avatar-option");
 
-  const editUsernameInput = document.getElementById("edit-username-input");
-  const editDimension = document.getElementById("edit-dimension");
-  const avatarOptions = document.querySelectorAll(".avatar-option");
+    let currentUser;
+    let selectedAvatar = "avatars/avatar1.png";
 
-  let currentUser;
-  let selectedAvatar = "avatars/avatar1.png";
+    // Funció per obtenir el títol segons nivell
+    function getTitle(level) {
+      const titles = {
+        1: "Custodi del Flux",
+        2: "Guardià del Patró",
+        3: "Savi d’Ekuatia",
+        4: "Somniador de Tangentia",
+        5: "Vigilant de Complexia",
+        6: "Cercador de Functonia",
+        7: "Mestre de Derivalia"
+      };
+      return titles[level] || `Aventurer Nivell ${level}`;
+    }
 
-  
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      currentUser = user;
-      emailEl.textContent = user.email;
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        currentUser = user;
+        emailEl.textContent = user.email;
 
-      const ref = doc(db, "users", user.uid);
-      const snapshot = await getDoc(ref);
+        const ref = doc(db, "users", user.uid);
+        const snapshot = await getDoc(ref);
 
-      if (snapshot.exists()) {
-        const data = snapshot.data();
-        usernameEl.textContent = data.username || "Usuari sense nom";
-        avatarEl.src = data.avatar || "avatars/avatar1.png";
-        favoriteDimensionText.textContent = "Dimensió preferida: " + (data.favoriteDimension || "Secuentia");
+        if (snapshot.exists()) {
+          const data = snapshot.data();
+          usernameEl.textContent = data.username || "Usuari sense nom";
+          avatarEl.src = data.avatar || "avatars/avatar1.png";
+          favoriteDimensionText.textContent = "Dimensió preferida: " + (data.favoriteDimension || "Secuentia");
 
-        // XP i nivell
-        const xp = data.xp || 0;
-        const level = data.level || 1;
-        xpEl.textContent = xp;
-        xpMaxEl.textContent = level * 100;
-        levelEl.textContent = level;
-        xpBar.style.width = `${(xp / (level * 100)) * 100}%`;
+          const xp = data.xp || 0;
+          const level = data.level || 1;
+          xpEl.textContent = xp;
+          xpMaxEl.textContent = level * 100;
+          levelEl.textContent = level;
+          xpBar.style.width = `${(xp / (level * 100)) * 100}%`;
+          titleEl.textContent = getTitle(level);
 
-        // Assoliments
-        achievementsList.innerHTML = "";
-        if (data.achievements) {
-          data.achievements.forEach(a => {
-            const li = document.createElement("li");
-            li.textContent = a;
-            achievementsList.appendChild(li);
+          achievementsList.innerHTML = "";
+          if (data.achievements) {
+            data.achievements.forEach(a => {
+              const li = document.createElement("li");
+              li.textContent = a;
+              achievementsList.appendChild(li);
+            });
+          }
+        } else {
+          await setDoc(ref, {
+            username: "Nou jugador",
+            avatar: "avatars/avatar1.png",
+            xp: 0,
+            level: 1,
+            achievements: [],
+            favoriteDimension: "Secuentia"
           });
         }
       } else {
-        // Si és nou, crea document
-        await setDoc(ref, {
-          username: "Nou jugador",
-          avatar: "avatars/avatar1.png",
-          xp: 0,
-          level: 1,
-          achievements: [],
-          favoriteDimension: "Secuentia"
-        });
+        window.location.href = "inici.html";
       }
-    } else {
-      window.location.href = "inici.html";
-    }
-  });
-
-  // Mode edició
-  editBtn.addEventListener("click", () => {
-    viewMode.style.display = "none";
-    editMode.style.display = "block";
-
-    // Precarregar valors actuals
-    editUsernameInput.value = usernameEl.textContent;
-    editDimension.value = favoriteDimensionText.textContent.replace("Dimensió preferida: ", "");
-    selectedAvatar = avatarEl.src;
-  });
-
-  // Cancel·lar edició
-  cancelBtn.addEventListener("click", () => {
-    editMode.style.display = "none";
-    viewMode.style.display = "block";
-  });
-
-  // Seleccionar avatar
-  avatarOptions.forEach(img => {
-    img.addEventListener("click", () => {
-      selectedAvatar = img.src;
-      avatarOptions.forEach(i => i.classList.remove("selected"));
-      img.classList.add("selected");
     });
-  });
 
-  // Confirmar i desar canvis
-  confirmBtn.addEventListener("click", async () => {
-    if (currentUser) {
-      await updateDoc(doc(db, "users", currentUser.uid), {
-        username: editUsernameInput.value,
-        avatar: selectedAvatar,
-        favoriteDimension: editDimension.value
-      });
+    // Mode edició
+    editBtn.addEventListener("click", () => {
+      viewMode.style.display = "none";
+      editMode.style.display = "block";
+      editUsernameInput.value = usernameEl.textContent;
+      editDimension.value = favoriteDimensionText.textContent.replace("Dimensió preferida: ", "");
+      selectedAvatar = avatarEl.src;
+    });
 
-      // Actualitzar vista
-      usernameEl.textContent = editUsernameInput.value;
-      avatarEl.src = selectedAvatar;
-      favoriteDimensionText.textContent = "Dimensió preferida: " + editDimension.value;
-
-      // Tornar a mode vista
+    cancelBtn.addEventListener("click", () => {
       editMode.style.display = "none";
       viewMode.style.display = "block";
-    }
-  });
+    });
 
-  // Tancar sessió
-  document.getElementById("logout").addEventListener("click", async () => {
-    await signOut(auth);
-    window.location.href = "inici.html";
-  });
+    avatarOptions.forEach(img => {
+      img.addEventListener("click", () => {
+        selectedAvatar = img.src;
+        avatarOptions.forEach(i => i.classList.remove("selected"));
+        img.classList.add("selected");
+      });
+    });
 
-  document.getElementById("back-to-map").addEventListener("click", () => {
-  window.location.href = "map.html";
-});
+    confirmBtn.addEventListener("click", async () => {
+      if (currentUser) {
+        await updateDoc(doc(db, "users", currentUser.uid), {
+          username: editUsernameInput.value,
+          avatar: selectedAvatar,
+          favoriteDimension: editDimension.value
+        });
 
+        usernameEl.textContent = editUsernameInput.value;
+        avatarEl.src = selectedAvatar;
+        favoriteDimensionText.textContent = "Dimensió preferida: " + editDimension.value;
 
+        editMode.style.display = "none";
+        viewMode.style.display = "block";
+      }
+    });
 
+    document.getElementById("logout").addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "inici.html";
+    });
   </script>
 </body>
 </html>
