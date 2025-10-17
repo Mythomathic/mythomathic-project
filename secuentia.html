@@ -37,27 +37,21 @@
   </aside>
 
   <div class="symbols">
-    <!-- Progressions Aritmètiques -->
-    <img src="icon-sec.png" alt="Aritmètiques" class="symbol" data-cat="aritmetiques"
-         style="top: 180px; left: 320px;" onclick="openPopup('Suma i termes de PA')">
-    <img src="icon-sec.png" alt="Aritmètiques" class="symbol" data-cat="aritmetiques"
-         style="top: 430px; left: 980px;" onclick="openPopup('Troba el terme general PA')">
+    <!-- PA -->
+    <img src="icon-sec.png" class="symbol" data-cat="aritmetiques" style="top:180px;left:320px;" onclick="openPopup('Suma i termes de PA')">
+    <img src="icon-sec.png" class="symbol" data-cat="aritmetiques" style="top:430px;left:980px;" onclick="openPopup('Troba el terme general PA')">
 
-    <!-- Progressions Geomètriques -->
-    <img src="icon-sec.png" alt="Geomètriques" class="symbol" data-cat="geometriques"
-         style="top: 220px; left: 780px;" onclick="openPopup('Suma i termes de PG')">
-    <img src="icon-sec.png" alt="Geomètriques" class="symbol" data-cat="geometriques"
-         style="top: 420px; left: 560px;" onclick="openPopup('Troba el terme general PG')">
+    <!-- PG -->
+    <img src="icon-sec.png" class="symbol" data-cat="geometriques" style="top:220px;left:780px;" onclick="openPopup('Suma i termes de PG')">
+    <img src="icon-sec.png" class="symbol" data-cat="geometriques" style="top:420px;left:560px;" onclick="openPopup('Troba el terme general PG')">
 
-    <!-- Termes Generals -->
-    <img src="icon-sec.png" alt="Generals" class="symbol" data-cat="generals"
-         style="top: 350px; left: 940px;" onclick="openPopup('Calcula termes de la successió')">
-    <img src="icon-sec.png" alt="Generals" class="symbol" data-cat="generals"
-         style="top: 510px; left: 260px;" onclick="openPopup('Troba el terme indicat')">
+    <!-- Generals -->
+    <img src="icon-sec.png" class="symbol" data-cat="generals" style="top:350px;left:940px;" onclick="openPopup('Calcula termes de la successió')">
+    <img src="icon-sec.png" class="symbol" data-cat="generals" style="top:510px;left:260px;" onclick="openPopup('Troba el terme indicat')">
   </div>
 </main>
 
-<!-- POPUP LORE -->
+<!-- LORE -->
 <div id="lorePopup" class="popup">
   <div class="popup-content lore-content">
     <span class="close" onclick="closeLore()">&times;</span>
@@ -65,7 +59,7 @@
   </div>
 </div>
 
-<!-- POPUP EXERCICI -->
+<!-- EXERCICIS -->
 <div id="exercisePopup" class="popup">
   <div class="popup-content">
     <span class="close" onclick="closePopup()">&times;</span>
@@ -75,208 +69,243 @@
 </div>
 
 <script>
-function toggleMenu() {
-  document.getElementById('menu').classList.toggle('active');
-}
+function toggleMenu(){ document.getElementById('menu').classList.toggle('active'); }
+function goTo(page){ window.location.href = page; }
+function openLore(){ document.getElementById("lorePopup").style.display = "flex"; }
+function closeLore(){ document.getElementById("lorePopup").style.display = "none"; }
 
-function goTo(page) {
-  window.location.href = page;
-}
-
-function openLore() { 
-  document.getElementById("lorePopup").style.display = "flex"; 
-} 
-
-
-
-// funció existent: tanca el popup lore
-  function closeLore(){
-    const lp = document.getElementById("lorePopup");
-    if(lp) lp.style.display = "none";
+document.addEventListener("DOMContentLoaded",()=>{
+  const lorePopup=document.getElementById("lorePopup");
+  if(lorePopup){
+    lorePopup.addEventListener("click",(e)=>{ if(e.target===lorePopup) closeLore(); });
   }
-
-  // fallback: assegurem l'event si l'atribut onclick no s'executa per algun motiu
-  document.addEventListener("DOMContentLoaded", () => {
-    const closeBtn = document.querySelector(".lore-content .close");
-    if(closeBtn){
-      closeBtn.addEventListener("click", closeLore);
-    }
-    // També fem que fer click a la capa fosca tanqui el popup (opcional)
-    const lorePopup = document.getElementById("lorePopup");
-    if(lorePopup){
-      lorePopup.addEventListener("click", (e) => {
-        if(e.target === lorePopup) closeLore(); // només si cliques fora del contingut
-      });
-    }
-  });
-
-function showSymbols(type) {
-  document.querySelectorAll(".symbol").forEach(el => el.style.display = "none");
-  document.querySelectorAll(".symbol[data-cat='"+type+"']").forEach(el => el.style.display = "block");
-}
-
-document.addEventListener("DOMContentLoaded", () => {
   showSymbols("aritmetiques");
 });
 
-// ===== POPUP Exercicis =====
-function closePopup() {
-  document.getElementById("exercisePopup").style.display = "none";
+function showSymbols(type){
+  document.querySelectorAll(".symbol").forEach(el=>el.style.display="none");
+  document.querySelectorAll(`.symbol[data-cat='${type}']`).forEach(el=>el.style.display="block");
 }
+function closePopup(){ document.getElementById("exercisePopup").style.display="none"; }
+function randomInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
 
-// Generació aleatòria d’exercicis
-function randomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-// Diccionari d’exercicis
+// ==================== EXERCICIS ======================
 const exercises = {
-  "Calcula termes de la successió": () => {
-    const n = randomInt(3,7);
-    const a = randomInt(1,5);
-    const b = randomInt(1,5);
-    const expr = `a_n = ${a}·n^2 + ${b}·n`;
-    const container = document.getElementById("exerciseContent");
-    container.innerHTML = `<p>Troba els ${n} primers termes de la successió:</p>
-      <p><b>${expr}</b></p>
-      <input type="text" id="answer" placeholder="Ex: 12, 24, 48...">
-      <button onclick="generateTermsExercise(${a},${b},${n})">Comprovar</button>
-      <button onclick="exercises['Calcula termes de la successió']()">Nova activitat</button>
-      <p id="feedback"></p>`;
+  // --- Successions generals ---
+  "Calcula termes de la successió": ()=>{
+    const n=randomInt(3,7), a=randomInt(1,5), b=randomInt(1,5);
+    const expr=`aₙ = ${a}·n² + ${b}·n`;
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`<p>Troba els ${n} primers termes de la successió:</p>
+    <p><b>${expr}</b></p>
+    <input id="answer" placeholder="Ex: 2, 6, 12..." />
+    <button onclick="generateTermsExercise(${a},${b},${n})">Comprovar</button>
+    <button onclick="exercises['Calcula termes de la successió']()">Nova activitat</button>
+    <p id="feedback"></p>`;
   },
 
-  "Troba el terme indicat": () => {
-    const n = randomInt(5,15);
-    const a = randomInt(1,5);
-    const b = randomInt(-5,5);
-    const expr = `a_n = ${a}·n + ${b}`;
-    const container = document.getElementById("exerciseContent");
-    container.innerHTML = `<p>Troba el terme a<sub>${n}</sub> de la successió:</p>
-      <p><b>${expr}</b></p>
-      <input type="text" id="answer" placeholder="Ex: 12">
-      <button onclick="checkTerm(${a},${b},${n})">Comprovar</button>
-      <button onclick="exercises['Troba el terme indicat']()">Nova activitat</button>
-      <p id="feedback"></p>`;
+  "Troba el terme indicat": ()=>{
+    const n=randomInt(5,15), a=randomInt(1,5), b=randomInt(-5,5);
+    const expr=`aₙ = ${a}·n + ${b}`;
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`<p>Troba el terme a<sub>${n}</sub> de la successió:</p>
+    <p><b>${expr}</b></p>
+    <input id="answer" placeholder="Ex: 12" />
+    <button onclick="checkTerm(${a},${b},${n})">Comprovar</button>
+    <button onclick="exercises['Troba el terme indicat']()">Nova activitat</button>
+    <p id="feedback"></p>`;
   },
 
-  "Suma i termes de PA": () => {
-    const a2 = randomInt(1,10);
-    const a7 = randomInt(20,50);
-    const d = (a7 - a2)/5;
-    const a1 = a2 - d;
-    const container = document.getElementById("exerciseContent");
-    container.innerHTML = `<p>En una progressió aritmètica, a2 = ${a2} i a7 = ${a7}. Escriu el terme general i els 5 primers termes.</p>
-      <input type="text" id="answer" placeholder="Ex: a_n = ...">
-      <button onclick="checkPA(${a1},${d})">Comprovar</button>
-      <button onclick="exercises['Suma i termes de PA']()">Nova activitat</button>
-      <p id="feedback"></p>`;
+  // --- Progressions aritmètiques ---
+ "Suma i termes de PA": ()=>{
+    const a2=randomInt(1,10), a7=randomInt(20,50);
+    const d=(a7-a2)/5, a1=a2-d;
+    const terms=Array.from({length:5},(_,i)=>+(a1+i*d).toFixed(2)); // <-- arrodonim a 2 decimals
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`<p>En una progressió aritmètica, a₂ = ${a2} i a₇ = ${a7}. Escriu els 5 primers termes.</p>
+    <input id="answer" placeholder="Ex: 2.2, 6, 9.8, ..." />
+    <button onclick="checkPA1(${a1},${d},'${terms.join(', ')}')">Comprovar</button>
+    <button onclick="exercises['Suma i termes de PA']()">Nova activitat</button>
+    <p id="feedback"></p>`;
+},
+
+  "Troba el terme general PA": ()=>{
+    const a=randomInt(1,10), d=randomInt(2,6), n=randomInt(4,10);
+    const a_n=a+d*(n-1);
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`<p>En una progressió aritmètica amb a₁ = ${a} i d = ${d}, troba el terme a<sub>${n}</sub>.</p>
+    <input id="answer" placeholder="Ex: 34" />
+    <button onclick="checkPATerm(${a},${d},${n})">Comprovar</button>
+    <button onclick="exercises['Troba el terme general PA']()">Nova activitat</button>
+    <p id="feedback"></p>`;
   },
 
-  "Troba el terme general PA": () => {
-    const s3 = randomInt(20,60);
-    const s6 = randomInt(80,150);
-    const container = document.getElementById("exerciseContent");
-    container.innerHTML = `<p>La suma dels tres primers termes d'una PA és ${s3} i la suma dels tres següents és ${s6}. Troba el terme general.</p>
-      <input type="text" id="answer" placeholder="Ex: a_n = ...">
-      <button onclick="checkPA2(${s3},${s6})">Comprovar</button>
-      <button onclick="exercises['Troba el terme general PA']()">Nova activitat</button>
-      <p id="feedback"></p>`;
+  // --- Progressions geomètriques ---
+  "Suma i termes de PG": ()=>{
+    const a1=randomInt(2,6), r=(Math.random()<0.5)?0.5:0.25;
+    const sInf=a1/(1-r);
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`<p>Calcula la suma infinita de la successió: ${a1}, ${a1*r}, ${a1*r**2}, ${a1*r**3}, ...</p>
+    <input id="answer" placeholder="Ex: 12" />
+    <button onclick="checkPGSum(${a1},${r},${sInf})">Comprovar</button>
+    <button onclick="exercises['Suma i termes de PG']()">Nova activitat</button>
+    <p id="feedback"></p>`;
   },
 
-  "Suma i termes de PG": () => {
-    const c4 = randomInt(10,50);
-    const c5 = randomInt(20,60);
-    const container = document.getElementById("exerciseContent");
-    container.innerHTML = `<p>En una progressió geomètrica, c4 = ${c4} i c5 = ${c5}. Escriu el terme general.</p>
-      <input type="text" id="answer" placeholder="Ex: c_n = ...">
-      <button onclick="checkPG(${c4},${c5})">Comprovar</button>
-      <button onclick="exercises['Suma i termes de PG']()">Nova activitat</button>
-      <p id="feedback"></p>`;
-  },
-
-  "Troba el terme general PG": () => {
-    const sInf = randomInt(10,50);
-    const a2 = randomInt(1,10);
-    const container = document.getElementById("exerciseContent");
-    container.innerHTML = `<p>La suma infinita d'una PG és ${sInf} i a2 = ${a2}. Calcula a1 i la raó.</p>
-      <input type="text" id="answer" placeholder="Ex: a1 = ..., r = ...">
-      <button onclick="checkPG2(${sInf},${a2})">Comprovar</button>
-      <button onclick="exercises['Troba el terme general PG']()">Nova activitat</button>
-      <p id="feedback"></p>`;
+  "Troba el terme general PG": ()=>{
+    const a1=randomInt(2,6), r=randomInt(2,4);
+    const c5=a1*r**4;
+    const container=document.getElementById("exerciseContent");
+    container.innerHTML=`<p>El cinquè terme d'una PG és ${c5} i el primer és ${a1}. Troba els 5 primers termes.</p>
+    <input id="answer" placeholder="Ex: 3, 6, 12, 24, 48" />
+    <button onclick="checkPGTerms(${a1},${r})">Comprovar</button>
+    <button onclick="exercises['Troba el terme general PG']()">Nova activitat</button>
+    <p id="feedback"></p>`;
   }
 };
 
-function openPopup(title) {
-  document.getElementById("exerciseTitle").textContent = title;
-  document.getElementById("exercisePopup").style.display = "flex";
-  document.getElementById("exerciseContent").innerHTML = "";
-  if (exercises[title]) {
-    exercises[title]();
+function openPopup(title){
+  document.getElementById("exerciseTitle").textContent=title;
+  document.getElementById("exercisePopup").style.display="flex";
+  document.getElementById("exerciseContent").innerHTML="";
+  exercises[title] ? exercises[title]() :
+  document.getElementById("exerciseContent").innerHTML="<p>No hi ha exercicis disponibles.</p>";
+}
+
+// ================== COMPROVACIONS ====================
+function generateTermsExercise(a,b,n){
+  const correct=Array.from({length:n},(_,i)=>a*(i+1)**2+b*(i+1)).join(", ");
+  const user=document.getElementById("answer").value.trim();
+  const fb=document.getElementById("feedback");
+  if(user===correct){ fb.textContent="Correcte! ✔️"; onExerciseCorrect(); }
+  else fb.textContent=`Incorrecte ❌ (resposta esperada: ${correct})`;
+}
+function checkTerm(a,b,n){
+  const correct=a*n+b;
+  const user=Number(document.getElementById("answer").value.trim());
+  const fb=document.getElementById("feedback");
+  if(user===correct){ fb.textContent="Correcte! ✔️"; onExerciseCorrect(); }
+  else fb.textContent=`Incorrecte ❌ (resposta esperada: ${correct})`;
+}
+function checkPA1(a1,d,terms){
+    // Generem els termes arrodonits a 2 decimals
+    const correctTerms = Array.from({length:5},(_,i)=>+(a1+i*d).toFixed(2)).join(", ");
+    const user=document.getElementById("answer").value.trim();
+    const fb=document.getElementById("feedback");
+    if(user===correctTerms){ fb.textContent="Correcte! ✔️"; onExerciseCorrect(); }
+    else fb.textContent=`Incorrecte ❌ (resposta esperada: ${correctTerms})`;
+}
+function checkPATerm(a,d,n){
+  const correct=a+d*(n-1);
+  const user=Number(document.getElementById("answer").value.trim());
+  const fb=document.getElementById("feedback");
+  if(user===correct){ fb.textContent="Correcte! ✔️"; onExerciseCorrect(); }
+  else fb.textContent=`Incorrecte ❌ (resposta esperada: ${correct})`;
+}
+function checkPGSum(a1,r,sInf){
+  const correct=+(a1/(1-r)).toFixed(2);
+  const user=parseFloat(document.getElementById("answer").value.trim());
+  const fb=document.getElementById("feedback");
+  if(Math.abs(user-correct)<0.01){ fb.textContent="Correcte! ✔️"; onExerciseCorrect(); }
+  else fb.textContent=`Incorrecte ❌ (resposta esperada: ${correct})`;
+}
+function checkPGTerms(a1,r){
+  const correct=Array.from({length:5},(_,i)=>a1*Math.pow(r,i)).join(", ");
+  const user=document.getElementById("answer").value.trim();
+  const fb=document.getElementById("feedback");
+  if(user===correct){ fb.textContent="Correcte! ✔️"; onExerciseCorrect(); }
+  else fb.textContent=`Incorrecte ❌ (resposta esperada: ${correct})`;
+}
+
+// ================== EXPERIÈNCIA =====================
+let correctExercises=0;
+let xp=parseInt(localStorage.getItem("xp"))||0;
+let level=parseInt(localStorage.getItem("level"))||1;
+let xpGainBase=50;
+
+function addXP(amount){
+  xp+=amount;
+  const xpMax=level*100;
+  if(xp>=xpMax){ xp-=xpMax; level++; gainTitle(level); }
+  localStorage.setItem("xp",xp);
+  localStorage.setItem("level",level);
+  alert(`🏅 Has guanyat ${amount} XP! (Nivell actual: ${level})`);
+}
+function gainTitle(level){
+  const titles={
+    1:"Custodi del Flux",2:"Guardià del Patró",3:"Savi d’Ekuatia",
+    4:"Somniador de Tangentia",5:"Vigilant de Complexia",
+    6:"Cercador de Functonia",7:"Mestre de Derivalia"
+  };
+  const newTitle=titles[level]||`Aventurer Nivell ${level}`;
+  alert(`✨ Has pujat de nivell! Nou títol: ${newTitle}`);
+  localStorage.setItem("title",newTitle);
+}
+function onExerciseCorrect(){
+  correctExercises++;
+  if(correctExercises%5===0){
+    const earnedXP=Math.max(10,xpGainBase-(level-1)*5);
+    addXP(earnedXP);
+  }
+}
+</script>
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+// 🔹 Configuració Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyDPVUQZXaSAARwROsDgvlohMvB-esYvMrA",
+  authDomain: "mythomathic.firebaseapp.com",
+  projectId: "mythomathic",
+  storageBucket: "mythomathic.firebasestorage.app",
+  messagingSenderId: "396574593247",
+  appId: "1:396574593247:web:5b7f02c53de5613eda996a"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentUser;
+
+// 🔹 Quan l’usuari està autenticat, recuperem el seu XP actual
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    currentUser = user;
+    const ref = doc(db, "users", user.uid);
+    const snapshot = await getDoc(ref);
+    if (snapshot.exists()) {
+      const data = snapshot.data();
+      xp = data.xp || 0;
+      level = data.level || 1;
+      localStorage.setItem("xp", xp);
+      localStorage.setItem("level", level);
+    }
   } else {
-    document.getElementById("exerciseContent").innerHTML = "<p>Encara no hi ha exercicis disponibles per aquest apartat.</p>";
+    console.warn("Usuari no autenticat — XP només local.");
+  }
+});
+
+// 🔹 Funció per sincronitzar XP amb la base de dades
+async function updateXPInDB(newXP, newLevel) {
+  if (!currentUser) return;
+  try {
+    await updateDoc(doc(db, "users", currentUser.uid), {
+      xp: newXP,
+      level: newLevel
+    });
+    console.log("✅ XP actualitzat al núvol:", newXP, "nivell:", newLevel);
+  } catch (err) {
+    console.error("❌ Error actualitzant XP a Firestore:", err);
   }
 }
 
-// ===== Funcions de comprovació =====
-function generateTermsExercise(a,b,n) {
-  const correct = Array.from({length:n}, (_,i) => a*(i+1)**2 + b*(i+1)).join(", ");
-  const userAns = document.getElementById("answer").value.trim();
-  const fb = document.getElementById("feedback");
-  if(userAns === correct){
-    fb.textContent = "Correcte! ✔️";
-    onExerciseCorrect();
-  } else {
-    fb.textContent = `Incorrecte ❌ (resposta esperada: ${correct})`;
-  }
-}
-
-function checkTerm(a,b,n) {
-  const correct = a*n + b;
-  const userAns = Number(document.getElementById("answer").value.trim());
-  const fb = document.getElementById("feedback");
-  if(userAns === correct){
-    fb.textContent = "Correcte! ✔️";
-    onExerciseCorrect();
-  } else {
-    fb.textContent = `Incorrecte ❌ (resposta esperada: ${correct})`;
-  }
-}
-
-function checkPA(a1,d) {
-  const correct = `a_n = ${a1} + ${d}·(n-1)`;
-  const fb = document.getElementById("feedback");
-  const userAns = document.getElementById("answer").value.trim();
-  if(userAns === correct){
-    fb.textContent = "Correcte! ✔️";
-    onExerciseCorrect();
-  } else {
-    fb.textContent = `Incorrecte ❌ (resposta esperada: ${correct})`;
-  }
-}
-
-function checkPA2(s3,s6) {
-  const fb = document.getElementById("feedback");
-  fb.textContent = "Revisa el càlcul segons la suma dels termes. ❌";
-}
-
-function checkPG(c4,c5) {
-  const fb = document.getElementById("feedback");
-  fb.textContent = "Calcula a partir de la raó c5/c4 i troba c1. ❌";
-}
-
-function checkPG2(sInf,a2) {
-  const fb = document.getElementById("feedback");
-  fb.textContent = "Calcula a1 = ?, raó = ?. ❌";
-}
-
-
-// ===== Sistema d'Experiència i Nivells =====
-let correctExercises = 0;
-let xp = parseInt(localStorage.getItem("xp")) || 0;
-let level = parseInt(localStorage.getItem("level")) || 1;
-let xpGainBase = 50; // XP inicial per cada 5 exercicis
-
-function addXP(amount) {
+// ✨ Modifica la funció addXP perquè actualitzi Firebase també
+window.addXP = async function(amount) {
   xp += amount;
   const xpMax = level * 100;
   if (xp >= xpMax) {
@@ -288,40 +317,15 @@ function addXP(amount) {
   localStorage.setItem("xp", xp);
   localStorage.setItem("level", level);
 
-  // Missatge de guany
   alert(`🏅 Has guanyat ${amount} XP! (Nivell actual: ${level})`);
-}
 
-function gainTitle(level) {
-  const titles = {
-    1: "Custodi del Flux",
-    2: "Guardià del Patró",
-    3: "Savi d’Ekuatia",
-    4: "Somniador de Tangentia",
-    5: "Vigilant de Complexia",
-    6: "Cercador de Functonia",
-    7: "Mestre de Derivalia"
-  };
+  await updateXPInDB(xp, level);
+};
 
-  const newTitle = titles[level] || `Aventurer Nivell ${level}`;
-  alert(`✨ Has pujat de nivell! Nou títol: ${newTitle}`);
-  localStorage.setItem("title", newTitle);
-}
-
-// Cada cop que un exercici és correcte:
-function onExerciseCorrect() {
-  correctExercises++;
-  if (correctExercises % 5 === 0) {
-    // cada 5 correctes → guany XP
-    const earnedXP = Math.max(10, xpGainBase - (level - 1) * 5);
-    addXP(earnedXP);
-  }
-}
 
 
 
 </script>
 </body>
 </html>
-
 
