@@ -168,11 +168,11 @@ capyInput.addEventListener("keypress", async (e) => {
     capyMessages.innerHTML += `<p><b>Tu:</b> ${msg}</p>`;
     capyInput.value = "";
 
-    const res = await fetch("https://mythomathic-server.onrender.com", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: msg })
-    });
+    const res = await fetch('https://mythomathic-server.onrender.com/api/chat', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ message: msg }),
+});
 
     const data = await res.json();
     capyMessages.innerHTML += `<p><b>Capy:</b> ${data.reply}</p>`;
@@ -662,6 +662,7 @@ window.addXP = async function(amount) {
 
 </body> 
 </html>
+
 
 
 
