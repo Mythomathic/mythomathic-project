@@ -87,6 +87,25 @@ style="top:630px; left:760px;" onclick="openPopup('Sistemes d’Inequacions')">
 </div>
 </div>
 
+<!-- CHATBOT -->
+<div id="capy-toggle">
+  <img src="capy.png" alt="Capy">
+</div>
+
+<div id="capy-chat" class="hidden">
+  <div class="capy-header">
+    <img src="capy.png" alt="Capy">
+    <span>Capy - Guia</span>
+  </div>
+  <div id="capy-messages"></div>
+  <input id="capy-input" placeholder="Pregunta a Capy...">
+  <div id="capy-thinking" class="hidden">
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+</div>
+</div>
+
 <script>
 function toggleMenu(){document.getElementById('menu').classList.toggle('active');}
 function goTo(page){window.location.href=page;}
@@ -104,9 +123,52 @@ function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+/* ---------- CHATBOT ---------- */
+const capyToggle = document.getElementById("capy-toggle");
+const capyChat = document.getElementById("capy-chat");
+const capyInput = document.getElementById("capy-input");
+const capyMessages = document.getElementById("capy-messages");
+
+capyToggle.onclick = () => capyChat.classList.toggle("hidden");
+
+capyInput.addEventListener("keypress", async (e) => {
+  if (e.key === "Enter" && capyInput.value.trim()) {
+    const msg = capyInput.value.trim();
+    capyMessages.innerHTML += `<p><b>Tu:</b> ${msg}</p>`;
+    capyInput.value = "";
+
+    // MOSTREM punts de pensament
+    const thinking = document.getElementById("capy-thinking");
+    thinking.classList.remove("hidden");
+
+    // Enviem el missatge al servidor
+    try {
+      const res = await fetch('https://mythomathic-server.onrender.com/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg }),
+      });
+
+      const data = await res.json();
+
+      // OCULTEM punts quan arriba la resposta
+      thinking.classList.add("hidden");
+
+      // Afegim missatge de Capy amb símbols matemàtics
+      capyMessages.innerHTML += `<p><b>Capy:</b> ${data.reply}</p>`;
+      MathJax.typesetPromise();
+      capyMessages.scrollTop = capyMessages.scrollHeight;
+
+    } catch (err) {
+      thinking.classList.add("hidden"); // assegurem amagar punts si hi ha error
+      capyMessages.innerHTML += `<p><b>Capy:</b> Ups! Hi ha hagut un error al enviar el missatge.</p>`;
+      capyMessages.scrollTop = capyMessages.scrollHeight;
+    }
+  }
+});
+
 // ===== POPUP Exercicis =====
 const exercises = {
-
 "Equacions Lineals": () => {
     const a = randomInt(1,5);
     const b = randomInt(-5,5);
@@ -222,20 +284,23 @@ const exercises = {
 
 "Sistemes 3x3": () => {
     const x = randomInt(1,3);
-    const y = randomInt(1,3);
-    const z = randomInt(1,3);
-    const c1 = x + y + z;
-    const c2 = 2*x - y + 3*z;
-    const c3 = x - y + 2*z;
-    const container = document.getElementById("exerciseContent");
-    container.innerHTML = `
-    <p>Resol el sistema 3x3:</p>
-    <p>x + y + z = ${c1}</p>
-    <p>2x - y + 3z = ${c2}</p>
-    <p>x - y + 2z = ${c3}</p>
-    <input type="text" id="answer" placeholder="x,y,z">
-    <button onclick="checkSystem3x3(${x},${y},${z})">Comprovar</button>
-    <button onclick="exercises['Sistemes 3x3']()">Nova activitat</button>`;
+  const y = randomInt(1,3);
+  const z = randomInt(1,3);
+  const a1 = randomInt(1,4), b1 = randomInt(1,4), c1c = randomInt(1,4);
+  const a2 = randomInt(1,4), b2 = randomInt(1,4), c2c = randomInt(1,4);
+  const a3 = randomInt(1,4), b3 = randomInt(1,4), c3c = randomInt(1,4);
+  const d1 = a1*x + b1*y + c1c*z;
+  const d2 = a2*x + b2*y + c2c*z;
+  const d3 = a3*x + b3*y + c3c*z;
+  const container = document.getElementById("exerciseContent");
+  container.innerHTML = `
+  <p>Resol el sistema 3x3:</p>
+  <p>${a1}x + ${b1}y + ${c1c}z = ${d1}</p>
+  <p>${a2}x + ${b2}y + ${c2c}z = ${d2}</p>
+  <p>${a3}x + ${b3}y + ${c3c}z = ${d3}</p>
+  <input type="text" id="answer" placeholder="x,y,z">
+  <button onclick="checkSystem3x3(${x},${y},${z})">Comprovar</button>
+  <button onclick="exercises['Sistemes 3x3']()">Nova activitat</button>`;
 },
 
 "Inequacions Simples": () => {
@@ -279,11 +344,13 @@ const exercises = {
 }
 }
 
+<!-- ===== FUNCIONS DE COMPROVACIÓ ===== -->
+
 function checkLinear(a,b,c){
     const user = Number(document.getElementById("answer").value.trim());
     const correct = (c-b)/a;
     const fb = document.getElementById("feedback");
-    if(user===correct){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    if(user===correct){fb.textContent="Correcte! ✔️"; fb.style.color="green"; onExerciseCorrect();}
     else{fb.textContent=`Incorrecte ❌ (resposta: ${correct})`; fb.style.color="red";}
 }
 
@@ -291,27 +358,42 @@ function checkQuadratic(x1,x2){
     const user = document.getElementById("answer").value.trim().split(",").map(Number).sort((a,b)=>a-b);
     const correct = [x1,x2].sort((a,b)=>a-b);
     const fb = document.getElementById("feedback");
-    if(user[0]===correct[0] && user[1]===correct[1]){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    if(user[0]===correct[0] && user[1]===correct[1]){fb.textContent="Correcte! ✔️"; fb.style.color="green"; onExerciseCorrect();}
     else{fb.textContent=`Incorrecte ❌ (resposta: ${correct.join(",")})`; fb.style.color="red";}
 }
 
+
 function checkPolynomial(a,b,c){
+    const correct = Math.cbrt(c/a * -1) || 0; 
+    const user = Number(document.getElementById("answer").value.trim());
     const fb = document.getElementById("feedback");
-    fb.textContent="Revisa el càlcul polinòmic. ❌";
-    fb.style.color="red";
+    if(Math.abs(user - correct) < 0.01){ 
+        fb.textContent="Correcte! ✔️"; fb.style.color="green"; onExerciseCorrect();
+    } else {
+        fb.textContent=`Incorrecte ❌ (resposta aprox.: ${correct.toFixed(2)})`;
+        fb.style.color="red";
+    }
 }
 
+
 function checkAlgebraic(a,b){
+    // Equació: x² - a/x = b  →  x³ - b·x - a = 0
+    const correct = Math.cbrt(a); // arrel aproximada positiva
+    const user = Number(document.getElementById("answer").value.trim());
     const fb = document.getElementById("feedback");
-    fb.textContent="Revisa la resolució algebraica. ❌";
-    fb.style.color="red";
+    if(Math.abs(user - correct) < 0.01){
+        fb.textContent="Correcte! ✔️"; fb.style.color="green"; onExerciseCorrect();
+    } else {
+        fb.textContent=`Incorrecte ❌ (resposta aprox.: ${correct.toFixed(2)})`;
+        fb.style.color="red";
+    }
 }
 
 function checkIrrational(r){
     const user = Number(document.getElementById("answer").value.trim());
     const correct = r**2;
     const fb = document.getElementById("feedback");
-    if(user===correct){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    if(user===correct){fb.textContent="Correcte! ✔️"; fb.style.color="green"; onExerciseCorrect();}
     else{fb.textContent=`Incorrecte ❌ (resposta: ${correct})`; fb.style.color="red";}
 }
 
@@ -319,7 +401,7 @@ function checkLogarithm(b,r){
     const user = Number(document.getElementById("answer").value.trim());
     const correct = Math.pow(b,r);
     const fb = document.getElementById("feedback");
-    if(user===correct){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    if(user===correct){fb.textContent="Correcte! ✔️"; fb.style.color="green"; onExerciseCorrect();}
     else{fb.textContent=`Incorrecte ❌ (resposta: ${correct})`; fb.style.color="red";}
 }
 
@@ -327,56 +409,89 @@ function checkExponential(b,r){
     const user = Number(document.getElementById("answer").value.trim());
     const correct = Math.log(r)/Math.log(b);
     const fb = document.getElementById("feedback");
-    if(Math.abs(user-correct)<0.001){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    if(Math.abs(user-correct)<0.001){fb.textContent="Correcte! ✔️"; fb.style.color="green"; onExerciseCorrect();}
     else{fb.textContent=`Incorrecte ❌ (resposta: ${correct.toFixed(3)})`; fb.style.color="red";}
 }
 
 function checkSystemLinear(c1,x2,y2,c2){
-    const user = document.getElementById("answer").value.trim().split(",").map(Number);
-    const y = (c2 - x2*c1/(1)) / y2; 
-    const x = c1 - y;
-    const fb = document.getElementById("feedback");
-    if(Math.abs(user[0]-x)<0.001 && Math.abs(user[1]-y)<0.001){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
-    else{fb.textContent=`Incorrecte ❌ (resposta: ${x},${y})`; fb.style.color="red";}
+  const fb = document.getElementById("feedback");
+  const det = (1 * y2) - (x2 * 1);
+  if (det === 0) {
+    fb.textContent = "El sistema no té solució única (infinites o cap). ⚠️";
+    fb.style.color = "orange";
+    return;
+  }
+  const x = (c1 * y2 - c2 * 1) / det;
+  const y = (1 * c2 - x2 * c1) / det;
+  const user = document.getElementById("answer").value.trim().split(",").map(Number);
+  if (Math.abs(user[0] - x) < 0.01 && Math.abs(user[1] - y) < 0.01) {
+    fb.textContent = "Correcte! ✔️";
+    fb.style.color = "green";
+    onExerciseCorrect();
+  } else {
+    fb.textContent = `Incorrecte ❌ (resposta: x=${x.toFixed(2)}, y=${y.toFixed(2)})`;
+    fb.style.color = "red";
+  }
 }
 
 function checkSystemNonLinear(x,y){
     const user = document.getElementById("answer").value.trim().split(",").map(Number);
     const fb = document.getElementById("feedback");
-    if(user[0]===x && user[1]===y){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    if(user[0]===x && user[1]===y){fb.textContent="Correcte! ✔️"; fb.style.color="green"; onExerciseCorrect();}
     else{fb.textContent=`Incorrecte ❌ (resposta: ${x},${y})`; fb.style.color="red";}
 }
 
 function checkSystem3x3(x,y,z){
     const user = document.getElementById("answer").value.trim().split(",").map(Number);
     const fb = document.getElementById("feedback");
-    if(user[0]===x && user[1]===y && user[2]===z){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    if(user[0]===x && user[1]===y && user[2]===z){fb.textContent="Correcte! ✔️"; fb.style.color="green"; onExerciseCorrect();}
     else{fb.textContent=`Incorrecte ❌ (resposta: ${x},${y},${z})`; fb.style.color="red";}
 }
 
 function checkInequationSimple(a,b){
-    const correct = `x >= ${b/a}`;
-    const user = document.getElementById("answer").value.trim();
-    const fb = document.getElementById("feedback");
-    if(user===correct){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
-    else{fb.textContent=`Incorrecte ❌ (resposta: ${correct})`; fb.style.color="red";}
+  const correctValue = (b / a).toFixed(2);
+  const correct = `x >= ${correctValue}`;
+  const user = document.getElementById("answer").value.trim();
+  const fb = document.getElementById("feedback");
+  if (user === correct) {
+    fb.textContent = "Correcte! ✔️";
+    fb.style.color = "green";
+    onExerciseCorrect();
+  } else {
+    fb.textContent = `Incorrecte ❌ (resposta: ${correct})`;
+    fb.style.color = "red";
+  }
 }
 
 function checkInequationQuadratic(x1,x2){
     const correct = `[${x1}, ${x2}]`;
     const user = document.getElementById("answer").value.trim();
     const fb = document.getElementById("feedback");
-    if(user===correct){fb.textContent="Correcte! ✔️"; fb.style.color="green";}
+    if(user===correct){fb.textContent="Correcte! ✔️"; fb.style.color="green"; onExerciseCorrect();}
     else{fb.textContent=`Incorrecte ❌ (resposta: ${correct})`; fb.style.color="red";}
 }
 
+
 function checkSystemIneq(a1,b1,a2,b2){
-    const fb = document.getElementById("feedback");
-    fb.textContent="Resol el sistema gràficament. ❌";
-    fb.style.color="red";
+  const fb = document.getElementById("feedback");
+  // Calcul senzill: igualtat dels dos per trobar el punt d’intersecció
+  const y1 = x => -(a1/b1)*x;
+  const y2 = x => ((5 - a2*x)/(-b2));
+  const interX = (5*b1) / (a2*b1 - a1*b2);
+  const interY = y1(interX);
+  const correct = `Intersecció aprox.: (x=${interX.toFixed(2)}, y=${interY.toFixed(2)})`;
+  const user = document.getElementById("answer").value.trim();
+  if (user.includes(interX.toFixed(2)) && user.includes(interY.toFixed(2))) {
+    fb.textContent = "Correcte! ✔️";
+    fb.style.color = "green";
+    onExerciseCorrect();
+  } else {
+    fb.textContent = `Incorrecte ❌ (${correct})`;
+    fb.style.color = "red";
+  }
 }
 
-// ===== Obrir popup =====
+
 function openPopup(title){
     document.getElementById("exerciseTitle").textContent=title;
     document.getElementById("exercisePopup").style.display="flex";
@@ -386,6 +501,117 @@ function openPopup(title){
     else document.getElementById("exerciseContent").innerHTML="<p>Encara no hi ha exercicis disponibles.</p>";
 }
 
+
+let correctExercises=0;
+let xp=parseInt(localStorage.getItem("xp"))||0;
+let level=parseInt(localStorage.getItem("level"))||1;
+let xpGainBase=50;
+
+function addXP(amount){
+  xp+=amount;
+  const xpMax=level*100;
+  if(xp>=xpMax){ xp-=xpMax; level++; gainTitle(level); }
+  localStorage.setItem("xp",xp);
+  localStorage.setItem("level",level);
+  alert(`🏅 Has guanyat ${amount} XP! (Nivell actual: ${level})`);
+}
+function gainTitle(level){
+  const titles={
+    1:"Custodi del Flux",2:"Guardià del Patró",3:"Savi d’Ekuatia",
+    4:"Somniador de Tangentia",5:"Vigilant de Complexia",
+    6:"Cercador de Functonia",7:"Mestre de Derivalia"
+  };
+  const newTitle=titles[level]||`Aventurer Nivell ${level}`;
+  alert(`✨ Has pujat de nivell! Nou títol: ${newTitle}`);
+  localStorage.setItem("title",newTitle);
+}
+function onExerciseCorrect(){
+  correctExercises++;
+  if(correctExercises%5===0){
+    const earnedXP=Math.max(10,xpGainBase-(level-1)*5);
+    addXP(earnedXP);
+  }
+}
 </script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+// 🔹 Configuració Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyDPVUQZXaSAARwROsDgvlohMvB-esYvMrA",
+  authDomain: "mythomathic.firebaseapp.com",
+  projectId: "mythomathic",
+  storageBucket: "mythomathic.firebasestorage.app",
+  messagingSenderId: "396574593247",
+  appId: "1:396574593247:web:5b7f02c53de5613eda996a"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentUser;
+
+// 🔹 Quan l’usuari està autenticat, recuperem el seu XP actual
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    currentUser = user;
+    const ref = doc(db, "users", user.uid);
+    const snapshot = await getDoc(ref);
+    if (snapshot.exists()) {
+      const data = snapshot.data();
+      xp = data.xp || 0;
+      level = data.level || 1;
+      localStorage.setItem("xp", xp);
+      localStorage.setItem("level", level);
+    }
+  } else {
+    console.warn("Usuari no autenticat — XP només local.");
+  }
+});
+
+// 🔹 Funció per sincronitzar XP amb la base de dades
+async function updateXPInDB(newXP, newLevel) {
+  if (!currentUser) return;
+  try {
+    await updateDoc(doc(db, "users", currentUser.uid), {
+      xp: newXP,
+      level: newLevel
+    });
+    console.log("✅ XP actualitzat al núvol:", newXP, "nivell:", newLevel);
+  } catch (err) {
+    console.error("❌ Error actualitzant XP a Firestore:", err);
+  }
+}
+
+// ✨ Modifica la funció addXP perquè actualitzi Firebase també
+window.addXP = async function(amount) {
+  xp += amount;
+  const xpMax = level * 100;
+  if (xp >= xpMax) {
+    xp -= xpMax;
+    level++;
+    gainTitle(level);
+  }
+
+  localStorage.setItem("xp", xp);
+  localStorage.setItem("level", level);
+
+  alert(`🏅 Has guanyat ${amount} XP! (Nivell actual: ${level})`);
+
+  await updateXPInDB(xp, level);
+};
+
+</script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+ src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
 </body>
 </html>
+
