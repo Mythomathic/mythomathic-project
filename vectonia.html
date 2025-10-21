@@ -76,6 +76,25 @@
   </div>
 </div>
 
+<!-- CHATBOT -->
+<div id="capy-toggle">
+  <img src="capy.png" alt="Capy">
+</div>
+
+<div id="capy-chat" class="hidden">
+  <div class="capy-header">
+    <img src="capy.png" alt="Capy">
+    <span>Capy - Guia</span>
+  </div>
+  <div id="capy-messages"></div>
+  <input id="capy-input" placeholder="Pregunta a Capy...">
+  <div id="capy-thinking" class="hidden">
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+</div>
+</div>
+
 <script>
 
 function toggleMenu() { 
@@ -122,12 +141,63 @@ document.addEventListener('DOMContentLoaded',()=>showSymbols('vectors'));
 function closePopup(){document.getElementById('exercisePopup').style.display='none';}
 function randomInt(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
 function randomChoice(a){return a[Math.floor(Math.random()*a.length)];}
+
 function checkTextAnswers(expected){
   const user=document.getElementById("answer1").value.trim().toLowerCase().replace(/\s+/g,'');
   const valid=expected.map(e=>e.toLowerCase().replace(/\s+/g,''));
   const fb=document.getElementById("feedback");
-  fb.innerHTML= valid.includes(user) ? "✅ Correcte!" : `❌ Incorrecte (resposta esperada: ${expected[0]})`;
+
+  if(valid.includes(user)){
+    fb.innerHTML = "✅ Correcte!";
+    onExerciseCorrect();
+  } else {
+    fb.innerHTML = `❌ Incorrecte (resposta esperada: ${expected[0]})`;
+  }
 }
+
+/* ---------- CHATBOT ---------- */
+const capyToggle = document.getElementById("capy-toggle");
+const capyChat = document.getElementById("capy-chat");
+const capyInput = document.getElementById("capy-input");
+const capyMessages = document.getElementById("capy-messages");
+
+capyToggle.onclick = () => capyChat.classList.toggle("hidden");
+
+capyInput.addEventListener("keypress", async (e) => {
+  if (e.key === "Enter" && capyInput.value.trim()) {
+    const msg = capyInput.value.trim();
+    capyMessages.innerHTML += `<p><b>Tu:</b> ${msg}</p>`;
+    capyInput.value = "";
+
+    // MOSTREM punts de pensament
+    const thinking = document.getElementById("capy-thinking");
+    thinking.classList.remove("hidden");
+
+    // Enviem el missatge al servidor
+    try {
+      const res = await fetch('https://mythomathic-server.onrender.com/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg }),
+      });
+
+      const data = await res.json();
+
+      // OCULTEM punts quan arriba la resposta
+      thinking.classList.add("hidden");
+
+      // Afegim missatge de Capy amb símbols matemàtics
+      capyMessages.innerHTML += `<p><b>Capy:</b> ${data.reply}</p>`;
+      MathJax.typesetPromise();
+      capyMessages.scrollTop = capyMessages.scrollHeight;
+
+    } catch (err) {
+      thinking.classList.add("hidden"); // assegurem amagar punts si hi ha error
+      capyMessages.innerHTML += `<p><b>Capy:</b> Ups! Hi ha hagut un error al enviar el missatge.</p>`;
+      capyMessages.scrollTop = capyMessages.scrollHeight;
+    }
+  }
+});
 
 // ====== EXERCICIS ======
 const exercises={
@@ -439,6 +509,7 @@ function checkTriangleAnswers(ab, bc, ca, A, B, C){
   const fb=document.getElementById("feedback");
   if(user1===expected1 && user2===expected2){
     fb.innerHTML="✅ Correcte!";
+    onExerciseCorrect();
   } else {
     fb.innerHTML=`❌ Incorrecte.<br>Respostes esperades:<br>Costats: ${expected1}<br>Angles: ${expected2}`;
   }
@@ -455,6 +526,7 @@ function checkParallelogramAnswers(ab, bc, area){
 
   if(user1===exp1 && user2===exp2){
     fb.innerHTML="✅ Correcte! Els costats i l’àrea són correctes.";
+    onExerciseCorrect();
   } else if(user1===exp1){
     fb.innerHTML="✅ Costats correctes, però ❌ àrea incorrecta.";
   } else if(user2===exp2){
@@ -474,6 +546,7 @@ function checkSecants(correctSec, correctPoint){
 
   if(userSel===correctSec && isPointCorrect){
     fb.innerHTML="✅ Correcte! Les dues respostes són encertades.";
+    onExerciseCorrect();
   } else if(userSel===correctSec){
     fb.innerHTML=`✅ Correcte que són "${correctSec}", però ❌ punt de tall incorrecte (esperat: ${correctPoint}).`;
   } else {
@@ -481,10 +554,118 @@ function checkSecants(correctSec, correctPoint){
   }
 }
 
+// ================== EXPERIÈNCIA =====================
+let correctExercises=0;
+let xp=parseInt(localStorage.getItem("xp"))||0;
+let level=parseInt(localStorage.getItem("level"))||1;
+let xpGainBase=50;
 
+function addXP(amount){
+  xp+=amount;
+  const xpMax=level*100;
+  if(xp>=xpMax){ xp-=xpMax; level++; gainTitle(level); }
+  localStorage.setItem("xp",xp);
+  localStorage.setItem("level",level);
+  alert(`🏅 Has guanyat ${amount} XP! (Nivell actual: ${level})`);
+}
+function gainTitle(level){
+  const titles={
+    1:"Custodi del Flux",2:"Guardià del Patró",3:"Savi d’Ekuatia",
+    4:"Somniador de Tangentia",5:"Vigilant de Complexia",
+    6:"Cercador de Functonia",7:"Mestre de Derivalia"
+  };
+  const newTitle=titles[level]||`Aventurer Nivell ${level}`;
+  alert(`✨ Has pujat de nivell! Nou títol: ${newTitle}`);
+  localStorage.setItem("title",newTitle);
+}
+function onExerciseCorrect(){
+  correctExercises++;
+  if(correctExercises%5===0){
+    const earnedXP=Math.max(10,xpGainBase-(level-1)*5);
+    addXP(earnedXP);
+  }
+}
+</script>
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+// 🔹 Configuració Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyDPVUQZXaSAARwROsDgvlohMvB-esYvMrA",
+  authDomain: "mythomathic.firebaseapp.com",
+  projectId: "mythomathic",
+  storageBucket: "mythomathic.firebasestorage.app",
+  messagingSenderId: "396574593247",
+  appId: "1:396574593247:web:5b7f02c53de5613eda996a"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentUser;
+
+// 🔹 Quan l’usuari està autenticat, recuperem el seu XP actual
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    currentUser = user;
+    const ref = doc(db, "users", user.uid);
+    const snapshot = await getDoc(ref);
+    if (snapshot.exists()) {
+      const data = snapshot.data();
+      xp = data.xp || 0;
+      level = data.level || 1;
+      localStorage.setItem("xp", xp);
+      localStorage.setItem("level", level);
+    }
+  } else {
+    console.warn("Usuari no autenticat — XP només local.");
+  }
+});
+
+// 🔹 Funció per sincronitzar XP amb la base de dades
+async function updateXPInDB(newXP, newLevel) {
+  if (!currentUser) return;
+  try {
+    await updateDoc(doc(db, "users", currentUser.uid), {
+      xp: newXP,
+      level: newLevel
+    });
+    console.log("✅ XP actualitzat al núvol:", newXP, "nivell:", newLevel);
+  } catch (err) {
+    console.error("❌ Error actualitzant XP a Firestore:", err);
+  }
+}
+
+// ✨ Modifica la funció addXP perquè actualitzi Firebase també
+window.addXP = async function(amount) {
+  xp += amount;
+  const xpMax = level * 100;
+  if (xp >= xpMax) {
+    xp -= xpMax;
+    level++;
+    gainTitle(level);
+  }
+
+  localStorage.setItem("xp", xp);
+  localStorage.setItem("level", level);
+
+  alert(`🏅 Has guanyat ${amount} XP! (Nivell actual: ${level})`);
+
+  await updateXPInDB(xp, level);
+};
+
+
+</script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+ src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 </script>
 
 </body>
 </html>
-
-
