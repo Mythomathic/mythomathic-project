@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Configuración - Mythomathic</title>
+  <link rel="stylesheet" href="config.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="gradient-background"></div>
+  <header>
+    <div class="header-left">
+      <a href="map_es.html" class="btn-link">← Volver al mapa</a>
+    </div>
+    <h1>Configuración</h1>
+    <div class="header-right">
+      <nav>
+        <ul class="menu">
+          <li><a href="perfil_es.html">Perfil</a></li>
+          <li><a href="config_es.html" class="active">Configuración</a></li>
+          <li><a href="sobremi_es.html">Sobre mí</a></li>
+          <li><a href="contacte_es.html">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <form id="config-form" class="config-card">
+      <!-- Idioma -->
+      <div class="config-option">
+        <label for="language">Idioma</label>
+        <select id="language">
+          <option value="ca">Català</option>
+          <option value="es" selected>Castellano</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+
+      <!-- Botones -->
+      <button type="submit" class="save-btn">💾 Guardar</button>
+      <button type="button" id="delete-account" class="delete-btn">🗑️ Eliminar cuenta</button>
+    </form>
+  </main>
+
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, deleteUser } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc, setDoc, deleteDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDPVUQZXaSAARwROsDgvlohMvB-esYvMrA",
+    authDomain: "mythomathic.firebaseapp.com",
+    projectId: "mythomathic",
+    storageBucket: "mythomathic.firebasestorage.app",
+    messagingSenderId: "396574593247",
+    appId: "1:396574593247:web:5b7f02c53de5613eda996a",
+    measurementId: "G-P649F73C8E"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const ref = doc(db, "users", user.uid);
+      const snap = await getDoc(ref);
+      if (snap.exists()) {
+        const data = snap.data();
+        document.getElementById("language").value = data.language || "es";
+      }
+    }
+  });
+
+  document.getElementById("config-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const prefs = { language: document.getElementById("language").value };
+    const ref = doc(db, "users", user.uid);
+    await setDoc(ref, prefs, { merge: true });
+
+    alert("✅ Configuración guardada!");
+    if (prefs.language === "ca") window.location.href = "config.html";
+    else if (prefs.language === "en") window.location.href = "config_en.html";
+  });
+
+  async function deleteUserData(uid) {
+    try {
+      await deleteDoc(doc(db, "users", uid));
+      const subcollections = ["exercicis", "preferencies", "altresDades"]; 
+      for (const sub of subcollections) {
+        const colRef = collection(db, "users", uid, sub);
+        const snapshot = await getDocs(colRef);
+        snapshot.forEach(async (docu) => {
+          await deleteDoc(doc(db, "users", uid, sub, docu.id));
+        });
+      }
+    } catch (err) {
+      console.error("❌ Error al eliminar datos:", err);
+    }
+  }
+
+  document.getElementById("delete-account").addEventListener("click", async () => {
+    if (!confirm("⚠️ ¿Seguro que quieres eliminar tu cuenta y todos tus datos? ¡Esta acción no se puede deshacer!")) return;
+
+    const user = auth.currentUser;
+    if (!user) return;
+
+    try {
+      await deleteUserData(user.uid);
+      await deleteUser(user);
+
+      alert("🗑️ Cuenta y datos eliminados correctamente.");
+      window.location.href = "inici.html";
+    } catch (err) {
+      console.error(err);
+      alert("❌ Error al eliminar la cuenta. Vuelve a iniciar sesión e inténtalo de nuevo.");
+    }
+  });
+  </script>
+</body>
+</html>
