@@ -90,6 +90,27 @@
   </div>
 </div>
 
+<!-- BOTÓ XAT -->
+<div id="capy-toggle">
+  <img src="capy.png" alt="Capy">
+</div>
+
+<!-- CHATBOT -->
+<div id="capy-chat" class="hidden">
+  <div class="capy-header">
+    <img src="capy.png" alt="Capy">
+    <span>Capy - Guia</span>
+  </div>
+  <div id="capy-messages">
+    <div id="capy-thinking" class="hidden">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+  <input id="capy-input" placeholder="Pregunta a Capy...">
+</div>
+
 <script>
 function toggleMenu(){document.getElementById('menu').classList.toggle('active');}
 function goTo(page){window.location.href=page;}
@@ -106,6 +127,51 @@ function closePopup(){document.getElementById("exercisePopup").style.display="no
 
 // Random util
 function randomInt(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+
+/* ---------- CHATBOT ---------- */
+const capyToggle = document.getElementById("capy-toggle");
+const capyChat = document.getElementById("capy-chat");
+const capyInput = document.getElementById("capy-input");
+const capyMessages = document.getElementById("capy-messages");
+
+capyToggle.onclick = () => capyChat.classList.toggle("hidden");
+
+capyInput.addEventListener("keypress", async (e) => {
+  if (e.key === "Enter" && capyInput.value.trim()) {
+    const msg = capyInput.value.trim();
+    capyMessages.innerHTML += `<p><b>Tu:</b> ${msg}</p>`;
+    capyInput.value = "";
+
+    // MOSTREM punts de pensament
+    const thinking = document.getElementById("capy-thinking");
+    thinking.classList.remove("hidden");
+
+    // Enviem el missatge al servidor
+    try {
+      const res = await fetch('https://mythomathic-server.onrender.com/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg }),
+      });
+
+      const data = await res.json();
+
+      // OCULTEM punts quan arriba la resposta
+      thinking.classList.add("hidden");
+
+      // Afegim missatge de Capy amb símbols matemàtics
+      capyMessages.innerHTML += `<p><b>Capy:</b> ${data.reply}</p>`;
+      MathJax.typesetPromise();
+      capyMessages.scrollTop = capyMessages.scrollHeight;
+
+    } catch (err) {
+      thinking.classList.add("hidden"); // assegurem amagar punts si hi ha error
+      capyMessages.innerHTML += `<p><b>Capy:</b> Ups! Hi ha hagut un error al enviar el missatge.</p>`;
+      capyMessages.scrollTop = capyMessages.scrollHeight;
+    }
+  }
+});
+
 
 // Exercicis
 const exercises = {
@@ -371,6 +437,7 @@ function checkDoubleAnswer(correct1, correct2){
   const u1=parseFloat(user[0]), u2=parseFloat(user[1]);
   if(Math.abs(u1-correct1)<0.1 && Math.abs(u2-correct2)<0.1){
     fb.innerHTML="✅ <span style='color:lightgreen'>Correcte!</span>";
+    onExerciseCorrect();
   } else {
     fb.innerHTML=`❌ Incorrecte (esperat: ${correct1}, ${correct2})`;
   }
@@ -383,15 +450,23 @@ function checkCosAlpha(val, quadCorrect){
   if(quad===quadCorrect && !isNaN(userAns)){
     fb.textContent="✅ Correcte! (cosα i quadrant correctes)";
     fb.style.color="green";
+    onExerciseCorrect();
   } else {
     fb.textContent="❌ Incorrecte. Revisa el signe del cos i el quadrant.";
     fb.style.color="red";
   }
 }
 
-function checkExerciciCombinat(sinA,cosA,sinB,cosB){
-  const fb=document.getElementById("feedback");
-  const results=[
+function checkExerciciCombinat(sinA, cosA, sinB, cosB){
+  const fb = document.getElementById("feedback");
+  const user = document.getElementById("answer").value.trim().split(",");
+  if(user.length !== 10){
+    fb.textContent = "❌ Introdueix 10 respostes separades per comes.";
+    fb.style.color = "red";
+    return;
+  }
+
+  const expected = [
     (2*sinA*cosA).toFixed(3),
     (cosA**2-sinA**2).toFixed(3),
     (2*sinB*cosB).toFixed(3),
@@ -403,9 +478,26 @@ function checkExerciciCombinat(sinA,cosA,sinB,cosB){
     Math.cos(Math.asin(sinA)+2*Math.acos(cosB)).toFixed(3),
     Math.sin(2*Math.asin(sinA)-Math.acos(cosB)).toFixed(3)
   ];
-  fb.textContent="Respostes esperades (aprox): "+results.join(", ");
-  fb.style.color="blue";
+
+  let correct = true;
+  for(let i=0; i<10; i++){
+    if(parseFloat(user[i]).toFixed(3) !== expected[i]){
+      correct = false;
+      break;
+    }
+  }
+
+  if(correct){
+    fb.innerHTML = "✅ Correcte! Totes les respostes són correctes.";
+    fb.style.color = "green";
+    onExerciseCorrect(); // <-- Cridem la funció d'experiència només quan és correcte
+  } else {
+    fb.innerHTML = `❌ Alguna resposta és incorrecta.<br>Respostes correctes: ${expected.join(", ")}`;
+    fb.style.color = "red";
+  }
 }
+
+
 
 function checkRombeTrapezi(correctRombe, correctTrap){
   const fb=document.getElementById("feedback");
@@ -414,6 +506,7 @@ function checkRombeTrapezi(correctRombe, correctTrap){
 
   if(Math.abs(userRombe-correctRombe)<0.1 && Math.abs(userTrap-correctTrap)<0.1){
     fb.innerHTML="✅ <span style='color:lightgreen'>Correcte! Tant el rombe com el trapezi són correctes.</span>";
+    onExerciseCorrect();
   } else {
     fb.innerHTML=`❌ <span style='color:red'>Incorrecte. Les respostes correctes eren costat del rombe = ${correctRombe}, àrea del trapezi = ${correctTrap}</span>`;
   }
@@ -424,12 +517,161 @@ function checkAnswer(correct){
   const fb=document.getElementById("feedback");
   if(parseFloat(user).toFixed(2)==parseFloat(correct).toFixed(2)){
     fb.innerHTML="✅ <span style='color:lightgreen'>Correcte!</span>";
+    onExerciseCorrect();
   } else {
     fb.innerHTML=`❌ <span style='color:red'>Incorrecte (esperat: ${correct})</span>`;
   }
 }
+
+
+// ================== EXPERIÈNCIA =====================
+let correctExercises=0;
+let xp=parseInt(localStorage.getItem("xp"))||0;
+let level=parseInt(localStorage.getItem("level"))||1;
+let xpGainBase=50;
+
+function addXP(amount){
+  xp+=amount;
+  const xpMax=level*100;
+  if(xp>=xpMax){ xp-=xpMax; level++; gainTitle(level); }
+  localStorage.setItem("xp",xp);
+  localStorage.setItem("level",level);
+  alert(`🏅 Has guanyat ${amount} XP! (Nivell actual: ${level})`);
+}
+function gainTitle(level){
+  const titles={
+    1:"Custodi del Flux",2:"Guardià del Patró",3:"Savi d’Ekuatia",
+    4:"Somniador de Tangentia",5:"Vigilant de Complexia",
+    6:"Cercador de Functonia",7:"Mestre de Derivalia"
+  };
+  const newTitle=titles[level]||`Aventurer Nivell ${level}`;
+  alert(`✨ Has pujat de nivell! Nou títol: ${newTitle}`);
+  localStorage.setItem("title",newTitle);
+}
+function onExerciseCorrect(){
+  correctExercises++;
+  if(correctExercises%5===0){
+    const earnedXP=Math.max(10,xpGainBase-(level-1)*5);
+    addXP(earnedXP);
+  }
+}
+
+
+function openPopup(title){
+  const popup = document.getElementById("exercisePopup");
+  document.getElementById("exerciseTitle").textContent = title;
+  popup.style.display = "flex";
+  document.getElementById("feedback").textContent = "";
+
+  // Si l'exercici existeix, l'executem
+  if(exercises[title]){
+    exercises[title]();
+
+    // Només per a "Exercici combinat"
+    if(title === "Exercici combinat"){
+      // Afegim listener per fer clic fora del popup-content
+      const clickOutside = (event) => {
+        if(!popup.querySelector(".popup-content").contains(event.target)){
+          popup.style.display = "none";
+          document.removeEventListener("click", clickOutside);
+        }
+      };
+      // Utilitzem setTimeout per evitar que el click d'obertura tanqui directament
+      setTimeout(() => document.addEventListener("click", clickOutside), 0);
+    }
+  } else {
+    document.getElementById("exerciseContent").innerHTML = "<p>Encara no hi ha exercicis disponibles.</p>";
+  }
+}
+
+
+
+
+
 </script>
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+// 🔹 Configuració Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyDPVUQZXaSAARwROsDgvlohMvB-esYvMrA",
+  authDomain: "mythomathic.firebaseapp.com",
+  projectId: "mythomathic",
+  storageBucket: "mythomathic.firebasestorage.app",
+  messagingSenderId: "396574593247",
+  appId: "1:396574593247:web:5b7f02c53de5613eda996a"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentUser;
+
+// 🔹 Quan l’usuari està autenticat, recuperem el seu XP actual
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    currentUser = user;
+    const ref = doc(db, "users", user.uid);
+    const snapshot = await getDoc(ref);
+    if (snapshot.exists()) {
+      const data = snapshot.data();
+      xp = data.xp || 0;
+      level = data.level || 1;
+      localStorage.setItem("xp", xp);
+      localStorage.setItem("level", level);
+    }
+  } else {
+    console.warn("Usuari no autenticat — XP només local.");
+  }
+});
+
+// 🔹 Funció per sincronitzar XP amb la base de dades
+async function updateXPInDB(newXP, newLevel) {
+  if (!currentUser) return;
+  try {
+    await updateDoc(doc(db, "users", currentUser.uid), {
+      xp: newXP,
+      level: newLevel
+    });
+    console.log("✅ XP actualitzat al núvol:", newXP, "nivell:", newLevel);
+  } catch (err) {
+    console.error("❌ Error actualitzant XP a Firestore:", err);
+  }
+}
+
+// ✨ Modifica la funció addXP perquè actualitzi Firebase també
+window.addXP = async function(amount) {
+  xp += amount;
+  const xpMax = level * 100;
+  if (xp >= xpMax) {
+    xp -= xpMax;
+    level++;
+    gainTitle(level);
+  }
+
+  localStorage.setItem("xp", xp);
+  localStorage.setItem("level", level);
+
+  alert(`🏅 Has guanyat ${amount} XP! (Nivell actual: ${level})`);
+
+  await updateXPInDB(xp, level);
+};
+
+</script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+ src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
 </body>
 </html>
+
+
 
 
