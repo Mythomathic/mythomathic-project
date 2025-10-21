@@ -9,17 +9,17 @@
 <body>
   <header>
     <div class="header-left">
-      <a href="map.html" class="btn-link">⟵ Tornar al mapa</a>
+      <a href="map.html" class="btn-link" id="back-to-map">⟵ Tornar al mapa</a>
     </div>
 
-    <h1>El meu perfil</h1>
+    <h1 id="page-title">El meu perfil</h1>
 
     <nav class="header-right">
       <ul class="menu">
-        <li><a href="perfil.html">Perfil</a></li>
-        <li><a href="config.html">Configuració</a></li>
-        <li><a href="sobremi.html">Sobre mi</a></li>
-        <li><a href="contacte.html">Contacte</a></li>
+        <li id="menu-profile"><a href="perfil.html">Perfil</a></li>
+        <li id="menu-config"><a href="config.html">Configuració</a></li>
+        <li id="menu-about"><a href="sobremi.html">Sobre mi</a></li>
+        <li id="menu-contact"><a href="contacte.html">Contacte</a></li>
       </ul>
     </nav>
   </header>
@@ -36,16 +36,16 @@
       </div>
 
       <div class="progress-section">
-        <p>Nivell: <span id="level">1</span></p>
+        <p id="level-text"><span id="level-label">Nivell:</span> <span id="level">1</span></p>
         <div class="progress-bar">
           <div class="progress" id="xp-bar"></div>
         </div>
-        <p>XP: <span id="xp">0</span> / <span id="xp-max">100</span></p>
-        <p>Títol: <span id="title">Novell de Mythomathic</span></p>
+        <p id="xp-text">XP: <span id="xp">0</span> / <span id="xp-max">100</span></p>
+        <p id="title-text"><span id="title">Novell de Mythomathic</span></p>
       </div>
 
       <div class="achievements">
-        <h3>Assoliments</h3>
+        <h3 id="achievements-title">Assoliments</h3>
         <ul id="achievements-list"></ul>
       </div>
 
@@ -58,16 +58,16 @@
 
     <button id="logout" class="logout-btn">Tancar sessió</button>
 
-    <!-- Vista d'edició -->
     <div id="edit-mode" style="display:none;">
       <div class="edit-section">
-        <label for="edit-username">Nom d'usuari:</label>
+        <label for="edit-username" id="label-edit-username">Nom d'usuari:</label>
         <input type="text" id="edit-username-input">
       </div>
 
       <div class="edit-section">
-        <p>Escull avatar:</p>
+        <p id="avatar-text">Escull avatar:</p>
         <div id="avatar-options">
+          <!-- Avatar options -->
           <img src="avatar1.png" class="avatar-option">
           <img src="avatar2.png" class="avatar-option">
           <img src="avatar3.png" class="avatar-option">
@@ -96,7 +96,7 @@
       </div> <br>
 
       <div class="edit-section">
-        <label for="edit-dimension">Dimensió preferida:</label>
+        <label for="edit-dimension" id="label-edit-dimension">Dimensió preferida:</label>
         <select id="edit-dimension">
           <option value="Secuentia">Secuentia</option>
           <option value="Vectonia">Vectonia</option>
@@ -134,6 +134,90 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    // Texts per idioma
+    const texts = {
+      ca: {
+        pageTitle: "El meu perfil",
+        backToMap: "⟵ Tornar al mapa",
+        menu: { profile: "Perfil", config: "Configuració", about: "Sobre mi", contact: "Contacte" },
+        level: "Nivell",
+        xp: "XP",
+        achievements: "Assoliments",
+        favoriteDimension: "Dimensió preferida",
+        editProfile: "✎ Editar perfil",
+        logout: "Tancar sessió",
+        editUsername: "Nom d'usuari:",
+        avatar: "Escull avatar:",
+        confirm: "✅ Confirmar",
+        cancel: "❌ Cancel·lar"
+      },
+      es: {
+        pageTitle: "Mi perfil",
+        backToMap: "⟵ Volver al mapa",
+        menu: { profile: "Perfil", config: "Configuración", about: "Sobre mí", contact: "Contacto" },
+        level: "Nivel",
+        xp: "XP",
+        achievements: "Logros",
+        favoriteDimension: "Dimensión favorita",
+        editProfile: "✎ Editar perfil",
+        logout: "Cerrar sesión",
+        editUsername: "Nombre de usuario:",
+        avatar: "Elige avatar:",
+        confirm: "✅ Confirmar",
+        cancel: "❌ Cancelar"
+      },
+      en: {
+        pageTitle: "My profile",
+        backToMap: "⟵ Back to map",
+        menu: { profile: "Profile", config: "Settings", about: "About me", contact: "Contact" },
+        level: "Level",
+        xp: "XP",
+        achievements: "Achievements",
+        favoriteDimension: "Favorite dimension",
+        editProfile: "✎ Edit profile",
+        logout: "Logout",
+        editUsername: "Username:",
+        avatar: "Choose avatar:",
+        confirm: "✅ Confirm",
+        cancel: "❌ Cancel"
+      }
+    };
+
+    // Titles per nivell i idioma
+    const titlesByLang = {
+      ca: {
+        1: "Custodi del Flux",
+        2: "Guardià del Patró",
+        3: "Savi d’Ekuatia",
+        4: "Somniador de Tangentia",
+        5: "Vigilant de Complexia",
+        6: "Cercador de Functonia",
+        7: "Mestre de Derivalia"
+      },
+      es: {
+        1: "Guardián del Flujo",
+        2: "Guardián del Patrón",
+        3: "Sabio de Ekuatia",
+        4: "Soñador de Tangentia",
+        5: "Vigilante de Complexia",
+        6: "Buscador de Functonia",
+        7: "Maestro de Derivalia"
+      },
+      en: {
+        1: "Flow Keeper",
+        2: "Pattern Guardian",
+        3: "Ekuatia Sage",
+        4: "Tangentia Dreamer",
+        5: "Complexia Watcher",
+        6: "Functonia Seeker",
+        7: "Derivalia Master"
+      }
+    };
+
+    function getTitle(level, lang) {
+      return titlesByLang[lang][level] || `Adventurer Level ${level}`;
+    }
+
     // Elements
     const usernameEl = document.getElementById("username");
     const emailEl = document.getElementById("email");
@@ -145,85 +229,100 @@
     const achievementsList = document.getElementById("achievements-list");
     const avatarEl = document.getElementById("avatar");
     const favoriteDimensionText = document.getElementById("favorite-dimension-text");
-
     const editBtn = document.getElementById("edit-profile");
     const editMode = document.getElementById("edit-mode");
     const viewMode = document.getElementById("view-mode");
     const confirmBtn = document.getElementById("confirm-edit");
     const cancelBtn = document.getElementById("cancel-edit");
-
     const editUsernameInput = document.getElementById("edit-username-input");
     const editDimension = document.getElementById("edit-dimension");
     const avatarOptions = document.querySelectorAll(".avatar-option");
 
+    const pageTitle = document.getElementById("page-title");
+    const backToMap = document.getElementById("back-to-map");
+    const labelEditUsername = document.getElementById("label-edit-username");
+    const labelEditDimension = document.getElementById("label-edit-dimension");
+    const avatarText = document.getElementById("avatar-text");
+    const achievementsTitle = document.getElementById("achievements-title");
+    const levelLabel = document.getElementById("level-label");
+
+    const menuProfile = document.getElementById("menu-profile");
+    const menuConfig = document.getElementById("menu-config");
+    const menuAbout = document.getElementById("menu-about");
+    const menuContact = document.getElementById("menu-contact");
+
     let currentUser;
     let selectedAvatar = "avatars/avatar1.png";
 
-    // Funció per obtenir el títol segons nivell
-    function getTitle(level) {
-      const titles = {
-        1: "Custodi del Flux",
-        2: "Guardià del Patró",
-        3: "Savi d’Ekuatia",
-        4: "Somniador de Tangentia",
-        5: "Vigilant de Complexia",
-        6: "Cercador de Functonia",
-        7: "Mestre de Derivalia"
-      };
-      return titles[level] || `Aventurer Nivell ${level}`;
-    }
-
     onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        currentUser = user;
-        emailEl.textContent = user.email;
+      if (!user) { window.location.href = "inici.html"; return; }
+      currentUser = user;
 
-        const ref = doc(db, "users", user.uid);
-        const snapshot = await getDoc(ref);
+      const ref = doc(db, "users", user.uid);
+      const snapshot = await getDoc(ref);
+      let lang = "ca";
 
-        if (snapshot.exists()) {
-          const data = snapshot.data();
-          usernameEl.textContent = data.username || "Usuari sense nom";
-          avatarEl.src = data.avatar || "avatars/avatar1.png";
-          favoriteDimensionText.textContent = "Dimensió preferida: " + (data.favoriteDimension || "Secuentia");
+      if (snapshot.exists()) {
+        const data = snapshot.data();
+        lang = data.language || "ca";
 
-          const xp = data.xp || 0;
-          const level = data.level || 1;
-          xpEl.textContent = xp;
-          xpMaxEl.textContent = level * 100;
-          levelEl.textContent = level;
-          xpBar.style.width = `${(xp / (level * 100)) * 100}%`;
-          titleEl.textContent = getTitle(level);
+        usernameEl.textContent = data.username || "Usuari sense nom";
+        avatarEl.src = data.avatar || "avatars/avatar1.png";
+        favoriteDimensionText.textContent = `${texts[lang].favoriteDimension}: ${data.favoriteDimension || "Secuentia"}`;
 
-          achievementsList.innerHTML = "";
-          if (data.achievements) {
-            data.achievements.forEach(a => {
-              const li = document.createElement("li");
-              li.textContent = a;
-              achievementsList.appendChild(li);
-            });
-          }
-        } else {
-          await setDoc(ref, {
-            username: "Nou jugador",
-            avatar: "avatars/avatar1.png",
-            xp: 0,
-            level: 1,
-            achievements: [],
-            favoriteDimension: "Secuentia"
+        const xp = data.xp || 0;
+        const level = data.level || 1;
+        xpEl.textContent = xp;
+        xpMaxEl.textContent = level * 100;
+        levelEl.textContent = level;
+        xpBar.style.width = `${(xp / (level * 100)) * 100}%`;
+        titleEl.textContent = getTitle(level, lang);
+
+        achievementsList.innerHTML = "";
+        if (data.achievements) {
+          data.achievements.forEach(a => {
+            const li = document.createElement("li");
+            li.textContent = a;
+            achievementsList.appendChild(li);
           });
         }
       } else {
-        window.location.href = "inici.html";
+        await setDoc(ref, {
+          username: "Nou jugador",
+          avatar: "avatars/avatar1.png",
+          xp: 0,
+          level: 1,
+          achievements: [],
+          favoriteDimension: "Secuentia",
+          language: "ca"
+        });
       }
+
+      // Traducció global
+      pageTitle.textContent = texts[lang].pageTitle;
+      backToMap.textContent = texts[lang].backToMap;
+      labelEditUsername.textContent = texts[lang].editUsername;
+      labelEditDimension.textContent = texts[lang].favoriteDimension + ":";
+      avatarText.textContent = texts[lang].avatar;
+      achievementsTitle.textContent = texts[lang].achievements;
+      editBtn.textContent = texts[lang].editProfile;
+      document.getElementById("logout").textContent = texts[lang].logout;
+      confirmBtn.textContent = texts[lang].confirm;
+      cancelBtn.textContent = texts[lang].cancel;
+      levelLabel.textContent = texts[lang].level + ":";
+
+      // Header
+      menuProfile.querySelector("a").textContent = texts[lang].menu.profile;
+      menuConfig.querySelector("a").textContent = texts[lang].menu.config;
+      menuAbout.querySelector("a").textContent = texts[lang].menu.about;
+      menuContact.querySelector("a").textContent = texts[lang].menu.contact;
     });
 
-    // Mode edició
     editBtn.addEventListener("click", () => {
       viewMode.style.display = "none";
       editMode.style.display = "block";
       editUsernameInput.value = usernameEl.textContent;
-      editDimension.value = favoriteDimensionText.textContent.replace("Dimensió preferida: ", "");
+      editDimension.value = favoriteDimensionText.textContent.split(": ")[1];
       selectedAvatar = avatarEl.src;
     });
 
@@ -247,11 +346,10 @@
           avatar: selectedAvatar,
           favoriteDimension: editDimension.value
         });
-
         usernameEl.textContent = editUsernameInput.value;
         avatarEl.src = selectedAvatar;
-        favoriteDimensionText.textContent = "Dimensió preferida: " + editDimension.value;
-
+        const lang = currentUser.language || "ca";
+        favoriteDimensionText.textContent = `${texts[lang].favoriteDimension}: ${editDimension.value}`;
         editMode.style.display = "none";
         viewMode.style.display = "block";
       }
@@ -264,4 +362,5 @@
   </script>
 </body>
 </html>
+
 
