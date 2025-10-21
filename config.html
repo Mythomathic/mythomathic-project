@@ -10,16 +10,16 @@
   <div class="gradient-background"></div>
   <header>
     <div class="header-left">
-      <a href="map.html" class="btn-link">← Tornar al mapa</a>
+      <a href="map.html" class="btn-link" id="back-to-map">← Tornar al mapa</a>
     </div>
-    <h1>Configuració</h1>
+    <h1 id="page-title">Configuració</h1>
     <div class="header-right">
       <nav>
         <ul class="menu">
-          <li><a href="perfil.html">Perfil</a></li>
-          <li><a href="config.html" class="active">Configuració</a></li>
-          <li><a href="sobremi.html">Sobre mi</a></li>
-          <li><a href="contacte.html">Contacte</a></li>
+          <li id="menu-profile"><a href="perfil.html">Perfil</a></li>
+          <li id="menu-config"><a href="config.html" class="active">Configuració</a></li>
+          <li id="menu-about"><a href="sobremi.html">Sobre mi</a></li>
+          <li id="menu-contact"><a href="contacte.html">Contacte</a></li>
         </ul>
       </nav>
     </div>
@@ -29,7 +29,7 @@
     <form id="config-form" class="config-card">
       <!-- Idioma -->
       <div class="config-option">
-        <label for="language">Idioma</label>
+        <label for="language" id="label-language">Idioma</label>
         <select id="language">
           <option value="ca">Català</option>
           <option value="es">Castellano</option>
@@ -38,27 +38,15 @@
       </div>
 
       <!-- Botons -->
-      <button type="submit" class="save-btn">💾 Guardar</button>
+      <button type="submit" class="save-btn" id="btn-save">💾 Guardar</button>
       <button type="button" id="delete-account" class="delete-btn">🗑️ Eliminar compte</button>
     </form>
   </main>
 
   <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-  import { 
-    getAuth, 
-    onAuthStateChanged, 
-    deleteUser 
-  } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-  import { 
-    getFirestore, 
-    doc, 
-    getDoc, 
-    setDoc, 
-    deleteDoc, 
-    collection, 
-    getDocs 
-  } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged, deleteUser } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc, setDoc, deleteDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDPVUQZXaSAARwROsDgvlohMvB-esYvMrA",
@@ -74,16 +62,67 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  // Carregar preferències
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      const ref = doc(db, "users", user.uid);
-      const snap = await getDoc(ref);
-      if (snap.exists()) {
-        const data = snap.data();
-        document.getElementById("language").value = data.language || "ca";
-      }
+  // Textos per idioma
+  const texts = {
+    ca: {
+      title: "Configuració",
+      backToMap: "← Tornar al mapa",
+      language: "Idioma",
+      save: "💾 Guardar",
+      deleteAccount: "🗑️ Eliminar compte",
+      menu: { profile: "Perfil", config: "Configuració", about: "Sobre mi", contact: "Contacte" }
+    },
+    es: {
+      title: "Configuración",
+      backToMap: "← Volver al mapa",
+      language: "Idioma",
+      save: "💾 Guardar",
+      deleteAccount: "🗑️ Eliminar cuenta",
+      menu: { profile: "Perfil", config: "Configuración", about: "Sobre mí", contact: "Contacto" }
+    },
+    en: {
+      title: "Settings",
+      backToMap: "← Back to map",
+      language: "Language",
+      save: "💾 Save",
+      deleteAccount: "🗑️ Delete account",
+      menu: { profile: "Profile", config: "Settings", about: "About Me", contact: "Contact" }
     }
+  };
+
+  // Carregar preferències i traduir
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = "inici.html"; return; }
+    const ref = doc(db, "users", user.uid);
+    const snap = await getDoc(ref);
+    const lang = snap.exists() && snap.data().language ? snap.data().language : "ca";
+
+    // Traducció de la pàgina
+    document.getElementById("page-title").textContent = texts[lang].title;
+    document.getElementById("back-to-map").textContent = texts[lang].backToMap;
+    document.getElementById("label-language").textContent = texts[lang].language;
+    document.getElementById("btn-save").textContent = texts[lang].save;
+    document.getElementById("delete-account").textContent = texts[lang].deleteAccount;
+
+    // Menu traduït sense perdre l'estil
+    document.querySelector("#menu-profile a").textContent = texts[lang].menu.profile;
+    document.querySelector("#menu-profile a").onclick = () => window.location.href = "perfil.html";
+
+    document.querySelector("#menu-config a").textContent = texts[lang].menu.config;
+    document.querySelector("#menu-config a").onclick = () => {
+      if(lang === "ca") window.location.href = "config.html";
+      else if(lang === "es") window.location.href = "config_es.html";
+      else window.location.href = "config_en.html";
+    };
+
+    document.querySelector("#menu-about a").textContent = texts[lang].menu.about;
+    document.querySelector("#menu-about a").onclick = () => window.location.href = "sobremi.html";
+
+    document.querySelector("#menu-contact a").textContent = texts[lang].menu.contact;
+    document.querySelector("#menu-contact a").onclick = () => window.location.href = "contacte.html";
+
+    // Carregar idioma guardat al select
+    document.getElementById("language").value = lang;
   });
 
   // Guardar preferències
@@ -92,44 +131,38 @@
     const user = auth.currentUser;
     if (!user) return;
 
-    const prefs = {
-      language: document.getElementById("language").value
-    };
-
+    const language = document.getElementById("language").value;
     const ref = doc(db, "users", user.uid);
-    await setDoc(ref, prefs, { merge: true });
+    await setDoc(ref, { language }, { merge: true });
 
     alert("✅ Configuració guardada!");
+    // Redirigir a la versió correcta
+    if (language === "ca") window.location.href = "config.html";
+    else if (language === "es") window.location.href = "config_es.html";
+    else window.location.href = "config_en.html";
   });
 
-  // Funció per eliminar TOT del Firestore per un usuari
+  // Funció per eliminar dades i compte
   async function deleteUserData(uid) {
     try {
       await deleteDoc(doc(db, "users", uid));
-      const subcollections = ["exercicis", "preferencies", "altresDades"]; 
+      const subcollections = ["exercicis", "preferencies", "altresDades"];
       for (const sub of subcollections) {
         const colRef = collection(db, "users", uid, sub);
         const snapshot = await getDocs(colRef);
-        snapshot.forEach(async (docu) => {
-          await deleteDoc(doc(db, "users", uid, sub, docu.id));
-        });
+        snapshot.forEach(async (docu) => { await deleteDoc(doc(db, "users", uid, sub, docu.id)); });
       }
-    } catch (err) {
-      console.error("❌ Error esborrant dades:", err);
-    }
+    } catch (err) { console.error("❌ Error esborrant dades:", err); }
   }
 
-  // Eliminar compte completament
   document.getElementById("delete-account").addEventListener("click", async () => {
     if (!confirm("⚠️ Estàs segur que vols eliminar el teu compte i totes les teves dades? Aquesta acció és irreversible!")) return;
-
     const user = auth.currentUser;
     if (!user) return;
 
     try {
       await deleteUserData(user.uid);
       await deleteUser(user);
-
       alert("🗑️ Compte i dades eliminades correctament.");
       window.location.href = "inici.html";
     } catch (err) {
@@ -137,8 +170,9 @@
       alert("❌ Error en eliminar el compte. Torna a iniciar sessió i torna-ho a provar.");
     }
   });
-</script>
-
+  </script>
 </body>
 </html>
+
+
 
