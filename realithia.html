@@ -101,6 +101,11 @@
   </div>
   <div id="capy-messages"></div>
   <input id="capy-input" placeholder="Pregunta a Capy...">
+  <div id="capy-thinking" class="hidden">
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+</div>
 </div>
 
 <script> 
@@ -168,17 +173,36 @@ capyInput.addEventListener("keypress", async (e) => {
     capyMessages.innerHTML += `<p><b>Tu:</b> ${msg}</p>`;
     capyInput.value = "";
 
-    const res = await fetch('https://mythomathic-server.onrender.com/api/chat', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ message: msg }),
-});
+    // MOSTREM punts de pensament
+    const thinking = document.getElementById("capy-thinking");
+    thinking.classList.remove("hidden");
 
-    const data = await res.json();
-    capyMessages.innerHTML += `<p><b>Capy:</b> ${data.reply}</p>`;
-    capyMessages.scrollTop = capyMessages.scrollHeight;
+    // Enviem el missatge al servidor
+    try {
+      const res = await fetch('https://mythomathic-server.onrender.com/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg }),
+      });
+
+      const data = await res.json();
+
+      // OCULTEM punts quan arriba la resposta
+      thinking.classList.add("hidden");
+
+      // Afegim missatge de Capy amb símbols matemàtics
+      capyMessages.innerHTML += `<p><b>Capy:</b> ${data.reply}</p>`;
+      MathJax.typesetPromise();
+      capyMessages.scrollTop = capyMessages.scrollHeight;
+
+    } catch (err) {
+      thinking.classList.add("hidden"); // assegurem amagar punts si hi ha error
+      capyMessages.innerHTML += `<p><b>Capy:</b> Ups! Hi ha hagut un error al enviar el missatge.</p>`;
+      capyMessages.scrollTop = capyMessages.scrollHeight;
+    }
   }
 });
+
 
 
 // Diccionari d’exercicis
@@ -660,16 +684,14 @@ window.addXP = async function(amount) {
 
 </script>
 
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+ src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+
 </body> 
 </html>
-
-
-
-
-
-
-
-
 
 
 
