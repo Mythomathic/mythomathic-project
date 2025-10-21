@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Map - Mythomathic</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="map.css">
+</head>
+<body>
+
+<header>
+    <img src="Title.png" alt="Mythomathic logo" class="title-logo">
+    <nav id="menu">
+        <button onclick="toggleMenu()">☰ Menu</button>
+        <ul>
+            <li onclick="goTo('perfil_en.html')">Profile</li>
+            <li onclick="goTo('config_en.html')">Settings</li>
+            <li onclick="goTo('sobremi_en.html')">About Me</li>
+            <li onclick="goTo('contacte_en.html')">Contact</li>
+        </ul>
+    </nav>
+</header>
+
+<div class="map-container">
+
+    <div class="portal side-left" style="top: 57%; left: 47%;" onclick="goTo('realithia.html')">
+        <img src="Re.png" alt="Portal Realithia">
+        <div class="tooltip realithia">🌌 <b>Realithia</b><br>Kingdom of real numbers, radicals, logarithms and powers, with a majestic and mysterious palace.</div>
+    </div>
+
+    <div class="portal big side-right" style="top: 15%; left: 75%;" onclick="goTo('tangentia.html')">
+        <img src="Tan.png" alt="Portal Tangentia">
+        <div class="tooltip tangentia">📐<b>Tangentia</b><br>Islands where trigonometry and triangles reign, surrounded by mystery.</div>
+    </div>
+
+    <div class="portal big" style="top: 50%; left: 77%;" onclick="goTo('complexia.html')">
+        <img src="Co.png" alt="Portal Complexia">
+        <div class="tooltip complexia"><img src="purple-fire.png" style="width: 15%; height: auto;"/><b>Complexia</b><br>Dimension of fire and darkness, dominated by complex numbers.</div>
+    </div>
+
+    <div class="portal big" style="top: 55%; left: 18%;" onclick="goTo('derivalia.html')">
+        <img src="De.png" alt="Portal Derivalia">
+        <div class="tooltip derivalia">〰️<b>Derivalia</b><br>World where everything flows with derivatives and infinite curves.</div>
+    </div>
+
+    <div class="portal side-left" style="top: 20%; left: 50%;" onclick="goTo('ekuatia.html')">
+        <img src="Ek.png" alt="Portal Ekuatia">
+        <div class="tooltip ekuatia">⚙️ <b>Ekuatia</b><br>Gear-and-steam library city, full of equations and systems.</div>
+    </div>
+
+    <div class="portal big side-right" style="top: 79%; left: 16%;" onclick="goTo('functonia.html')">
+        <img src="Fun.png" alt="Portal Functonia">
+        <div class="tooltip functonia">📈<b>Functonia</b><br>Futuristic dimension dedicated to functions and their patterns.</div>
+    </div>
+
+    <div class="portal side-right" style="top: 80%; left: 77%;" onclick="goTo('probathénia.html')">
+        <img src="Pro.png" alt="Portal Probathénia">
+        <div class="tooltip probathenia">🎲<b>Probathénia</b><br>World of chaos and infinite probabilities.</div>
+    </div>
+
+    <div class="portal big side-right" style="top: 15%; left: 12%;" onclick="goTo('secuentia.html')">
+        <img src="Sec.png" alt="Portal Secuentia">
+        <div class="tooltip secuentia">🌻 <b>Secuentia</b><br>Golden forest where sequences and eternal progressions reign.</div>
+    </div>
+
+    <div class="portal side-left" style="top: 86%; left: 47%;" onclick="goTo('vectonia.html')">
+        <img src="Vec.png" alt="Portal Vectonia">
+        <div class="tooltip vectonia">↗️ <b>Vectonia</b><br>Dimension of vectors and space-time transformations.</div>
+    </div>
+
+</div>
+
+<script>
+function toggleMenu() {
+    document.getElementById('menu').classList.toggle('active');
+}
+function goTo(page) {
+    window.location.href = page;
+}
+</script>
+
+</body>
+</html>
