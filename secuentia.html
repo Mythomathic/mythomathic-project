@@ -68,6 +68,26 @@
   </div>
 </div>
 
+
+<!-- CHATBOT -->
+<div id="capy-toggle">
+  <img src="capy.png" alt="Capy">
+</div>
+
+<div id="capy-chat" class="hidden">
+  <div class="capy-header">
+    <img src="capy.png" alt="Capy">
+    <span>Capy - Guia</span>
+  </div>
+  <div id="capy-messages"></div>
+  <input id="capy-input" placeholder="Pregunta a Capy...">
+  <div id="capy-thinking" class="hidden">
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+</div>
+</div>
+
 <script>
 function toggleMenu(){ document.getElementById('menu').classList.toggle('active'); }
 function goTo(page){ window.location.href = page; }
@@ -88,6 +108,50 @@ function showSymbols(type){
 }
 function closePopup(){ document.getElementById("exercisePopup").style.display="none"; }
 function randomInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+/* ---------- CHATBOT ---------- */
+const capyToggle = document.getElementById("capy-toggle");
+const capyChat = document.getElementById("capy-chat");
+const capyInput = document.getElementById("capy-input");
+const capyMessages = document.getElementById("capy-messages");
+
+capyToggle.onclick = () => capyChat.classList.toggle("hidden");
+
+capyInput.addEventListener("keypress", async (e) => {
+  if (e.key === "Enter" && capyInput.value.trim()) {
+    const msg = capyInput.value.trim();
+    capyMessages.innerHTML += `<p><b>Tu:</b> ${msg}</p>`;
+    capyInput.value = "";
+
+    // MOSTREM punts de pensament
+    const thinking = document.getElementById("capy-thinking");
+    thinking.classList.remove("hidden");
+
+    // Enviem el missatge al servidor
+    try {
+      const res = await fetch('https://mythomathic-server.onrender.com/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg }),
+      });
+
+      const data = await res.json();
+
+      // OCULTEM punts quan arriba la resposta
+      thinking.classList.add("hidden");
+
+      // Afegim missatge de Capy amb símbols matemàtics
+      capyMessages.innerHTML += `<p><b>Capy:</b> ${data.reply}</p>`;
+      MathJax.typesetPromise();
+      capyMessages.scrollTop = capyMessages.scrollHeight;
+
+    } catch (err) {
+      thinking.classList.add("hidden"); // assegurem amagar punts si hi ha error
+      capyMessages.innerHTML += `<p><b>Capy:</b> Ups! Hi ha hagut un error al enviar el missatge.</p>`;
+      capyMessages.scrollTop = capyMessages.scrollHeight;
+    }
+  }
+});
 
 // ==================== EXERCICIS ======================
 const exercises = {
@@ -323,9 +387,13 @@ window.addXP = async function(amount) {
 };
 
 
-
-
 </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+ src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+
 </body>
 </html>
-
