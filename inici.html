@@ -1,34 +1,33 @@
 <!DOCTYPE html>
-  <head>
-    
-    <meta charset="UTF-8">
-
-    <title>Inici de sessió - Mythomathic</title>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <title>Inici de sessió - Mythomathic</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">  
   <link rel="stylesheet" href="inici.css">
-    
-  </head>
+</head>
+<body>
 
-  <body>
+  <div class="gradient-background"></div>
 
-    <div class="gradient-background"></div>
-
-    <header>
+  <header>
     <img src="Title.png" alt="Mythomathic" class="logo">
   </header>
 
-    
-<div class="main-content">
+  <div class="main-content">
     <h1>Mates, mites i màgia.</h1>
     <h2>Inicia sessió</h2>
-  <div class="forms-container">
-    <form id="login-form">
-    <input type="email" id="login-email" placeholder="Correu electrònic" required>
-    <input type="password" id="login-password" placeholder="Contrasenya" required>
-    <button type="submit">Entrar</button>
-  </form>
+
+    <div class="forms-container">
+      <form id="login-form">
+        <input type="email" id="login-email" placeholder="Correu electrònic" required>
+        <input type="password" id="login-password" placeholder="Contrasenya" required>
+        <button type="submit">Entrar</button>
+      </form>
+
+      <button id="forgot-password-btn" class="forgot-btn">Has oblidat la contrasenya?</button>
+    </div>
   </div>
-</div>
 
   <h2>O crea un compte</h2>
   <form id="register-form">
@@ -37,61 +36,89 @@
     <button type="submit">Registrar-se</button>
   </form>
 
-<script type="module">
+  <!-- POP-UP per recuperar contrasenya -->
+  <div id="reset-popup" class="popup">
+    <div class="popup-content">
+      <span id="close-popup" class="close">&times;</span>
+      <h3>Recuperar contrasenya</h3>
+      <p>Escriu el teu correu per rebre un enllaç de restabliment:</p>
+      <input type="email" id="reset-email" placeholder="Correu electrònic">
+      <button id="reset-button">Enviar enllaç</button>
+    </div>
+  </div>
+
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword }
-        from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail }
+      from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-  
-   const firebaseConfig = {
-    apiKey: "AIzaSyDPVUQZXaSAARwROsDgvlohMvB-esYvMrA",
-    authDomain: "mythomathic.firebaseapp.com",
-    projectId: "mythomathic",
-    storageBucket: "mythomathic.firebasestorage.app",
-    messagingSenderId: "396574593247",
-    appId: "1:396574593247:web:5b7f02c53de5613eda996a",
-    measurementId: "G-P649F73C8E"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyDPVUQZXaSAARwROsDgvlohMvB-esYvMrA",
+      authDomain: "mythomathic.firebaseapp.com",
+      projectId: "mythomathic",
+      storageBucket: "mythomathic.firebasestorage.app",
+      messagingSenderId: "396574593247",
+      appId: "1:396574593247:web:5b7f02c53de5613eda996a",
+      measurementId: "G-P649F73C8E"
+    };
 
-    // Inicialitzar Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     const auth = getAuth(app);
 
-    // Registrar-se
-    document.getElementById("register-form").addEventListener("submit", function(e) {
-        e.preventDefault();
-        const email = document.getElementById("register-email").value;
-        const password = document.getElementById("register-password").value;
+    // 🔹 Registrar-se
+    document.getElementById("register-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("register-email").value;
+      const password = document.getElementById("register-password").value;
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then(function(userCredential) {
-                console.log("Usuari creat:", userCredential.user);
-                alert("Compte creat correctament!"); 
-              window.location.href = "perfil.html";
-            })
-            .catch(function(error) {
-                alert("Error: " + error.message);
-            });
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          alert("Compte creat correctament!");
+          window.location.href = "perfil.html";
+        })
+        .catch((error) => {
+          alert("Error: " + error.message);
+        });
     });
 
-    // Iniciar sessió
-    document.getElementById("login-form").addEventListener("submit", function(e) {
-        e.preventDefault();
-        const email = document.getElementById("login-email").value;
-        const password = document.getElementById("login-password").value;
+    // 🔹 Iniciar sessió
+    document.getElementById("login-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("login-email").value;
+      const password = document.getElementById("login-password").value;
 
-        signInWithEmailAndPassword(auth, email, password)
-            .then(function(userCredential) {
-                console.log("Sessió iniciada:", userCredential.user);
-                alert("Has iniciat sessió correctament!"); window.location.href = "map.html";
-            })
-            .catch(function(error) {
-                alert("Error: " + error.message);
-            });
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          alert("Has iniciat sessió correctament!");
+          window.location.href = "map.html";
+        })
+        .catch((error) => {
+          alert("Error: " + error.message);
+        });
     });
-</script>
+
+    // 🔹 Obrir / tancar pop-up de recuperació
+    const popup = document.getElementById("reset-popup");
+    document.getElementById("forgot-password-btn").addEventListener("click", () => popup.style.display = "flex");
+    document.getElementById("close-popup").addEventListener("click", () => popup.style.display = "none");
+
+    // 🔹 Enviar correu de restabliment
+    document.getElementById("reset-button").addEventListener("click", async () => {
+      const email = document.getElementById("reset-email").value;
+      if (!email) return alert("Escriu un correu primer!");
+
+      try {
+        await sendPasswordResetEmail(auth, email);
+        alert("S'ha enviat un correu per restablir la contrasenya! Revisa també el correu brossa (spam) per si de cas.");
+        popup.style.display = "none";
+      } catch (error) {
+        alert("Error: " + error.message);
+      }
+    });
+  </script>
 
 </body>
 </html>
+
