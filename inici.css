@@ -98,4 +98,53 @@ button:hover {
   to   { filter: drop-shadow(0 0 25px #0ff); }
 }
 
+/* 🔹 POPUP DE RECUPERACIÓ */
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.popup-content {
+  background: #003366;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #0ff;
+  text-align: center;
+  color: white;
+  width: 300px;
+}
+
+.popup-content input {
+  width: 80%;
+  margin: 10px 0;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 24px;
+  cursor: pointer;
+  color: white;
+}
+
+.forgot-btn {
+  background: none;
+  border: none;
+  color: #0ff;
+  font-size: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+
 
